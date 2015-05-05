@@ -44,7 +44,6 @@ public class SanPham {
 
     public void setDonGia(Number donGia) {
         this.donGia = donGia;
-    }
-    
+    }    
     
 }
