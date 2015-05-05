@@ -13,5 +13,10 @@ import org.pojo.SanPham;
  * @author Chan
  */
 public interface SanPhamDAO {
-    
+    public List<SanPham> getAllSanPham() throws SQLException;
+    public SanPham getSanPhamByID(int id) throws SQLException;
+    public void deleteSanPham(SanPham sp) throws SQLException;
+    public void deleteSanPham(int id) throws SQLException;
+    public void insertSanPham(SanPham sp) throws SQLException;
+    public void updateSanPham(SanPham sp) throws SQLException;
 }
