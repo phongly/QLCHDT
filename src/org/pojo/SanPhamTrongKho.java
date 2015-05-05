@@ -48,6 +48,44 @@ public class SanPhamTrongKho extends SanPham{
         this.ngayXuat = ngayXuat;
     }
 
+    public int getSanPhamTrongKhoID() {
+        return sanPhamTrongKhoID;
+    }
 
+    public void setSanPhamTrongKhoID(int sanPhamTrongKhoID) {
+        this.sanPhamTrongKhoID = sanPhamTrongKhoID;
+    }
+
+    public int getKhoID() {
+        return KhoID;
+    }
+
+    public void setKhoID(int KhoID) {
+        this.KhoID = KhoID;
+    }
+
+    public int getSoLuongTon() {
+        return soLuongTon;
+    }
+
+    public void setSoLuongTon(int soLuongTon) {
+        this.soLuongTon = soLuongTon;
+    }
+
+    public Date getNgayNhap() {
+        return ngayNhap;
+    }
+
+    public void setNgayNhap(Date ngayNhap) {
+        this.ngayNhap = ngayNhap;
+    }
+
+    public Date getNgayXuat() {
+        return ngayXuat;
+    }
+
+    public void setNgayXuat(Date ngayXuat) {
+        this.ngayXuat = ngayXuat;
+    }   
 
 }
