@@ -17,7 +17,17 @@ public class SanPham {
     public SanPham() {
     }
 
-    public SanPham(String ten, Number donGia) {
+    public SanPham(int sanPhamID) {
+        this.sanPhamID = sanPhamID;
+    }
+    
+    public SanPham(int sanPhamID, String ten) {
+        this.sanPhamID = sanPhamID;
+        this.ten = ten;
+    }
+   
+    public SanPham(int sanPhamID, String ten, Number donGia) {
+        this.sanPhamID = sanPhamID;
         this.ten = ten;
         this.donGia = donGia;
     }
@@ -26,9 +36,9 @@ public class SanPham {
         return sanPhamID;
     }
 
-//    public void setSanPhamID(int sanPhamID) {
-//        this.sanPhamID = sanPhamID;
-//    }
+    public void setSanPhamID(int sanPhamID) {
+        this.sanPhamID = sanPhamID;
+    }
 
     public String getTen() {
         return ten;
@@ -44,7 +54,6 @@ public class SanPham {
 
     public void setDonGia(Number donGia) {
         this.donGia = donGia;
-    }
-    
+    }    
     
 }
