@@ -6,28 +6,53 @@
 
 package org.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import org.dao.api.CuaHangDAO;
-import org.pojo.CuaHang;
+import org.dao.util.PostgreConnection;
+import org.pojo.CuaHangNhaCC;
 /**
  *
  * @author ly.phong
  */
 public class CuaHangDAOImpl implements CuaHangDAO{
 
+    private int loai = 2; // loai cua hang la` 2 
+    private CuaHangNhaCC convert(ResultSet rs) throws SQLException {
+        int cuaHangNhaCCID = rs.getInt("id");
+        String ten = rs.getString("ten");
+        String diaChi = rs.getString("dia_chi");
+        String soDT = rs.getString("so_dt");
+        
+        CuaHangNhaCC cuaHang = new CuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT);
+        return cuaHang;
+    }
+    
     @Override
-    public List<CuaHang> getAllCuaHang() throws SQLException {
+    public List<CuaHangNhaCC> getAllCuaHang() throws SQLException {
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        List<CuaHangNhaCC> list = new ArrayList<>();
+        String sql = "SELECT * FROM cuahang_hethong WHERE loai="+this.loai;
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            list.add(convert(rs));
+        }
+        rs.close();
+        statement.close();
+        return list;
+    }
+
+    @Override
+    public CuaHangNhaCC getCuaHangByID(int id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public CuaHang getCuaHangByID(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void deleteCuaHang(CuaHang cuaHang) throws SQLException {
+    public void deleteCuaHang(CuaHangNhaCC cuaHang) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -37,12 +62,19 @@ public class CuaHangDAOImpl implements CuaHangDAO{
     }
 
     @Override
-    public void insertCuaHang(CuaHang cuaHang) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insertCuaHang(CuaHangNhaCC cuaHang) throws SQLException {
+        String sql = "INSERT INTO cuahang_hethong_nhacc(ten, dia_chi, so_dt, loai) values (?,?,?,?)";
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        ps.setString(1, cuaHang.getTen());
+        ps.setString(2, cuaHang.getDiaChi());
+        ps.setString(3 , cuaHang.getSoDT());
+                ps.setInt(3 , this.loai);
+        ps.executeUpdate();
+        ps.close(); 
     }
 
     @Override
-    public void updateCuaHang(CuaHang cuaHang) throws SQLException {
+    public void updateCuaHang(CuaHangNhaCC cuaHang) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

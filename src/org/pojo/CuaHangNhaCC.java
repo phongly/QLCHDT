@@ -10,37 +10,44 @@ package org.pojo;
  *
  * @author ly.phong
  */
-public class CuaHang {
+public class CuaHangNhaCC {
     private int cuaHangID;
     private String ten;
     private String diaChi;
     private String soDT;
 
-    public CuaHang() {
+    public CuaHangNhaCC() {
     }
 
-    public CuaHang(String ten) {
+    public CuaHangNhaCC(int cuaHangID) {
+        this.cuaHangID = cuaHangID;
+    }
+   
+    public CuaHangNhaCC(int cuaHangID, String ten) {
+        this.cuaHangID = cuaHangID;
         this.ten = ten;
     }
 
-    public CuaHang(String ten, String diaChi) {
+    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi) {
+        this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
     }
 
-    public CuaHang(String ten, String diaChi, String soDT) {
+    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT) {
+        this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
         this.soDT = soDT;
     }
-
+   
     public int getCuaHangID() {
         return cuaHangID;
     }
 
-//    public void setCuaHangID(int cuaHangID) {
-//        this.cuaHangID = cuaHangID;
-//    }
+    public void setCuaHangID(int cuaHangID) {
+        this.cuaHangID = cuaHangID;
+    }
 
     public String getTen() {
         return ten;
