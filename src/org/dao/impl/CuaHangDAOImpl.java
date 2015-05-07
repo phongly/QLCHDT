@@ -27,8 +27,8 @@ public class CuaHangDAOImpl implements CuaHangDAO{
         String ten = rs.getString("ten");
         String diaChi = rs.getString("dia_chi");
         String soDT = rs.getString("so_dt");
-        
-        CuaHangNhaCC cuaHang = new CuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT);
+        String loaiCuaHang = rs.getString("loai");
+        CuaHangNhaCC cuaHang = new CuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT, loaiCuaHang);
         return cuaHang;
     }
     
@@ -36,7 +36,7 @@ public class CuaHangDAOImpl implements CuaHangDAO{
     public List<CuaHangNhaCC> getAllCuaHang() throws SQLException {
         Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
         List<CuaHangNhaCC> list = new ArrayList<>();
-        String sql = "SELECT * FROM cuahang_hethong WHERE loai="+this.loai;
+        String sql = "SELECT * FROM cuahang_hethong_nhacc WHERE loai="+this.loai;
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()) {
             list.add(convert(rs));

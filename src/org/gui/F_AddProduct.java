@@ -5,6 +5,14 @@
  */
 package org.gui;
 
+import java.sql.SQLException;
+import org.dao.util.ComboItem;
+import org.dao.impl.*;
+import org.pojo.CuaHangNhaCC;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Chan
@@ -14,8 +22,9 @@ public class F_AddProduct extends javax.swing.JFrame {
     /**
      * Creates new form F_AddProduct
      */
-    public F_AddProduct() {
+    public F_AddProduct() throws SQLException {
         initComponents();
+        initComboBoxKho();
     }
 
     /**
@@ -68,7 +77,6 @@ public class F_AddProduct extends javax.swing.JFrame {
 
         jLabel7.setText("Warehouse:");
 
-        cb_kho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "System", "Store 1", "Store 2", "Store 3" }));
         cb_kho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_khoActionPerformed(evt);
@@ -121,15 +129,15 @@ public class F_AddProduct extends javax.swing.JFrame {
                                 .addContainerGap(77, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(72, 72, 72)
-                                                .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(40, 40, 40)
-                                                .addComponent(txt_tenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(txt_dongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(5, 5, 5)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel5)
+                                                    .addGap(40, 40, 40)
+                                                    .addComponent(txt_tenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(txt_dongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel7)
@@ -214,6 +222,14 @@ public class F_AddProduct extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    public void initComboBoxKho() throws SQLException {
+        CuaHangDAOImpl cuaHangDaoImpl = new CuaHangDAOImpl();
+        List<CuaHangNhaCC> cuaHangs = cuaHangDaoImpl.getAllCuaHang();
+        for (CuaHangNhaCC cuaHang : cuaHangs) {
+            cb_kho.addItem(new ComboItem(cuaHang.getTen(), cuaHang.getLoai()));
+        }
+               
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -241,7 +257,12 @@ public class F_AddProduct extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new F_AddProduct().setVisible(true);
+                try {
+                    new F_AddProduct().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
     }

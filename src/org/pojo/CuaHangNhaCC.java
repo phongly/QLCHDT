@@ -15,7 +15,7 @@ public class CuaHangNhaCC {
     private String ten;
     private String diaChi;
     private String soDT;
-
+    private String loai;
     public CuaHangNhaCC() {
     }
 
@@ -40,7 +40,15 @@ public class CuaHangNhaCC {
         this.diaChi = diaChi;
         this.soDT = soDT;
     }
-   
+
+    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT, String loai) {
+        this.cuaHangID = cuaHangID;
+        this.ten = ten;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.loai = loai;
+    }
+    
     public int getCuaHangID() {
         return cuaHangID;
     }
@@ -72,6 +80,13 @@ public class CuaHangNhaCC {
     public void setSoDT(String soDT) {
         this.soDT = soDT;
     }
-    
-    
+
+    public String getLoai() {
+        return loai;
+    }
+
+    public void setLoai(String loai) {
+        this.loai = loai;
+    }
+
 }
