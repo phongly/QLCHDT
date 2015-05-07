@@ -6,9 +6,11 @@
 
 package org.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import org.dao.api.SanPhamDAO;
+import org.dao.util.PostgreConnection;
 import org.pojo.SanPham;
 /**
  *
@@ -38,7 +40,12 @@ public class SanPhamDAOImpl implements SanPhamDAO{
 
     @Override
     public void insertSanPham(SanPham sp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO sanpham(ten, don_gia) values (?,?)";
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        ps.setString(1, sp.getTen());
+        ps.setInt(2, sp.getDonGia().intValue());
+        ps.executeUpdate();
+        ps.close(); 
     }
 
     @Override

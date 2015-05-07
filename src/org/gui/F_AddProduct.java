@@ -6,13 +6,16 @@
 package org.gui;
 
 import java.sql.SQLException;
-import org.dao.util.ComboItem;
-import org.dao.impl.*;
-import org.pojo.CuaHangNhaCC;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.dao.impl.*;
+import org.dao.util.ComboItem;
+import org.pojo.*;
 /**
  *
  * @author Chan
@@ -38,21 +41,23 @@ public class F_AddProduct extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txt_nhanvien = new javax.swing.JTextField();
+        txtNhanvien = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txt_ngay = new javax.swing.JTextField();
+        txtNgay = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_tenSP = new javax.swing.JTextField();
-        txt_dongia = new javax.swing.JTextField();
+        txtTenSP = new javax.swing.JTextField();
+        txtDongia = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txt_soluong = new javax.swing.JTextField();
+        txtSoluong = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        cb_kho = new javax.swing.JComboBox();
+        cbKho = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         txt_nhacc = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btReset = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        lbTestValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,9 +66,9 @@ public class F_AddProduct extends javax.swing.JFrame {
 
         jLabel2.setText("Staff:");
 
-        txt_nhanvien.addActionListener(new java.awt.event.ActionListener() {
+        txtNhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_nhanvienActionPerformed(evt);
+                txtNhanvienActionPerformed(evt);
             }
         });
 
@@ -77,9 +82,9 @@ public class F_AddProduct extends javax.swing.JFrame {
 
         jLabel7.setText("Warehouse:");
 
-        cb_kho.addActionListener(new java.awt.event.ActionListener() {
+        cbKho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_khoActionPerformed(evt);
+                cbKhoActionPerformed(evt);
             }
         });
 
@@ -91,19 +96,23 @@ public class F_AddProduct extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Reset");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btReset.setText("Reset");
+        btReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btResetActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Save");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btSave.setText("Save");
+        btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btSaveActionPerformed(evt);
             }
         });
+
+        jLabel9.setText("test:");
+
+        lbTestValue.setText("jLabel10");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,17 +121,12 @@ public class F_AddProduct extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_nhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
@@ -132,12 +136,12 @@ public class F_AddProduct extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(5, 5, 5)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(layout.createSequentialGroup()
                                                     .addComponent(jLabel5)
                                                     .addGap(40, 40, 40)
-                                                    .addComponent(txt_tenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(txt_dongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel7)
@@ -145,13 +149,22 @@ public class F_AddProduct extends javax.swing.JFrame {
                                             .addGap(74, 74, 74)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(txt_nhacc, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cb_kho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jLabel6))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(11, 11, 11)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_ngay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbTestValue)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btReset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btSave)))
                 .addGap(62, 62, 62))
         );
         layout.setVerticalGroup(
@@ -162,9 +175,9 @@ public class F_AddProduct extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txt_ngay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_nhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -174,50 +187,73 @@ public class F_AddProduct extends javax.swing.JFrame {
                         .addGap(37, 37, 37))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_tenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_dongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel6)
                 .addGap(8, 8, 8)
-                .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_kho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_nhacc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btReset)
+                    .addComponent(btSave)
+                    .addComponent(jLabel9)
+                    .addComponent(lbTestValue))
                 .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_nhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nhanvienActionPerformed
+    private void txtNhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhanvienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nhanvienActionPerformed
+    }//GEN-LAST:event_txtNhanvienActionPerformed
 
-    private void cb_khoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_khoActionPerformed
+    private void cbKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbKhoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_khoActionPerformed
+    }//GEN-LAST:event_cbKhoActionPerformed
 
     private void txt_nhaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nhaccActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nhaccActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btResetActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String tenSp = txtTenSP.getText();
+        Number gia = 0;    
+        try {
+            gia = NumberFormat.getInstance().parse(txtDongia.getText()); //(txtDongia.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String soLuong = txtSoluong.getText();
+        
+        SanPham newSanPham = new SanPham(tenSp, gia);
+        SanPhamDAOImpl sanPhamDAO = new SanPhamDAOImpl();
+        try {
+            sanPhamDAO.insertSanPham(newSanPham);
+        } catch (SQLException ex) {
+            Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Object item = cbKho.getSelectedItem();
+        String maKho = ((ComboItem)item).getValue();
+        lbTestValue.setText(maKho);
+        SanPham sanPham = new SanPham();
+    }//GEN-LAST:event_btSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,8 +261,10 @@ public class F_AddProduct extends javax.swing.JFrame {
     public void initComboBoxKho() throws SQLException {
         CuaHangDAOImpl cuaHangDaoImpl = new CuaHangDAOImpl();
         List<CuaHangNhaCC> cuaHangs = cuaHangDaoImpl.getAllCuaHang();
+        String maCuaHang;
         for (CuaHangNhaCC cuaHang : cuaHangs) {
-            cb_kho.addItem(new ComboItem(cuaHang.getTen(), cuaHang.getLoai()));
+            maCuaHang = String.valueOf(cuaHang.getCuaHangID());           
+            cbKho.addItem(new ComboItem(cuaHang.getTen(), maCuaHang));
         }
                
     }
@@ -268,9 +306,9 @@ public class F_AddProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cb_kho;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btReset;
+    private javax.swing.JButton btSave;
+    private javax.swing.JComboBox cbKho;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -279,11 +317,13 @@ public class F_AddProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField txt_dongia;
-    private javax.swing.JTextField txt_ngay;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lbTestValue;
+    private javax.swing.JTextField txtDongia;
+    private javax.swing.JTextField txtNgay;
+    private javax.swing.JTextField txtNhanvien;
+    private javax.swing.JTextField txtSoluong;
+    private javax.swing.JTextField txtTenSP;
     private javax.swing.JTextField txt_nhacc;
-    private javax.swing.JTextField txt_nhanvien;
-    private javax.swing.JTextField txt_soluong;
-    private javax.swing.JTextField txt_tenSP;
     // End of variables declaration//GEN-END:variables
 }

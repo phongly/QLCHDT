@@ -32,6 +32,11 @@ public class SanPham {
         this.donGia = donGia;
     }
 
+    public SanPham(String ten, Number donGia) {
+        this.ten = ten;
+        this.donGia = donGia;
+    }
+    
     public int getSanPhamID() {
         return sanPhamID;
     }
