@@ -15,8 +15,9 @@ import org.pojo.SanPham;
 public interface SanPhamDAO {
     public List<SanPham> getAllSanPham() throws SQLException;
     public SanPham getSanPhamByID(int id) throws SQLException;
+    public SanPham getLastSanPham() throws SQLException;
     public void deleteSanPham(SanPham sp) throws SQLException;
     public void deleteSanPham(int id) throws SQLException;
-    public void insertSanPham(SanPham sp) throws SQLException;
+    public int insertSanPham(SanPham sp) throws SQLException;
     public void updateSanPham(SanPham sp) throws SQLException;
 }

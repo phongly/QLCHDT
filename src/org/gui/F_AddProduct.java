@@ -5,6 +5,7 @@
  */
 package org.gui;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.dao.impl.*;
 import org.dao.util.ComboItem;
+import org.dao.util.PostgreConnection;
 import org.pojo.*;
 /**
  *
@@ -231,28 +233,37 @@ public class F_AddProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btResetActionPerformed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        // TODO add your handling code here:
-        String tenSp = txtTenSP.getText();
-        Number gia = 0;    
-        try {
-            gia = NumberFormat.getInstance().parse(txtDongia.getText()); //(txtDongia.getText());
-        } catch (ParseException ex) {
-            Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String soLuong = txtSoluong.getText();
-        
-        SanPham newSanPham = new SanPham(tenSp, gia);
-        SanPhamDAOImpl sanPhamDAO = new SanPhamDAOImpl();
-        try {
-            sanPhamDAO.insertSanPham(newSanPham);
+        try {                                       
+            // TODO add your handling code here:
+            String tenSp = txtTenSP.getText();
+            Number gia = 0;
+            try {
+                gia = NumberFormat.getInstance().parse(txtDongia.getText());
+            } catch (ParseException ex) {
+                Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String soLuong = txtSoluong.getText();
+            
+            SanPham newSanPham = new SanPham(tenSp, gia);
+            SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();
+            
+            PostgreConnection connectInst = PostgreConnection.getInstance();      
+            Connection connect = connectInst.getConnection();
+            
+            connect.setAutoCommit(false);
+            int sanPhamID = sanPhamDAOIm.insertSanPham(newSanPham);
+//            SanPham lastSanPham = sanPhamDAOIm.getLastSanPham();
+            SanPham lastSanPham = sanPhamDAOIm.getSanPhamByID(sanPhamID);
+            SanPhamTrongKho sanPhamVaoKho = 
+            Object item = cbKho.getSelectedItem();
+            String maKho = ((ComboItem)item).getValue();
+            lbTestValue.setText(sanPhamVaoKho.getTen());
+            SanPham sanPham = new SanPham();
+            
+            connect.commit();
         } catch (SQLException ex) {
             Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        Object item = cbKho.getSelectedItem();
-        String maKho = ((ComboItem)item).getValue();
-        lbTestValue.setText(maKho);
-        SanPham sanPham = new SanPham();
     }//GEN-LAST:event_btSaveActionPerformed
 
     /**
