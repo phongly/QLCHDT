@@ -19,6 +19,6 @@ public interface NhaCCDAO {
     public CuaHangNhaCC getNhaCCByID(int id) throws SQLException;
     public void deleteNhaCC(CuaHangNhaCC nhaCC) throws SQLException;
     public void deleteNhaCC(int id) throws SQLException;
-    public void insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException;
+    public int insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException;
     public void updateNhaCC(CuaHangNhaCC nhaCC) throws SQLException;    
 }

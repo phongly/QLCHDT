@@ -20,6 +20,6 @@ public interface SanPhamTrongKhoDAO {
     public SanPhamTrongKho getSanPhamTrongKhoByID(int id) throws SQLException;
     public void deleteSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
     public void deleteSanPhamTrongKho(int id) throws SQLException;
-    public void insertSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
+    public int insertSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
     public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;    
 }

@@ -63,15 +63,22 @@ public class NhaCCDAOImpl implements NhaCCDAO{
     }
 
     @Override
-    public void insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException {
+    public int insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException {
         String sql = "INSERT INTO cuahang_hethong_nhacc(ten, dia_chi, so_dt, loai) values (?,?,?,?)";
-        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+//        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, nhaCC.getTen());
         ps.setString(2, nhaCC.getDiaChi());
         ps.setString(3 , nhaCC.getSoDT());
-        ps.setInt(3 , this.loai);
+        ps.setInt(4 , this.loai);
+        int result = 0;
         ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        while (rs.next()) {
+            result = rs.getInt(1);
+        }
         ps.close();
+        return result;
     }
 
     @Override

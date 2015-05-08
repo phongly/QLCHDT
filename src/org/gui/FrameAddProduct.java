@@ -22,12 +22,12 @@ import org.pojo.*;
  *
  * @author Chan
  */
-public class F_AddProduct extends javax.swing.JFrame {
+public class FrameAddProduct extends javax.swing.JFrame {
 
     /**
      * Creates new form F_AddProduct
      */
-    public F_AddProduct() throws SQLException {
+    public FrameAddProduct() throws SQLException {
         initComponents();
         initComboBoxKho();
     }
@@ -233,36 +233,48 @@ public class F_AddProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btResetActionPerformed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        try {                                       
+        try {                                  
             // TODO add your handling code here:
             String tenSp = txtTenSP.getText();
             Number gia = 0;
             try {
                 gia = NumberFormat.getInstance().parse(txtDongia.getText());
             } catch (ParseException ex) {
-                Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
             }
-            String soLuong = txtSoluong.getText();
-            
-            SanPham newSanPham = new SanPham(tenSp, gia);
-            SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();
-            
-            PostgreConnection connectInst = PostgreConnection.getInstance();      
-            Connection connect = connectInst.getConnection();
-            
-            connect.setAutoCommit(false);
+            // insert sanpham
+            SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
+            SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();       
             int sanPhamID = sanPhamDAOIm.insertSanPham(newSanPham);
-//            SanPham lastSanPham = sanPhamDAOIm.getLastSanPham();
-            SanPham lastSanPham = sanPhamDAOIm.getSanPhamByID(sanPhamID);
-            SanPhamTrongKho sanPhamVaoKho = 
-            Object item = cbKho.getSelectedItem();
-            String maKho = ((ComboItem)item).getValue();
-            lbTestValue.setText(sanPhamVaoKho.getTen());
-            SanPham sanPham = new SanPham();
             
-            connect.commit();
+            // insert nha cung cap
+            CuaHangNhaCC nhaCC = new CuaHangNhaCC();
+            nhaCC.setTen(txt_nhacc.getText());
+            nhaCC.setDiaChi(null);
+            nhaCC.setSoDT(null);
+            
+            NhaCCDAOImpl nhaCCDAOImp = new NhaCCDAOImpl();
+            int nhaCCID = nhaCCDAOImp.insertNhaCC(nhaCC);
+            // insert san pham trong kho
+            newSanPham.setSanPhamID(sanPhamID);
+            SanPhamTrongKho sptk = (SanPhamTrongKho)newSanPham;
+            
+            Object item = cbKho.getSelectedItem();
+            int khoID = Integer.parseInt(((ComboItem)item).getValue());            
+            int soLuongTon = Integer.parseInt(txtSoluong.getText());
+            sptk.setSanPhamID(sanPhamID);
+            sptk.setKhoID(khoID);
+            sptk.setSoLuongTon(soLuongTon);         
+            sptk.setNgayNhap(null);
+            sptk.setNgayXuat(null);
+            sptk.setNhaCCID(nhaCCID);
+            SanPhamTrongKhoDAOImpl sptkDAOImp = new SanPhamTrongKhoDAOImpl();
+            sptkDAOImp.insertSanPhamTrongKho(sptk);
+            
+
+            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
         } catch (SQLException ex) {
-            Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btSaveActionPerformed
 
@@ -293,13 +305,13 @@ public class F_AddProduct extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(F_AddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(F_AddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(F_AddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(F_AddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -307,9 +319,9 @@ public class F_AddProduct extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new F_AddProduct().setVisible(true);
+                    new FrameAddProduct().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(F_AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }

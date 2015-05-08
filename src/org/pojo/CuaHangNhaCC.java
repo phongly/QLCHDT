@@ -9,6 +9,7 @@ package org.pojo;
 /**
  *
  * @author ly.phong
+ * Vì cửa hàng và nhà cung cấp có chung thuộc tính nên sẽ dùng chung class này
  */
 public class CuaHangNhaCC {
     private int cuaHangID;
@@ -48,6 +49,14 @@ public class CuaHangNhaCC {
         this.soDT = soDT;
         this.loai = loai;
     }
+
+    public CuaHangNhaCC(String ten, String diaChi, String soDT, String loai) {
+        this.ten = ten;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.loai = loai;
+    }
+    
     
     public int getCuaHangID() {
         return cuaHangID;
