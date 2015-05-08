@@ -58,8 +58,6 @@ public class FrameAddProduct extends javax.swing.JFrame {
         txt_nhacc = new javax.swing.JTextField();
         btReset = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        lbTestValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,10 +110,6 @@ public class FrameAddProduct extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("test:");
-
-        lbTestValue.setText("jLabel10");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,11 +153,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbTestValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSave)))
@@ -207,9 +197,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btReset)
-                    .addComponent(btSave)
-                    .addComponent(jLabel9)
-                    .addComponent(lbTestValue))
+                    .addComponent(btSave))
                 .addGap(30, 30, 30))
         );
 
@@ -269,10 +257,9 @@ public class FrameAddProduct extends javax.swing.JFrame {
             sptk.setNgayXuat(null);
             sptk.setNhaCCID(nhaCCID);
             SanPhamTrongKhoDAOImpl sptkDAOImp = new SanPhamTrongKhoDAOImpl();
-            sptkDAOImp.insertSanPhamTrongKho(sptk);
-            
+            sptkDAOImp.insertSanPhamTrongKho(sptk);            
 
-            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
+//            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
         } catch (SQLException ex) {
             Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -340,8 +327,6 @@ public class FrameAddProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel lbTestValue;
     private javax.swing.JTextField txtDongia;
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtNhanvien;
