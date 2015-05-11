@@ -240,6 +240,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
         NhaCCDAOImpl nhaCCImpl = new NhaCCDAOImpl();
         List<HethongCuaHangNhaCC> nhaCCs = nhaCCImpl.getAllNhaCC();
         String maCuaHang;
+//        cbNhaCC.addi
         for (HethongCuaHangNhaCC cuaHang : nhaCCs) {
             maCuaHang = String.valueOf(cuaHang.getCuaHangID());           
             cbNhaCC.addItem(new ComboItem(cuaHang.getTen(), maCuaHang));

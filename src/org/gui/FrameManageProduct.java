@@ -5,7 +5,19 @@
  */
 
 package org.gui;
-
+import java.sql.SQLException;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import org.dao.api.*;
+import org.dao.impl.*;
+import org.dao.util.ComboItem;
+import org.dao.util.Row;
+import org.pojo.*;
 /**
  *
  * @author ly.phong
@@ -15,8 +27,10 @@ public class FrameManageProduct extends javax.swing.JFrame {
     /**
      * Creates new form FrameManageProduct
      */
-    public FrameManageProduct() {
+    public FrameManageProduct() throws SQLException {
         initComponents();
+        initComboBoxKho();
+        loadTableSanPham(1);
     }
 
     /**
@@ -40,16 +54,17 @@ public class FrameManageProduct extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        cbKho = new javax.swing.JComboBox();
+        cbHeThongKho = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btDelete = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        lblTest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,10 +87,9 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
         jLabel9.setText("Store:");
 
-        cbKho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "System", "store 1", "...", " " }));
-        cbKho.addActionListener(new java.awt.event.ActionListener() {
+        cbHeThongKho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbKhoActionPerformed(evt);
+                cbHeThongKhoActionPerformed(evt);
             }
         });
 
@@ -93,7 +107,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
                         .addGap(64, 64, 64)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbHeThongKho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -121,7 +135,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbHeThongKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -144,7 +158,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Price", "Quantity"
+                "ID", "Name", "Price", "Quantity"
             }
         ));
         jScrollPane1.setViewportView(tblSanPham);
@@ -153,7 +167,12 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
         jButton3.setText("Edit");
 
-        jButton4.setText("Delete");
+        btDelete.setText("Delete");
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Advance Info");
 
@@ -163,48 +182,54 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
         jLabel8.setText("2...");
 
+        lblTest.setText("test");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(226, 226, 226))
             .addGroup(layout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel8))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jButton1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTest)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(226, 226, 226))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
+                        .addContainerGap(93, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTest))
                 .addGap(37, 37, 37)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(btDelete)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,12 +244,56 @@ public class FrameManageProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbKhoActionPerformed
+    private void cbHeThongKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHeThongKhoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbKhoActionPerformed
+    }//GEN-LAST:event_cbHeThongKhoActionPerformed
 
-    private void initTableSanPham() {
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        try {
+            // TODO add your handling code here:
+            int selectedRowInd = tblSanPham.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+            
+            String id = model.getValueAt(selectedRowInd, 0).toString();
+            int spID = Integer.parseInt(id);
+            SanPhamTrongKhoDAOImpl sptk = new SanPhamTrongKhoDAOImpl();
+            sptk.deleteSanPhamTrongKho(spID);
+            SanPhamDAOImpl sp = new SanPhamDAOImpl();
+            sp.deleteSanPham(spID);
+//        int spID = Integer.parseInt(model.getValueAt(selectedRowInd, 0));
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+    }//GEN-LAST:event_btDeleteActionPerformed
+
+    private void loadTableSanPham(int loai) throws SQLException {
+        Object item = cbHeThongKho.getSelectedItem();
+        int cuaHangHeThongID = Integer.parseInt(((ComboItem)item).getValue());
+        HethongCuaHangNhaCC cuaHang = new HeThongCuaHangNhaCCDAOImpl().getKhoByID(cuaHangHeThongID);
+//        int loai = cuaHang.getCuaHangID();
+        List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByLoaiCuaHang(loai);
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        List<Row> newRows = new ArrayList<Row>();
+//        String test = "";
+        for (SanPhamToDisplay sanPhamToDisplay : sanPhamToDisPlays) {
+            Object[] values = {sanPhamToDisplay.getSanPhamID(), sanPhamToDisplay.getTen(), sanPhamToDisplay.getDonGia(), sanPhamToDisplay.getSoLuongTon()};
+            model.addRow(values);
+        }
+        
+    }
+    
+    private void initComboBoxKho() throws SQLException {
+//        NhaCCDAOImpl nhaCCImpl = new NhaCCDAOImpl();
+        HethongCuaHangNhaCC heThong = new HeThongDAOImpl().getHeThong();
+        cbHeThongKho.addItem(new ComboItem(heThong.getTen(), String.valueOf(heThong.getCuaHangID())));
+        
+        List<HethongCuaHangNhaCC> Khos = new CuaHangDAOImpl().getAllCuaHang();
+        String maKho;
+        for (HethongCuaHangNhaCC Kho : Khos) {
+            maKho = String.valueOf(Kho.getCuaHangID());           
+            cbHeThongKho.addItem(new ComboItem(Kho.getTen(), maKho));
+        }
     }
     /**
      * @param args the command line arguments
@@ -256,17 +325,21 @@ public class FrameManageProduct extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameManageProduct().setVisible(true);
+                try {
+                    new FrameManageProduct().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbKho;
+    private javax.swing.JButton btDelete;
+    private javax.swing.JComboBox cbHeThongKho;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -283,6 +356,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblTest;
     private javax.swing.JTable tblSanPham;
     // End of variables declaration//GEN-END:variables
 }

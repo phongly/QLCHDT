@@ -14,6 +14,7 @@ import java.sql.Date;
 public class SanPhamToDisplay extends SanPhamTrongKho{
     private String tenKho;
     private String nhaCC;
+//    private String tenSP;
     public SanPhamToDisplay() {
     }
 

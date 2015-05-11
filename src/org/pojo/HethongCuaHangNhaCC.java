@@ -16,7 +16,7 @@ public class HethongCuaHangNhaCC {
     private String ten;
     private String diaChi;
     private String soDT;
-    private String loai;
+    private int loai;
     public HethongCuaHangNhaCC() {
     }
 
@@ -42,7 +42,7 @@ public class HethongCuaHangNhaCC {
         this.soDT = soDT;
     }
 
-    public HethongCuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT, String loai) {
+    public HethongCuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT, int loai) {
         this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
@@ -50,7 +50,7 @@ public class HethongCuaHangNhaCC {
         this.loai = loai;
     }
 
-    public HethongCuaHangNhaCC(String ten, String diaChi, String soDT, String loai) {
+    public HethongCuaHangNhaCC(String ten, String diaChi, String soDT, int loai) {
         this.ten = ten;
         this.diaChi = diaChi;
         this.soDT = soDT;
@@ -90,11 +90,11 @@ public class HethongCuaHangNhaCC {
         this.soDT = soDT;
     }
 
-    public String getLoai() {
+    public int getLoai() {
         return loai;
     }
 
-    public void setLoai(String loai) {
+    public void setLoai(int loai) {
         this.loai = loai;
     }
 

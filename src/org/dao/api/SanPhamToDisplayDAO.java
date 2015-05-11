@@ -13,5 +13,6 @@ import org.pojo.SanPhamToDisplay;
  * @author Chan
  */
 public interface SanPhamToDisplayDAO{
-    public List<SanPhamToDisplay> getAllSanPhamToDisaPlay() throws SQLException;
+    public List<SanPhamToDisplay> getAllSanPhamToDisPlay() throws SQLException;
+    public List<SanPhamToDisplay> getAllSanPhamToDisPlayByLoaiCuaHang(int loai) throws SQLException;
 }

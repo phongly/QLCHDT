@@ -27,7 +27,7 @@ public class CuaHangDAOImpl implements CuaHangDAO{
         String ten = rs.getString("ten");
         String diaChi = rs.getString("dia_chi");
         String soDT = rs.getString("so_dt");
-        String loaiCuaHang = rs.getString("loai");
+        int loaiCuaHang = rs.getInt("loai");
         HethongCuaHangNhaCC cuaHang = new HethongCuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT, loaiCuaHang);
         return cuaHang;
     }
