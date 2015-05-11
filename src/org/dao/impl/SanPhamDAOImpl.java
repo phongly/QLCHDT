@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dao.api.SanPhamDAO;
 import org.dao.util.PostgreConnection;
-import org.pojo.CuaHangNhaCC;
+import org.pojo.HethongCuaHangNhaCC;
 import org.pojo.SanPham;
 /**
  *

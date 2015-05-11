@@ -9,6 +9,7 @@ package org.dao.api;
 import java.sql.SQLException;
 import java.util.List;
 import org.pojo.SanPhamTrongKho;
+import org.pojo.SanPhamToDisplay;
 /**
  *
  * @author ly.phong
@@ -21,5 +22,6 @@ public interface SanPhamTrongKhoDAO {
     public void deleteSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
     public void deleteSanPhamTrongKho(int id) throws SQLException;
     public int insertSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
-    public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;    
+    public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException;
+    
 }

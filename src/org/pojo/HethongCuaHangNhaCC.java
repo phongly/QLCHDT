@@ -11,38 +11,38 @@ package org.pojo;
  * @author ly.phong
  * Vì cửa hàng và nhà cung cấp có chung thuộc tính nên sẽ dùng chung class này
  */
-public class CuaHangNhaCC {
+public class HethongCuaHangNhaCC {
     private int cuaHangID;
     private String ten;
     private String diaChi;
     private String soDT;
     private String loai;
-    public CuaHangNhaCC() {
+    public HethongCuaHangNhaCC() {
     }
 
-    public CuaHangNhaCC(int cuaHangID) {
+    public HethongCuaHangNhaCC(int cuaHangID) {
         this.cuaHangID = cuaHangID;
     }
    
-    public CuaHangNhaCC(int cuaHangID, String ten) {
+    public HethongCuaHangNhaCC(int cuaHangID, String ten) {
         this.cuaHangID = cuaHangID;
         this.ten = ten;
     }
 
-    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi) {
+    public HethongCuaHangNhaCC(int cuaHangID, String ten, String diaChi) {
         this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
     }
 
-    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT) {
+    public HethongCuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT) {
         this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
         this.soDT = soDT;
     }
 
-    public CuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT, String loai) {
+    public HethongCuaHangNhaCC(int cuaHangID, String ten, String diaChi, String soDT, String loai) {
         this.cuaHangID = cuaHangID;
         this.ten = ten;
         this.diaChi = diaChi;
@@ -50,7 +50,7 @@ public class CuaHangNhaCC {
         this.loai = loai;
     }
 
-    public CuaHangNhaCC(String ten, String diaChi, String soDT, String loai) {
+    public HethongCuaHangNhaCC(String ten, String diaChi, String soDT, String loai) {
         this.ten = ten;
         this.diaChi = diaChi;
         this.soDT = soDT;

@@ -8,17 +8,17 @@ package org.dao.api;
 
 import java.sql.SQLException;
 import java.util.List;
-import org.pojo.CuaHangNhaCC;
+import org.pojo.HethongCuaHangNhaCC;
 
 /**
  *
  * @author ly.phong
  */
 public interface NhaCCDAO {
-    public List<CuaHangNhaCC> getAllNhaCC() throws SQLException;
-    public CuaHangNhaCC getNhaCCByID(int id) throws SQLException;
-    public void deleteNhaCC(CuaHangNhaCC nhaCC) throws SQLException;
+    public List<HethongCuaHangNhaCC> getAllNhaCC() throws SQLException;
+    public HethongCuaHangNhaCC getNhaCCByID(int id) throws SQLException;
+    public void deleteNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException;
     public void deleteNhaCC(int id) throws SQLException;
-    public int insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException;
-    public void updateNhaCC(CuaHangNhaCC nhaCC) throws SQLException;    
+    public int insertNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException;
+    public void updateNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException;    
 }

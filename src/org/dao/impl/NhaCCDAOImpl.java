@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dao.api.NhaCCDAO;
 import org.dao.util.PostgreConnection;
-import org.pojo.CuaHangNhaCC;
+import org.pojo.HethongCuaHangNhaCC;
 
 /**
  *
@@ -24,20 +24,20 @@ public class NhaCCDAOImpl implements NhaCCDAO{
     
     private int loai = 3; // loai nha cung cap la` 3
 
-    private CuaHangNhaCC convert(ResultSet rs) throws SQLException {
+    private HethongCuaHangNhaCC convert(ResultSet rs) throws SQLException {
         int cuaHangNhaCCID = rs.getInt("id");
         String ten = rs.getString("ten");
         String diaChi = rs.getString("dia_chi");
         String soDT = rs.getString("so_dt");
         
-        CuaHangNhaCC nhaCC = new CuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT);
+        HethongCuaHangNhaCC nhaCC = new HethongCuaHangNhaCC(cuaHangNhaCCID, ten, diaChi, soDT);
         return nhaCC;
     }
     @Override
-    public List<CuaHangNhaCC> getAllNhaCC() throws SQLException {
+    public List<HethongCuaHangNhaCC> getAllNhaCC() throws SQLException {
         Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
-        List<CuaHangNhaCC> list = new ArrayList<>();
-        String sql = "SELECT * FROM cuahang_hethong WHERE loai="+this.loai;
+        List<HethongCuaHangNhaCC> list = new ArrayList<>();
+        String sql = "SELECT * FROM cuahang_hethong_nhacc WHERE loai="+this.loai;
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()) {
             list.add(convert(rs));
@@ -48,12 +48,12 @@ public class NhaCCDAOImpl implements NhaCCDAO{
     }
 
     @Override
-    public CuaHangNhaCC getNhaCCByID(int id) throws SQLException {
+    public HethongCuaHangNhaCC getNhaCCByID(int id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void deleteNhaCC(CuaHangNhaCC nhaCC) throws SQLException {
+    public void deleteNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -63,7 +63,7 @@ public class NhaCCDAOImpl implements NhaCCDAO{
     }
 
     @Override
-    public int insertNhaCC(CuaHangNhaCC nhaCC) throws SQLException {
+    public int insertNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException {
         String sql = "INSERT INTO cuahang_hethong_nhacc(ten, dia_chi, so_dt, loai) values (?,?,?,?)";
 //        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -82,7 +82,7 @@ public class NhaCCDAOImpl implements NhaCCDAO{
     }
 
     @Override
-    public void updateNhaCC(CuaHangNhaCC nhaCC) throws SQLException {
+    public void updateNhaCC(HethongCuaHangNhaCC nhaCC) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

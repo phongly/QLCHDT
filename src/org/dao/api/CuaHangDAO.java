@@ -8,16 +8,16 @@ package org.dao.api;
 
 import java.sql.SQLException;
 import java.util.List;
-import org.pojo.CuaHangNhaCC;
+import org.pojo.HethongCuaHangNhaCC;
 /**
  *
  * @author ly.phong
  */
 public interface CuaHangDAO {
-    public List<CuaHangNhaCC> getAllCuaHang() throws SQLException;
-    public CuaHangNhaCC getCuaHangByID(int id) throws SQLException;
-    public void deleteCuaHang(CuaHangNhaCC cuaHang) throws SQLException;
+    public List<HethongCuaHangNhaCC> getAllCuaHang() throws SQLException;
+    public HethongCuaHangNhaCC getCuaHangByID(int id) throws SQLException;
+    public void deleteCuaHang(HethongCuaHangNhaCC cuaHang) throws SQLException;
     public void deleteCuaHang(int id) throws SQLException;
-    public void insertCuaHang(CuaHangNhaCC cuaHang) throws SQLException;
-    public void updateCuaHang(CuaHangNhaCC cuaHang) throws SQLException;
+    public void insertCuaHang(HethongCuaHangNhaCC cuaHang) throws SQLException;
+    public void updateCuaHang(HethongCuaHangNhaCC cuaHang) throws SQLException;
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import org.dao.api.SanPhamTrongKhoDAO;
 import org.dao.util.PostgreConnection;
 import org.pojo.SanPham;
+import org.pojo.SanPhamToDisplay;
 import org.pojo.SanPhamTrongKho;
 /**
  *
@@ -45,7 +46,7 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
         }
         rs.close();
         statement.close();
-        return list;           
+        return list;         
     }
 
     @Override
@@ -100,5 +101,7 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
     public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
 }
