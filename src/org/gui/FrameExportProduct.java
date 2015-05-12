@@ -22,14 +22,14 @@ import org.pojo.*;
  *
  * @author Chan
  */
-public class FrameAddProduct extends javax.swing.JFrame {
+public class FrameExportProduct extends javax.swing.JFrame {
 
     /**
      * Creates new form F_AddProduct
      */
-    public FrameAddProduct() throws SQLException {
+    public FrameExportProduct() throws SQLException {
         initComponents();
-        initComboBoxNhaCC();
+        initComboBoxKho();
     }
 
     /**
@@ -52,15 +52,15 @@ public class FrameAddProduct extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtSoluong = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        cbNhaCC = new javax.swing.JComboBox();
+        cbKho = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         btReset = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("Add Product");
+        jLabel1.setText("Export Product");
 
         jLabel2.setText("Staff:");
 
@@ -78,13 +78,13 @@ public class FrameAddProduct extends javax.swing.JFrame {
 
         jLabel6.setText("Quantity:");
 
-        cbNhaCC.addActionListener(new java.awt.event.ActionListener() {
+        cbKho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbNhaCCActionPerformed(evt);
+                cbKhoActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Provider:");
+        jLabel8.setText("For Store:");
 
         btReset.setText("Reset");
         btReset.addActionListener(new java.awt.event.ActionListener() {
@@ -115,35 +115,35 @@ public class FrameAddProduct extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(77, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(72, 72, 72)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel8)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(74, 74, 74)
-                                        .addComponent(cbNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5))
-                                .addGap(2, 2, 2))
+                                .addGap(72, 72, 72)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11)))))
+                                .addGap(74, 74, 74)
+                                .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addGap(2, 2, 2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btReset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSave)
-                .addGap(77, 77, 77))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btReset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btSave)
+                        .addGap(77, 77, 77))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(140, 140, 140))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +171,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel8)
                 .addGap(4, 4, 4)
-                .addComponent(cbNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btReset)
@@ -186,9 +186,9 @@ public class FrameAddProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNhanvienActionPerformed
 
-    private void cbNhaCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNhaCCActionPerformed
+    private void cbKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbKhoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbNhaCCActionPerformed
+    }//GEN-LAST:event_cbKhoActionPerformed
 
     private void btResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResetActionPerformed
         // TODO add your handling code here:
@@ -202,7 +202,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
             try {
                 gia = NumberFormat.getInstance().parse(txtDongia.getText());
             } catch (ParseException ex) {
-                Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
             }
             // insert sanpham
             SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
@@ -215,7 +215,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
             newSanPham.setSanPhamID(sanPhamID);
             SanPhamTrongKho sptk = (SanPhamTrongKho)newSanPham;
             
-            Object item = cbNhaCC.getSelectedItem();
+            Object item = cbKho.getSelectedItem();
             int nhaCCID = Integer.parseInt(((ComboItem)item).getValue());            
             int soLuongTon = Integer.parseInt(txtSoluong.getText());
             sptk.setSanPhamID(sanPhamID);
@@ -229,21 +229,21 @@ public class FrameAddProduct extends javax.swing.JFrame {
 
 //            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
         } catch (SQLException ex) {
-            Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btSaveActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public void initComboBoxNhaCC() throws SQLException {
-        NhaCCDAOImpl nhaCCImpl = new NhaCCDAOImpl();
-        List<HethongCuaHangNhaCC> nhaCCs = nhaCCImpl.getAllNhaCC();
+    public void initComboBoxKho() throws SQLException {
+        CuaHangDAOImpl cuaHangImpl = new CuaHangDAOImpl();
+        List<HethongCuaHangNhaCC> cuaHangs = cuaHangImpl.getAllCuaHang();
         String maCuaHang;
 //        cbNhaCC.addi
-        for (HethongCuaHangNhaCC cuaHang : nhaCCs) {
+        for (HethongCuaHangNhaCC cuaHang : cuaHangs) {
             maCuaHang = String.valueOf(cuaHang.getCuaHangID());           
-            cbNhaCC.addItem(new ComboItem(cuaHang.getTen(), maCuaHang));
+            cbKho.addItem(new ComboItem(cuaHang.getTen(), maCuaHang));
         }
                
     }
@@ -261,13 +261,13 @@ public class FrameAddProduct extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameExportProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameExportProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameExportProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameAddProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameExportProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -275,9 +275,9 @@ public class FrameAddProduct extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new FrameAddProduct().setVisible(true);
+                    new FrameExportProduct().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(FrameAddProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
@@ -287,7 +287,7 @@ public class FrameAddProduct extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btReset;
     private javax.swing.JButton btSave;
-    private javax.swing.JComboBox cbNhaCC;
+    private javax.swing.JComboBox cbKho;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 public class SanPhamToDisplay extends SanPhamTrongKho{
     private String tenKho;
-    private String nhaCC;
+    private String tenNhaCC;
 //    private String tenSP;
     public SanPhamToDisplay() {
     }
@@ -21,6 +21,7 @@ public class SanPhamToDisplay extends SanPhamTrongKho{
     public SanPhamToDisplay(int sanPhamID, int sanPhamTrongKhoID, int KhoID, int nhaCCID, int soLuongTon, String tenKho, String tenNhaCC, Date ngayNhap, Date ngayXuat) {
         super(sanPhamTrongKhoID, KhoID, nhaCCID, soLuongTon, ngayNhap, ngayXuat, sanPhamID);
         this.tenKho = tenKho;
+        this.tenNhaCC = tenNhaCC;
     }
 
     public String getTenKho() {
@@ -30,5 +31,15 @@ public class SanPhamToDisplay extends SanPhamTrongKho{
     public void setTenKho(String tenKho) {
         this.tenKho = tenKho;
     }
+
+    public String getTenNhaCC() {
+        return tenNhaCC;
+    }
+
+    public void setTenNhaCC(String tenNhaCC) {
+        this.tenNhaCC = tenNhaCC;
+    }
+
+    
     
 }

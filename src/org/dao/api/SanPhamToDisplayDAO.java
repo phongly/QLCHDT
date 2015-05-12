@@ -15,4 +15,5 @@ import org.pojo.SanPhamToDisplay;
 public interface SanPhamToDisplayDAO{
     public List<SanPhamToDisplay> getAllSanPhamToDisPlay() throws SQLException;
     public List<SanPhamToDisplay> getAllSanPhamToDisPlayByLoaiCuaHang(int loai) throws SQLException;
+    public List<SanPhamToDisplay> getAllSanPhamToDisPlayByCuaHangID(int id) throws SQLException;
 }

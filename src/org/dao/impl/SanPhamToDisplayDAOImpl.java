@@ -65,7 +65,7 @@ public class SanPhamToDisplayDAOImpl implements SanPhamToDisplayDAO{
 
     @Override
     public List<SanPhamToDisplay> getAllSanPhamToDisPlayByLoaiCuaHang(int loai) throws SQLException {
-      Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
         List<SanPhamToDisplay> list = new ArrayList<>();
         String sql = " SELECT sp.id AS id_sp, sp.ten AS tensp, sptk.so_luong_ton AS soluongton, sp.don_gia AS dongia,\n" +
                         "	sptk.ngay_xuat AS ngayxuat, sptk.ngay_nhap AS ngaynhap, sptk.id, sptk.nhacc_id,\n" +
@@ -77,6 +77,29 @@ public class SanPhamToDisplayDAOImpl implements SanPhamToDisplayDAO{
                         "  ON sptk.nhacc_id = nhacc.id \n" +
                         "  INNER JOIN cuahang_hethong_nhacc AS kho\n" +
                         "  ON sptk.id_kho = kho.id AND kho.loai="+loai;
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            list.add(convert(rs));
+        }
+        rs.close();
+        statement.close();
+        return list;
+    }
+
+    @Override
+    public List<SanPhamToDisplay> getAllSanPhamToDisPlayByCuaHangID(int id) throws SQLException {
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        List<SanPhamToDisplay> list = new ArrayList<>();
+        String sql =    " SELECT sp.id AS id_sp, sp.ten AS tensp, sptk.so_luong_ton AS soluongton, sp.don_gia AS dongia,\n" +
+                        "	sptk.ngay_xuat AS ngayxuat, sptk.ngay_nhap AS ngaynhap, sptk.id, sptk.nhacc_id,\n" +
+                        "	nhacc.ten AS tennhacungcap, kho.ten AS tencuahang, sptk.id_kho\n" +
+                        "  FROM sanpham_trong_kho AS sptk\n" +
+                        "  INNER JOIN sanpham AS sp\n" +
+                        "  ON sptk.id_sp = sp.id\n" +
+                        "  INNER JOIN cuahang_hethong_nhacc AS nhacc\n" +
+                        "  ON sptk.nhacc_id = nhacc.id\n" +
+                        "  INNER JOIN cuahang_hethong_nhacc AS kho\n" +
+                        "  ON sptk.id_kho = kho.id AND kho.id="+id;
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()) {
             list.add(convert(rs));

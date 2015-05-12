@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.dao.api.*;
 import org.dao.impl.*;
 import org.dao.util.ComboItem;
-import org.dao.util.Row;
+import org.dao.util.*;
 import org.pojo.*;
 /**
  *
@@ -52,21 +53,21 @@ public class FrameManageProduct extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btApply = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         cbHeThongKho = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btAdd = new javax.swing.JButton();
+        btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btInfo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lblTest = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("Manage Product");
@@ -83,7 +84,12 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
         jLabel5.setText("To:");
 
-        jButton2.setText("Apply");
+        btApply.setText("Apply");
+        btApply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btApplyActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Store:");
 
@@ -99,7 +105,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btApply)
                 .addGap(49, 49, 49))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +156,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2))
+                .addComponent(btApply))
         );
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
@@ -158,14 +164,24 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Price", "Quantity"
+                "ID", "Name", "Price", "Quantity", "Providers"
             }
         ));
         jScrollPane1.setViewportView(tblSanPham);
 
-        jButton1.setText("Add");
+        btAdd.setText("Add");
+        btAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Edit");
+        btEdit.setText("Edit");
+        btEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditActionPerformed(evt);
+            }
+        });
 
         btDelete.setText("Delete");
         btDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -174,15 +190,13 @@ public class FrameManageProduct extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Advance Info");
+        btInfo.setText("Advance Info");
 
         jLabel6.setText("Page");
 
         jLabel7.setText("1");
 
         jLabel8.setText("2...");
-
-        lblTest.setText("test");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -206,13 +220,13 @@ public class FrameManageProduct extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btAdd)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
+                                .addComponent(btEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5))
+                                .addComponent(btInfo))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
                         .addContainerGap(93, Short.MAX_VALUE))))
         );
@@ -227,10 +241,10 @@ public class FrameManageProduct extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
+                    .addComponent(btAdd)
+                    .addComponent(btEdit)
                     .addComponent(btDelete)
-                    .addComponent(jButton5))
+                    .addComponent(btInfo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,8 +272,8 @@ public class FrameManageProduct extends javax.swing.JFrame {
             int spID = Integer.parseInt(id);
             SanPhamTrongKhoDAOImpl sptk = new SanPhamTrongKhoDAOImpl();
             sptk.deleteSanPhamTrongKho(spID);
-            SanPhamDAOImpl sp = new SanPhamDAOImpl();
-            sp.deleteSanPham(spID);
+//            SanPhamDAOImpl sp = new SanPhamDAOImpl();
+//            sp.deleteSanPham(spID);
 //        int spID = Integer.parseInt(model.getValueAt(selectedRowInd, 0));
         } catch (SQLException ex) {
             Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,20 +281,46 @@ public class FrameManageProduct extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btDeleteActionPerformed
 
-    private void loadTableSanPham(int loai) throws SQLException {
-        Object item = cbHeThongKho.getSelectedItem();
-        int cuaHangHeThongID = Integer.parseInt(((ComboItem)item).getValue());
-        HethongCuaHangNhaCC cuaHang = new HeThongCuaHangNhaCCDAOImpl().getKhoByID(cuaHangHeThongID);
-//        int loai = cuaHang.getCuaHangID();
-        List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByLoaiCuaHang(loai);
-        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
-        List<Row> newRows = new ArrayList<Row>();
-//        String test = "";
-        for (SanPhamToDisplay sanPhamToDisplay : sanPhamToDisPlays) {
-            Object[] values = {sanPhamToDisplay.getSanPhamID(), sanPhamToDisplay.getTen(), sanPhamToDisplay.getDonGia(), sanPhamToDisplay.getSoLuongTon()};
-            model.addRow(values);
+    private void btApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApplyActionPerformed
+        try {
+            // TODO add your handling code here:
+            Object item = cbHeThongKho.getSelectedItem();
+            int cuaHangHeThongID = Integer.parseInt(((ComboItem)item).getValue());
+            loadTableSanPham(cuaHangHeThongID);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }//GEN-LAST:event_btApplyActionPerformed
+
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+        try {
+            // TODO add your handling code here:
+            FrameImportProduct addProduct = new FrameImportProduct();
+            addProduct.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btAddActionPerformed
+
+    private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
+        // TODO add your handling code here:
+        FrameUpdateProduct updateProduct = new FrameUpdateProduct();
+        updateProduct.setVisible(true);
+    }//GEN-LAST:event_btEditActionPerformed
+
+    private void loadTableSanPham(int khoID) throws SQLException {
+        removeAllRows(tblSanPham);
+        List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByCuaHangID(khoID);
+//        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel(); 
+//        List<Row> newRows = new ArrayList<Row>();
+//        for (SanPhamToDisplay sanPhamToDisplay : sanPhamToDisPlays) {
+//            Object[] values = {sanPhamToDisplay.getSanPhamTrongKhoID(), sanPhamToDisplay.getTen(), sanPhamToDisplay.getDonGia(), sanPhamToDisplay.getSoLuongTon(), sanPhamToDisplay.getTenNhaCC()};
+//            model.addRow(values);
+//        }
+        SanPhamDisplayTableModel model = new SanPhamDisplayTableModel(sanPhamToDisPlays);
+        tblSanPham.setModel(model);
     }
     
     private void initComboBoxKho() throws SQLException {
@@ -293,6 +333,16 @@ public class FrameManageProduct extends javax.swing.JFrame {
         for (HethongCuaHangNhaCC Kho : Khos) {
             maKho = String.valueOf(Kho.getCuaHangID());           
             cbHeThongKho.addItem(new ComboItem(Kho.getTen(), maKho));
+        }
+    }
+    
+    private void removeAllRows(JTable table) {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        
+        int rowCount = dm.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
         }
     }
     /**
@@ -335,12 +385,12 @@ public class FrameManageProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAdd;
+    private javax.swing.JButton btApply;
     private javax.swing.JButton btDelete;
+    private javax.swing.JButton btEdit;
+    private javax.swing.JButton btInfo;
     private javax.swing.JComboBox cbHeThongKho;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
