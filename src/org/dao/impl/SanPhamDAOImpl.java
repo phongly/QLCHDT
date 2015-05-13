@@ -64,7 +64,9 @@ public class SanPhamDAOImpl implements SanPhamDAO{
     
     @Override
     public void deleteSanPham(SanPham sp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        String sql = "DELETE FROM sanpham WHERE id="+sp.getSanPhamID();
+        statement.executeUpdate(sql);
     }
 
     @Override

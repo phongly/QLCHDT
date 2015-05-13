@@ -68,13 +68,15 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
 
     @Override
     public void deleteSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        String sql = "DELETE FROM sanpham_trong_kho WHERE id="+sp.getSanPhamTrongKhoID();
+        statement.executeUpdate(sql);
     }
 
     @Override
     public void deleteSanPhamTrongKho(int id) throws SQLException {
         Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
-        String sql = "DELETE FROM sanpham_trong_kho WHERE id_sp="+id;
+        String sql = "DELETE FROM sanpham_trong_kho WHERE id="+id;
         statement.executeUpdate(sql);
     }
 

@@ -264,18 +264,17 @@ public class FrameManageProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_cbHeThongKhoActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+
         try {
             // TODO add your handling code here:
             int selectedRowInd = tblSanPham.getSelectedRow();
-            DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+            SanPhamToDisplay selectedSP = spModel.getSanPham(selectedRowInd);
+            SanPhamDAOImpl spDAO = new SanPhamDAOImpl();
+            SanPhamTrongKhoDAOImpl sptkDAO = new SanPhamTrongKhoDAOImpl();
             
-            String id = model.getValueAt(selectedRowInd, 0).toString();
-            int spID = Integer.parseInt(id);
-            SanPhamTrongKhoDAOImpl sptk = new SanPhamTrongKhoDAOImpl();
-            sptk.deleteSanPhamTrongKho(spID);
-//            SanPhamDAOImpl sp = new SanPhamDAOImpl();
-//            sp.deleteSanPham(spID);
-//        int spID = Integer.parseInt(model.getValueAt(selectedRowInd, 0));
+            spDAO.deleteSanPham(selectedSP);
+            sptkDAO.deleteSanPhamTrongKho(selectedSP);
+            spModel.removeSanPham(selectedRowInd);
         } catch (SQLException ex) {
             Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
