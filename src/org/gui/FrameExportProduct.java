@@ -5,6 +5,7 @@
  */
 package org.gui;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.Format;
@@ -198,12 +199,8 @@ public class FrameExportProduct extends javax.swing.JFrame {
         try {                                  
             // TODO add your handling code here:
             String tenSp = txtTenSP.getText();
-            Number gia = 0;
-            try {
-                gia = NumberFormat.getInstance().parse(txtDongia.getText());
-            } catch (ParseException ex) {
-                Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            double gia = Double.valueOf(txtDongia.getText()) ;
+
             // insert sanpham
             SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
             SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();       

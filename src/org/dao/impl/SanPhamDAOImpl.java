@@ -6,6 +6,7 @@
 
 package org.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +26,8 @@ public class SanPhamDAOImpl implements SanPhamDAO{
     private SanPham convert(ResultSet rs) throws SQLException {
         int sanPhamID = rs.getInt("id");
         String ten = rs.getString("ten");
-        String diaChi = rs.getString("don_gia");
-        SanPham sanPham = new SanPham(sanPhamID, ten, sanPhamID);
+        double donGia = rs.getDouble("don_gia");
+        SanPham sanPham = new SanPham(sanPhamID, ten, donGia);
         return sanPham;
     }
     
@@ -78,7 +79,7 @@ public class SanPhamDAOImpl implements SanPhamDAO{
         String sql = "INSERT INTO sanpham(ten, don_gia) values (?,?)";
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, sp.getTen());
-        ps.setInt(2, sp.getDonGia().intValue());
+        ps.setDouble(2, sp.getDonGia());
         int result = 0;
 
         ps.executeUpdate();
@@ -92,7 +93,14 @@ public class SanPhamDAOImpl implements SanPhamDAO{
 
     @Override
     public void updateSanPham(SanPham sp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = " UPDATE sanpham " +
+                     " SET ten=?, don_gia=? " +
+                     " WHERE id=?";
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        ps.setString(1, sp.getTen());
+        ps.setDouble(2, sp.getDonGia());
+        ps.setInt(3, sp.getSanPhamID());
+        ps.executeUpdate();
     }
     
 }

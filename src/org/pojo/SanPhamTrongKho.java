@@ -6,6 +6,7 @@
 
 package org.pojo;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -24,7 +25,7 @@ public class SanPhamTrongKho extends SanPham{
         super();
     }
 
-    public SanPhamTrongKho(String ten, Number donGia) {
+    public SanPhamTrongKho(String ten, double donGia) {
         super(ten, donGia);
     }
        

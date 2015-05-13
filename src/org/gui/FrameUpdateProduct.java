@@ -6,6 +6,11 @@
 
 package org.gui;
 
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.dao.impl.*;
 import org.pojo.*;
 /**
@@ -98,6 +103,11 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
         jButton1.setText("Add Advance Info");
 
         btSave.setText("Save");
+        btSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaveActionPerformed(evt);
+            }
+        });
 
         btCancel.setText("Cancel");
 
@@ -189,10 +199,29 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDonGiaActionPerformed
 
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        try {
+            // TODO add your handling code here:
+            sanPham.setSanPhamID(Integer.parseInt(txtSanPhamID.getText()));
+            sanPham.setTen(txtTenSP.getText());
+            sanPham.setDonGia(Double.valueOf(txtDonGia.getText()));
+            sanPham.setTenKho(txtTenKho.getText()) ;
+            sanPham.setSoLuongTon(Integer.parseInt(txtSoluong.getText()));
+            
+            SanPhamDAOImpl spDAO = new SanPhamDAOImpl();
+            SanPhamTrongKhoDAOImpl sptkDAO = new SanPhamTrongKhoDAOImpl();
+            
+            spDAO.updateSanPham(sanPham);
+            sptkDAO.updateSanPhamTrongKho(sanPham);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameUpdateProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btSaveActionPerformed
+
     private void initForm() {
         txtSanPhamID.setText(sanPham.getSanPhamID()+"");
         txtTenSP.setText(sanPham.getTen());
-        txtDonGia.setText(sanPham.getDonGia().toString());
+        txtDonGia.setText(sanPham.getDonGia()+"");
         txtTenKho.setText(sanPham.getTenKho());
         txtSoluong.setText(sanPham.getSoLuongTon()+"");
        
@@ -245,7 +274,7 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtDonGia;
-    public javax.swing.JTextField txtSanPhamID;
+    private javax.swing.JTextField txtSanPhamID;
     private javax.swing.JTextField txtSoluong;
     private javax.swing.JTextField txtTenKho;
     private javax.swing.JTextField txtTenSP;

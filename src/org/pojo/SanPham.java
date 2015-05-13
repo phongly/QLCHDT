@@ -5,6 +5,8 @@
  */
 package org.pojo;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Chan
@@ -12,7 +14,7 @@ package org.pojo;
 public class SanPham {
     private int sanPhamID;
     private String ten;
-    private Number donGia;
+    private double donGia;
 
     public SanPham() {
     }
@@ -26,13 +28,13 @@ public class SanPham {
         this.ten = ten;
     }
    
-    public SanPham(int sanPhamID, String ten, Number donGia) {
+    public SanPham(int sanPhamID, String ten, double donGia) {
         this.sanPhamID = sanPhamID;
         this.ten = ten;
         this.donGia = donGia;
     }
 
-    public SanPham(String ten, Number donGia) {
+    public SanPham(String ten, double donGia) {
         this.ten = ten;
         this.donGia = donGia;
     }
@@ -53,11 +55,11 @@ public class SanPham {
         this.ten = ten;
     }
 
-    public Number getDonGia() {
+    public double getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(Number donGia) {
+    public void setDonGia(double donGia) {
         this.donGia = donGia;
     }    
     

@@ -101,7 +101,20 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
 
     @Override
     public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = " UPDATE sanpham_trong_kho\n" +
+                    "  SET id_sp=?, id_kho=?, so_luong_ton=?, ngay_nhap=?, ngay_xuat=?," +
+                    "   nhacc_id=?" +
+                    "  WHERE id=?";
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        ps.setInt(1, sp.getSanPhamID());
+        ps.setInt(2, sp.getKhoID());
+        ps.setInt(3, sp.getSoLuongTon());
+        ps.setDate(4, sp.getNgayNhap());
+        ps.setDate(5, sp.getNgayXuat());
+        ps.setInt(6, sp.getNhaCCID());
+        ps.setInt(7, sp.getSanPhamTrongKhoID());
+        ps.executeUpdate();
+        
     }
 
 

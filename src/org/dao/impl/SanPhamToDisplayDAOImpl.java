@@ -5,6 +5,7 @@
  */
 package org.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;

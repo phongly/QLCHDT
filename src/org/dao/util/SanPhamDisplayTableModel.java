@@ -6,6 +6,7 @@
 
 package org.dao.util;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class SanPhamDisplayTableModel extends AbstractTableModel{
         {
             case 0:  sanPham.setSanPhamTrongKhoID((int)value);break;
             case 1:  sanPham.setTen((String)value); break;
-            case 2:  sanPham.setDonGia((Number)value); break;
+            case 2:  sanPham.setDonGia((double)value); break;
             case 3:  sanPham.setSoLuongTon((int)value); break;
             case 4:  sanPham.setTenNhaCC((String)value); break;
         }
