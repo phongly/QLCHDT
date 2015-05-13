@@ -14,10 +14,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.dao.api.*;
 import org.dao.impl.*;
-import org.dao.util.ComboItem;
 import org.dao.util.*;
+import org.dao.util.ComboItem;
 import org.pojo.*;
 /**
  *
@@ -310,17 +311,12 @@ public class FrameManageProduct extends javax.swing.JFrame {
         updateProduct.setVisible(true);
     }//GEN-LAST:event_btEditActionPerformed
 
-    private void loadTableSanPham(int khoID) throws SQLException {
-        removeAllRows(tblSanPham);
+    private void loadTableSanPham(int khoID) throws SQLException {               
+        removeAllRows(spModel);
         List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByCuaHangID(khoID);
-//        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel(); 
-//        List<Row> newRows = new ArrayList<Row>();
-//        for (SanPhamToDisplay sanPhamToDisplay : sanPhamToDisPlays) {
-//            Object[] values = {sanPhamToDisplay.getSanPhamTrongKhoID(), sanPhamToDisplay.getTen(), sanPhamToDisplay.getDonGia(), sanPhamToDisplay.getSoLuongTon(), sanPhamToDisplay.getTenNhaCC()};
-//            model.addRow(values);
-//        }
-        SanPhamDisplayTableModel model = new SanPhamDisplayTableModel(sanPhamToDisPlays);
-        tblSanPham.setModel(model);
+        spModel = new SanPhamDisplayTableModel(sanPhamToDisPlays);
+        
+        tblSanPham.setModel(spModel);
     }
     
     private void initComboBoxKho() throws SQLException {
@@ -336,13 +332,11 @@ public class FrameManageProduct extends javax.swing.JFrame {
         }
     }
     
-    private void removeAllRows(JTable table) {
-        DefaultTableModel dm = (DefaultTableModel) table.getModel();
-        
-        int rowCount = dm.getRowCount();
+    private void removeAllRows(SanPhamDisplayTableModel model) {        
+        int rowCount = model.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
-            dm.removeRow(i);
+            model.removeSanPham(i);
         }
     }
     /**
@@ -384,6 +378,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
         });
     }
 
+    private SanPhamDisplayTableModel spModel = new SanPhamDisplayTableModel();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btApply;

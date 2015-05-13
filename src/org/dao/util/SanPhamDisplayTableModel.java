@@ -59,7 +59,7 @@ public class SanPhamDisplayTableModel extends AbstractTableModel{
     {
         switch (column)
         {
-            case 2: return Date.class;
+            case 2: return Number.class;
             default: return String.class;
         }
     }
