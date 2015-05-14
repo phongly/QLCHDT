@@ -110,6 +110,11 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
         });
 
         btCancel.setText("Cancel");
+        btCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,6 +222,11 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
             Logger.getLogger(FrameUpdateProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btSaveActionPerformed
+
+    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btCancelActionPerformed
 
     private void initForm() {
         txtSanPhamID.setText(sanPham.getSanPhamID()+"");
