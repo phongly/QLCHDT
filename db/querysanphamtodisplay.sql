@@ -7,4 +7,4 @@
   INNER JOIN cuahang_hethong_nhacc AS nhacc
   ON sptk.nhacc_id = nhacc.id
   INNER JOIN cuahang_hethong_nhacc AS kho
-  ON sptk.id_kho = kho.id AND kho.id=1
+  ON sptk.id_kho = kho.id AND kho.id=2
