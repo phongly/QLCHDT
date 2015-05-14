@@ -59,7 +59,7 @@ public class ThongTinCaoCapTableModel extends AbstractTableModel{
     {
         switch (column)
         {
-            case 2: return Number.class;
+            case 0: return Integer.class;
             default: return String.class;
         }
     }

@@ -247,7 +247,7 @@ public class FrameAdvanceInfo extends javax.swing.JFrame {
         tfDescription.setText(thongTinCC.getMoTa());
         
         actionStatus = 1; // update enable
-        lblTest.setText(actionStatus+"");
+        lblTest.setText(actionStatus+" id:" + thongTinCC.getId());
     }//GEN-LAST:event_btUpdateActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
@@ -269,14 +269,18 @@ public class FrameAdvanceInfo extends javax.swing.JFrame {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         try {
-            // TODO add your handling code here:
-            thongTinCC = new ThongTinCaoCap(txtFeature.getText(), tfDescription.getText(), sanPham.getSanPhamID());
+            // TODO add your handling code here:      
             ThongTinCaoCapDAOImpl ttDaoImpl = new ThongTinCaoCapDAOImpl();
             if(actionStatus == 1) {
+                thongTinCC = new ThongTinCaoCap( thongTinCC.getId(), txtFeature.getText(), tfDescription.getText(), sanPham.getSanPhamID());
                 ttDaoImpl.updateThongTin(thongTinCC);
-                lblTest.setText("dang update " + thongTinCC.getTenThongTin() +" " + thongTinCC.getMoTa());
-            }else
+//                lblTest.setText("dang update " + thongTinCC.getTenThongTin() +" " + 
+//                        thongTinCC.getMoTa() + " " +  thongTinCC.getId());
+            }else {
+                thongTinCC = new ThongTinCaoCap( txtFeature.getText(), tfDescription.getText(), sanPham.getSanPhamID());
                 ttDaoImpl.insertThongTin(thongTinCC);
+            }
+            clear();
             loadTableThongtinCC();
             actionStatus = 0;
         } catch (SQLException ex) {
@@ -293,6 +297,10 @@ public class FrameAdvanceInfo extends javax.swing.JFrame {
     private void initForm() throws SQLException {
         loadTableThongtinCC();
         lblProductName.setText(this.sanPham.getTen());
+    }
+    private void clear() {
+        txtFeature.setText(null);
+        tfDescription.setText(null);
     }
     /**
      * @param args the command line arguments
