@@ -17,6 +17,7 @@ import org.pojo.*;
 public interface ThongTinCaoCapDAO {
     public List<ThongTinCaoCap> getAllThongTin() throws SQLException;
     public ThongTinCaoCap getThongTinByID(int id) throws SQLException;
+    public List<ThongTinCaoCap> getAllThongTinBySanPhamID(int id) throws SQLException;
     public void deleteThongTin(ThongTinCaoCap thongTin) throws SQLException;
     public void deleteThongTin(int id) throws SQLException;
     public int insertThongTin(ThongTinCaoCap thongTin) throws SQLException;

@@ -192,6 +192,11 @@ public class FrameManageProduct extends javax.swing.JFrame {
         });
 
         btInfo.setText("Advance Info");
+        btInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInfoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Page");
 
@@ -313,6 +318,18 @@ public class FrameManageProduct extends javax.swing.JFrame {
         updateProduct.setVisible(true);
     }//GEN-LAST:event_btEditActionPerformed
 
+    private void btInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfoActionPerformed
+        try {
+            // TODO add your handling code here:
+            int selectedRowInd = tblSanPham.getSelectedRow();
+            SanPhamToDisplay selectedSP = spModel.getSanPham(selectedRowInd);
+            FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo(selectedSP);
+            advanceInfo.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btInfoActionPerformed
+
     private void loadTableSanPham(int khoID) throws SQLException {               
         removeAllRows(spModel);
         List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByCuaHangID(khoID);
@@ -381,6 +398,7 @@ public class FrameManageProduct extends javax.swing.JFrame {
     }
 
     private SanPhamDisplayTableModel spModel = new SanPhamDisplayTableModel();
+    private ThongTinCaoCap ttCC;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btApply;

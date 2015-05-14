@@ -23,6 +23,12 @@ public class ThongTinCaoCap {
         this.sanPhamID = sanPhamID;
     }
 
+    public ThongTinCaoCap( String tenThongTin, String moTa, int sanPhamID) {
+        this.tenThongTin = tenThongTin;
+        this.moTa = moTa;
+        this.sanPhamID = sanPhamID;
+    }
+    
     public int getId() {
         return id;
     }
