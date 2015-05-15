@@ -53,7 +53,7 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
         txtSoluong = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtDonGia = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btInfo = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
         btCancel = new javax.swing.JButton();
 
@@ -100,7 +100,12 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Add Advance Info");
+        btInfo.setText("Add Advance Info");
+        btInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInfoActionPerformed(evt);
+            }
+        });
 
         btSave.setText("Save");
         btSave.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +134,7 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
-                                .addComponent(jButton1)
+                                .addComponent(btInfo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,7 +190,7 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btSave)
                     .addComponent(btCancel)
-                    .addComponent(jButton1))
+                    .addComponent(btInfo))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
@@ -227,6 +232,16 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btCancelActionPerformed
+
+    private void btInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfoActionPerformed
+        try {
+            // TODO add your handling code here:
+            FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo(sanPham);
+            advanceInfo.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameUpdateProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btInfoActionPerformed
 
     private void initForm() {
         txtSanPhamID.setText(sanPham.getSanPhamID()+"");
@@ -275,8 +290,8 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
     private SanPhamToDisplay sanPham = new SanPhamToDisplay();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
+    private javax.swing.JButton btInfo;
     private javax.swing.JButton btSave;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
