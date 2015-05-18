@@ -5,20 +5,24 @@
  */
 package org.gui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.dao.impl.CuaHangDAOImpl;
 import org.dao.impl.HeThongDAOImpl;
-import org.dao.impl.ThongTinCaoCapDAOImpl;
 import org.dao.impl.SanPhamToDisplayDAOImpl;
+import org.dao.impl.ThongTinCaoCapDAOImpl;
 import org.dao.util.ComboItem;
 import org.dao.util.SanPhamDisplayTableModel;
-import org.pojo.HethongCuaHangNhaCC;
 import org.pojo.*;
+import org.pojo.HethongCuaHangNhaCC;
 
 /**
  *
@@ -34,13 +38,28 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         initComboBoxCuaHang();
         initSelectRowEventListener();
         chooseCuahang();
+//        this.addWindowListener(new WindowAdapter() {
+//            public void WindowClosing(WindowEvent evt){
+//                lblMsg.setText("closing");
+//                JOptionPane.showMessageDialog(null,"MONSTER IS CLOSE");
+//                
+////                this.wait();
+//            }
+//        });
     }
 
-    public FrameBuyProduct(SanPham sanPham) throws SQLException {
+    public FrameBuyProduct(SanPhamTrongHoaDon sanPhamTrongHD) throws SQLException {
         initComponents();
         initComboBoxCuaHang();
         initSelectRowEventListener();
         chooseCuahang();
+        this.sanPhamTrongHD = sanPhamTrongHD;
+//        this.addWindowListener(new WindowAdapter() {
+//                public void WindowClosing(WindowEvent evt){
+////                    JOptionPane.showMessageDialog(null,"MONSTER IS CLOSE");
+//                    
+//                }
+//            });
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,7 +76,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         btOK = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuyNumber = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAreaDetail = new javax.swing.JTextArea();
@@ -102,10 +121,11 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtBuyNumber.setText("1");
+        txtBuyNumber.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtBuyNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtBuyNumberActionPerformed(evt);
             }
         });
 
@@ -146,7 +166,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btOK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -174,7 +194,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btOK)
                     .addComponent(btCancel))
                 .addContainerGap(47, Short.MAX_VALUE))
@@ -188,9 +208,9 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         chooseCuahang();
     }//GEN-LAST:event_cbCuaHangActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtBuyNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuyNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtBuyNumberActionPerformed
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         // TODO add your handling code here:
@@ -199,15 +219,17 @@ public class FrameBuyProduct extends javax.swing.JFrame {
 
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
         // TODO add your handling code here:
-        if(sanPhamTrongKho == null)
+        if(sanPhamTrongHD == null)
             lblMsg.setText("Please choose a product!");
-        else
+        else {
             this.dispose();
+            
+        }
     }//GEN-LAST:event_btOKActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         // TODO add your handling code here:
-        sanPhamTrongKho = null;
+        sanPhamTrongHD = null;
         this.dispose();
     }//GEN-LAST:event_btCancelActionPerformed
 
@@ -229,15 +251,19 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                             detail += thongTinCC.getMoTa() + "\n";
                             
                         }
-                        sanPhamTrongKho = sanPham;
+//                        sanPhamTrongKho = (SanPhamTrongKho) sanPham;
+                        
+                        sanPhamTrongHD = new SanPhamTrongHoaDon(sanPham.getTen(), sanPham.getDonGia(), sanPham.getSanPhamID(), 
+                                                                    Integer.parseInt(txtBuyNumber.getText()));
                     }
-                    txtAreaDetail.setText(detail);
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(FrameBuyProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -315,8 +341,11 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             model.removeSanPham(i);
         }
     }
+    
+    
     private SanPhamDisplayTableModel spModel = new SanPhamDisplayTableModel();
-    public SanPhamTrongKho sanPhamTrongKho = null;
+    public SanPhamTrongHoaDon sanPhamTrongHD = null;
+    private SanPhamTrongKho sanPhamTrongKho = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btOK;
@@ -326,9 +355,9 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblMsg;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextArea txtAreaDetail;
+    private javax.swing.JTextField txtBuyNumber;
     // End of variables declaration//GEN-END:variables
 }

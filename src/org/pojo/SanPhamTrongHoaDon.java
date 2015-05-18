@@ -15,6 +15,7 @@ public class SanPhamTrongHoaDon extends SanPham{
     private int hoaDonID;
     private int sanPhamID;
     private int soLuongMua;
+    private double soTienMuaSP = 0;
 
     public SanPhamTrongHoaDon() {
         super();
@@ -24,6 +25,11 @@ public class SanPhamTrongHoaDon extends SanPham{
         super(ten, donGia);
     }
 
+    public SanPhamTrongHoaDon(String ten, double donGia, int sanPhamID, int soLuongMua) {
+        super(ten, donGia);
+        this.sanPhamID = sanPhamID;
+        this.soLuongMua = soLuongMua;
+    }
     
     public SanPhamTrongHoaDon(int hoaDonID, int sanPhamID, int soLuongMua) {
         super();
@@ -85,4 +91,10 @@ public class SanPhamTrongHoaDon extends SanPham{
     public void setSoLuongMua(int soLuongMua) {
         this.soLuongMua = soLuongMua;
     }
+
+    public double getSoTienMuaSP() {
+        return soTienMuaSP = this.getDonGia()*this.soLuongMua;
+    }
+    
+    
 }
