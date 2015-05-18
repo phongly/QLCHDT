@@ -24,8 +24,8 @@ public class SanPhamDisplayTableModel extends AbstractTableModel{
         "ID",
         "Name",
         "Price",
-        "Quantity",
-        "Providers"
+        "In Stock",
+        "Provider"
     };
     private List<SanPhamToDisplay> sanPhams;
     

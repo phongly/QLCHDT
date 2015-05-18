@@ -17,6 +17,7 @@ public class SanPhamToDisplay extends SanPhamTrongKho{
 //    private String tenSP;
     public SanPhamToDisplay() {
     }
+    
 
     public SanPhamToDisplay(int sanPhamID, int sanPhamTrongKhoID, int KhoID, int nhaCCID, int soLuongTon, String tenKho, String tenNhaCC, Date ngayNhap, Date ngayXuat) {
         super(sanPhamTrongKhoID, KhoID, nhaCCID, soLuongTon, ngayNhap, ngayXuat, sanPhamID);

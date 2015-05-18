@@ -85,6 +85,4 @@ public class SanPhamTrongHoaDon extends SanPham{
     public void setSoLuongMua(int soLuongMua) {
         this.soLuongMua = soLuongMua;
     }
-    
-    
 }

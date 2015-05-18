@@ -6,6 +6,14 @@
 
 package org.gui;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.pojo.SanPhamTrongKho;
+
 /**
  *
  * @author ly.phong
@@ -73,13 +81,13 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
         tbSanPhamDuocMua.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Product", "Store", "Quantity", "Price Per Unit"
+                "Product", "Unit Number", "Price Per Unit"
             }
         ));
         jScrollPane1.setViewportView(tbSanPhamDuocMua);
@@ -174,7 +182,23 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuyMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyMoreActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            FrameBuyProduct frameBP = new FrameBuyProduct();
+            frameBP.addWindowListener(new java.awt.event.WindowAdapter() {
+//                private Object JOptionPane;
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if (frameBP.sanPhamTrongKho != null){
+                        sanPhamTrongKhos.add(frameBP.sanPhamTrongKho);
+                    }
+                }
+            });
+            frameBP.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btBuyMoreActionPerformed
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
@@ -216,7 +240,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    private List<SanPhamTrongKho> sanPhamTrongKhos = new ArrayList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;
     private javax.swing.JButton btDelete;
