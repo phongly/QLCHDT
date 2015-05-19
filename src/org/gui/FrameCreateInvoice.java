@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.dao.util.SanPhamTrongHoaDonTableModel;
 import org.pojo.SanPhamTrongHoaDon;
 import org.pojo.SanPhamTrongKho;
 
@@ -31,24 +33,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
      * Creates new form ManageReceipt
      */
     public FrameCreateInvoice() throws SQLException {
-        this.frameBP = new FrameBuyProduct();
-            frameBP.addWindowListener( new WindowAdapter() {
-                
-                public void WindowClosing(WindowEvent evt){
-//                    Frame temp=(Frame)evt.getSource();  
-//                    temp.dispose();
-//                    JOptionPane.showMessageDialog(null,"MONSTER IS CLOSE");
-//                    lblTest.setText("hello");
-//                    sanPhamTrongHDs.add(null);
-                    System.out.println("vao ");
-                    DefaultTableModel model = new DefaultTableModel();
-                    Object[] rowData = {"ten sp", "so luong mua", "don gia"};
-                    model.addRow(rowData);
-                    tbSanPhamTrongHD.setModel(model);
-                    
-                }
-            }); 
+//        tbSanPhamTrongHD = new JTable();         
         initComponents();
+//        tbSanPhamTrongHD = new JTable();  
+//        this.frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
     }
 
     /**
@@ -106,13 +94,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
         tbSanPhamTrongHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Product", "Unit Number", "Price Per Unit"
+                "Product", "Unit Number", "Price Per Unit", "Final Price"
             }
         ));
         jScrollPane1.setViewportView(tbSanPhamTrongHD);
@@ -212,28 +197,36 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuyMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyMoreActionPerformed
+        try {
             // TODO add your handling code here:
-            frameBP.setVisible(true);
-//            frameBP.addWindowListener( new WindowAdapter() {
-//                public void WindowClosing(WindowEvent evt){
-//                    JOptionPane.showMessageDialog(null,"MONSTER IS CLOSE");  
-//                }
-//            });        
+            frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
+            frameBP.setVisible(true);       
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btBuyMoreActionPerformed
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btDoneActionPerformed
 
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
-        DefaultTableModel model = new DefaultTableModel();
-        for (SanPhamTrongHoaDon sanPhamTrongHD : sanPhamTrongHDs) {
-            Object[] rowData = {sanPhamTrongHD.getTen(), sanPhamTrongHD.getSoLuongMua(), sanPhamTrongHD.getDonGia()};
-            model.addRow(rowData);
-        }
+        removeAllRows(spModel);
+//        List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByCuaHangID(khoID);
         
-        tbSanPhamTrongHD.setModel(model);
+        spModel = new SanPhamTrongHoaDonTableModel(sanPhamTrongHDs);
+        
+        tbSanPhamTrongHD.setModel(spModel);
+    }
+    
+    private void removeAllRows(SanPhamTrongHoaDonTableModel model) {        
+        int rowCount = model.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeSanPhamTHD(i);
+        }
     }
     /**
      * @param args the command line arguments
@@ -277,7 +270,9 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     
     private List<SanPhamTrongKho> sanPhamTrongKhos = new ArrayList<>();
     private List<SanPhamTrongHoaDon> sanPhamTrongHDs = new ArrayList<SanPhamTrongHoaDon>();
+    private SanPhamTrongHoaDonTableModel spModel = new SanPhamTrongHoaDonTableModel();
     FrameBuyProduct frameBP;
+    private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;
     private javax.swing.JButton btDelete;
@@ -294,6 +289,6 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tbSanPhamTrongHD;
     private javax.swing.JTextField txtNgayNhap;
-    private javax.swing.JTextField txtNhanvien;
+    public javax.swing.JTextField txtNhanvien;
     // End of variables declaration//GEN-END:variables
 }

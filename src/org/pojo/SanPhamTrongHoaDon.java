@@ -15,7 +15,7 @@ public class SanPhamTrongHoaDon extends SanPham{
     private int hoaDonID;
     private int sanPhamID;
     private int soLuongMua;
-    private double soTienMuaSP = 0;
+    private double thanhTien = 0;
 
     public SanPhamTrongHoaDon() {
         super();
@@ -92,8 +92,8 @@ public class SanPhamTrongHoaDon extends SanPham{
         this.soLuongMua = soLuongMua;
     }
 
-    public double getSoTienMuaSP() {
-        return soTienMuaSP = this.getDonGia()*this.soLuongMua;
+    public double getThanhTien() {
+        return thanhTien = this.getDonGia()*this.soLuongMua;
     }
     
     
