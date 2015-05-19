@@ -26,9 +26,9 @@ public class PostgreConnection {
     private Connection connection;
 
     private PostgreConnection() throws SQLException {
-        this.url = "jdbc:postgresql://localhost:5432/QLHDT";
+        this.url = "jdbc:postgresql://localhost:5432/QLHDT_PHONG";
         this.user = "postgres";
-        this.password = "postgres";
+        this.password = "dhkhtn";
         this.characterEncoding = "utf8";
 
         Properties info = new Properties();
