@@ -6,32 +6,36 @@
 
 package org.dao.util;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.pojo.SanPhamTrongHoaDon;
+import org.pojo.HoaDonToDisPlay;
 
 /**
  *
  * @author ly.phong
  */
-public class SanPhamTrongHoaDonTableModel extends AbstractTableModel{
+public class HoaDonToDisplayTableModel extends AbstractTableModel{
 
     private String[] columnNames =
     {
-        "Product",
-        "Price Per Unit",
-        "Buy Number Units",
-        "Final Price"
+        "ID",
+        "Staff",
+        "Customer",
+        "Total",
+        "Date",
+        "Provider",
+        "Status"
         
     };
-    private List<SanPhamTrongHoaDon> sanPhamTrongHoaDons;
+    private List<HoaDonToDisPlay> sanPhamTrongHoaDons;
     
-    public SanPhamTrongHoaDonTableModel() {
+    public HoaDonToDisplayTableModel() {
         sanPhamTrongHoaDons = new ArrayList<>();
     }
 
-    public SanPhamTrongHoaDonTableModel(List<SanPhamTrongHoaDon> sanPhamTrongHoaDons) {
+    public HoaDonToDisplayTableModel(List<HoaDonToDisPlay> sanPhamTrongHoaDons) {
         this.sanPhamTrongHoaDons = sanPhamTrongHoaDons;
     }   
     
@@ -57,7 +61,8 @@ public class SanPhamTrongHoaDonTableModel extends AbstractTableModel{
     {
         switch (column)
         {
-//            case 0: return Integer.class;
+            case 0: return Integer.class;
+            case 4: return Double.class;
             default: return String.class;
         }
     }
@@ -73,13 +78,15 @@ public class SanPhamTrongHoaDonTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int row, int column)
     {
-        SanPhamTrongHoaDon sanPhamTHD = getSPTrongHD(row);
+        HoaDonToDisPlay sanPhamTHD = getSPTrongHD(row);
         switch (column)
         {
-            case 0: return sanPhamTHD.getTen();
-            case 1: return sanPhamTHD.getDonGia();
-            case 2: return sanPhamTHD.getSoLuongMua();           
-            case 3: return sanPhamTHD.getThanhTien();
+            case 0: return sanPhamTHD.getId();
+            case 1: return sanPhamTHD.getNhanVien();
+            case 2: return sanPhamTHD.getKhachHang();           
+            case 3: return sanPhamTHD.getTongTien();
+            case 4: return sanPhamTHD.getNgayNhap();
+            case 5: return sanPhamTHD.getTinhTrang();
             default: return null;
         }
     }
@@ -87,29 +94,29 @@ public class SanPhamTrongHoaDonTableModel extends AbstractTableModel{
     @Override
     public void setValueAt(Object value, int row, int column)
     {
-        SanPhamTrongHoaDon sanPhamTHD = getSPTrongHD(row);
+        HoaDonToDisPlay sanPhamTHD = getSPTrongHD(row);
 
         switch (column)
         {
-            case 0:  sanPhamTHD.setTen((String)value);break;           
-            case 1:  sanPhamTHD.setDonGia((double)value); break;
-            case 2:  sanPhamTHD.setSoLuongMua((int)value); break;
+            case 0:  sanPhamTHD.setId((int)value);break;           
+            case 1:  sanPhamTHD.setNgayNhap((Date)value); break;
+//            case 2:  sanPhamTHD.setSoLuongMua((int)value); break;
 //            case 3:  sanPhamTHD.setThanhTien();
         }
 
         fireTableCellUpdated(row, column);
     }
-    public SanPhamTrongHoaDon getSPTrongHD(int row)
+    public HoaDonToDisPlay getSPTrongHD(int row)
     {
         return sanPhamTrongHoaDons.get(row);
     }
     
-    public void addSanPhamTHD(SanPhamTrongHoaDon sanPhamTHD)
+    public void addSanPhamTHD(HoaDonToDisPlay sanPhamTHD)
     {
         insertSanPhamTHD(getRowCount(), sanPhamTHD);
     }
 
-    public void insertSanPhamTHD(int row, SanPhamTrongHoaDon spTHD)
+    public void insertSanPhamTHD(int row, HoaDonToDisPlay spTHD)
     {
         sanPhamTrongHoaDons.add(row, spTHD);
         fireTableRowsInserted(row, row);
@@ -121,7 +128,4 @@ public class SanPhamTrongHoaDonTableModel extends AbstractTableModel{
         fireTableRowsDeleted(row, row);
     }
     
-    public List<SanPhamTrongHoaDon> getAllSPTrongHD() {
-        return sanPhamTrongHoaDons;
-    } 
 }

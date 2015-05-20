@@ -16,6 +16,7 @@ import org.pojo.*;
  */
 public interface HoaDonDAO {
     public List<HoaDon> getAllHoaDon() throws SQLException;
+    public List<HoaDon> getAllHoaDonByCuaHangID(int cuaHangID) throws SQLException;
     public HoaDon getHoaDonByID(int id) throws SQLException;
     public void deleteHoaDon(HoaDon hd) throws SQLException;
     public void deleteHoaDon(int id) throws SQLException;

@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.dao.impl.CuaHangDAOImpl;
@@ -67,6 +69,49 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         initSelectRowEventListener();
         chooseCuahang();
         tblSanPhamTHD = tblSanPhamTHDon;
+        txtBuyNumber.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateText();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateText();
+            }
+            
+            public void updateText() {
+                lblMsg.setText(txtBuyNumber.getText());
+                sanPhamTrongHD.setSoLuongMua(Integer.parseInt(txtBuyNumber.getText()));
+            }
+        });
+//        txtBuyNumber.getDocument().addDocumentListener(new DocumentListener() {
+//            public void changedUpdate(DocumentEvent e) {
+//              warn();
+//            }
+//            public void removeUpdate(DocumentEvent e) {
+//              warn();
+//            }
+//            public void insertUpdate(DocumentEvent e) {
+//              warn();
+//            }
+//
+//            public void warn() {
+//               if (Integer.parseInt(textField.getText())<=0){
+//                 JOptionPane.showMessageDialog(null,
+//                    "Error: Please enter number bigger than 0", "Error Massage",
+//                    JOptionPane.ERROR_MESSAGE);
+//               }
+//            }
+//        });
+        
+//        lblMsg.setText(sanPhamTrongHDs.size()+"");
     }    
     /**SanPhamTrongHoaDonTableModel spModel
      * This method is called from within the constructor to initialize the form.
@@ -217,6 +262,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
 
     private void txtBuyNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuyNumberActionPerformed
         // TODO add your handling code here:
+//        evt.getSource().get
+//        txtBuyNumber.setText(null);
     }//GEN-LAST:event_txtBuyNumberActionPerformed
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
@@ -231,11 +278,24 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         else {
 //            this.sanPhamTrongHDs.add(sanPhamTrongHD);
 //            spTHDModel.add(sanPhamTrongHD);
-            for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
+//            spTHDModel.get
+//            sanPhamTrongHD.getTen();
+            int flag = 0;
+            List<SanPhamTrongHoaDon> sanPhamTHDs = spTHDModel.getAllSPTrongHD();
+            for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTHDs) {
+                if(sanPhamTrongHoaDon.getTen().equals(sanPhamTrongHD.getTen()))
+                    flag = 1;
+            }
+            
+            if(flag == 1) {
+                lblMsg.setText("You've chosen this product");
+            }
+            else {
                 spTHDModel.addSanPhamTHD(sanPhamTrongHD);
-            }           
-            tblSanPhamTHD.setModel(spTHDModel);
-            this.dispose();           
+                tblSanPhamTHD.setModel(spTHDModel);
+                //            this.dispose();  
+            }
+   
         }
 //        txtBuyNumber.setText(" get from child frame");
     }//GEN-LAST:event_btOKActionPerformed
@@ -269,6 +329,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                         sanPhamTrongHD = new SanPhamTrongHoaDon(sanPham.getTen(), sanPham.getDonGia(), sanPham.getSanPhamID(), 
                                                                     Integer.parseInt(txtBuyNumber.getText()));
                         sanPhamTrongHDs.add(sanPhamTrongHD);
+                        lblMsg.setText("change "+ sanPhamTrongHDs.size());
                     }
                     
                 } catch (SQLException ex) {

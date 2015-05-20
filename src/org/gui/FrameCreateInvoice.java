@@ -35,6 +35,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     public FrameCreateInvoice() throws SQLException {
 //        tbSanPhamTrongHD = new JTable();         
         initComponents();
+        frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
+//        tbSanPhamTrongHD = new JTable();
 //        tbSanPhamTrongHD = new JTable();  
 //        this.frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
     }
@@ -84,6 +86,11 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel6.setText("Buy Products:");
 
         btDelete.setText("Delete");
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         btBuyMore.setText("Buy More...");
         btBuyMore.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +101,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
         tbSanPhamTrongHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Product", "Unit Number", "Price Per Unit", "Final Price"
@@ -197,13 +204,9 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuyMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyMoreActionPerformed
-        try {
-            // TODO add your handling code here:
-            frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
-            frameBP.setVisible(true);       
-        } catch (SQLException ex) {
-            Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          
+        frameBP.setVisible(true);       
+
     }//GEN-LAST:event_btBuyMoreActionPerformed
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
@@ -211,17 +214,26 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btDoneActionPerformed
 
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        // TODO add your handling code here:
+        int selectedRowInd = tbSanPhamTrongHD.getSelectedRow();
+        spTHDModel = (SanPhamTrongHoaDonTableModel) tbSanPhamTrongHD.getModel();
+        spTHDModel.removeSanPhamTHD(selectedRowInd);
+        tbSanPhamTrongHD.setModel(spTHDModel);
+        
+    }//GEN-LAST:event_btDeleteActionPerformed
+
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
-        removeAllRows(spModel);
+        removeAllRows(spTHDModel);
 //        List<SanPhamToDisplay> sanPhamToDisPlays = new SanPhamToDisplayDAOImpl().getAllSanPhamToDisPlayByCuaHangID(khoID);
         
-        spModel = new SanPhamTrongHoaDonTableModel(sanPhamTrongHDs);
+        spTHDModel = new SanPhamTrongHoaDonTableModel(sanPhamTrongHDs);
         
-        tbSanPhamTrongHD.setModel(spModel);
+        tbSanPhamTrongHD.setModel(spTHDModel);
     }
     
-    private void removeAllRows(SanPhamTrongHoaDonTableModel model) {        
+    private void removeAllRows(SanPhamTrongHoaDonTableModel model) {  
         int rowCount = model.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -270,7 +282,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     
     private List<SanPhamTrongKho> sanPhamTrongKhos = new ArrayList<>();
     private List<SanPhamTrongHoaDon> sanPhamTrongHDs = new ArrayList<SanPhamTrongHoaDon>();
-    private SanPhamTrongHoaDonTableModel spModel = new SanPhamTrongHoaDonTableModel();
+    private SanPhamTrongHoaDonTableModel spTHDModel = new SanPhamTrongHoaDonTableModel();
     FrameBuyProduct frameBP;
     private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables

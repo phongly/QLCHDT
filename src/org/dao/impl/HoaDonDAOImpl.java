@@ -108,5 +108,19 @@ public class HoaDonDAOImpl implements HoaDonDAO{
         statement.close();
         return hoaDon;
     }
+
+    @Override
+    public List<HoaDon> getAllHoaDonByCuaHangID(int cuaHangID) throws SQLException {
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        List<HoaDon> list = new ArrayList<>();
+        String sql = "SELECT * FROM hoadon WHERE cuahang_id="+cuaHangID;
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            list.add(convert(rs));
+        }
+        rs.close();
+        statement.close();
+        return list;
+    }
     
 }
