@@ -220,8 +220,13 @@ public class FrameListInvoices extends javax.swing.JFrame {
 
     private void loadTableCuaHang(int cuaHangID) throws SQLException {               
         removeAllRows(hdModel);
-        List<HoaDonToDisPlay> sanPhamToDisPlays = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
-        hdModel = new HoaDonToDisplayTableModel(sanPhamToDisPlays);
+        List<HoaDon> hoaDonToDisplays = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
+        for (HoaDon hoaDonToDisplay : hoaDonToDisplays) {
+            hoaDonToDisplay = (HoaDonToDisPlay)hoaDonToDisplay;
+        }
+        
+
+//        hdModel = new HoaDonToDisplayTableModel(sanPhamToDisPlays);
         
         tblSanPham.setModel(hdModel);
     }
