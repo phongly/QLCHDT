@@ -29,14 +29,14 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
         "Status"
         
     };
-    private List<HoaDonToDisPlay> sanPhamTrongHoaDons;
+    private List<HoaDonToDisPlay> hoaDonToDisplays;
     
     public HoaDonToDisplayTableModel() {
-        sanPhamTrongHoaDons = new ArrayList<>();
+        hoaDonToDisplays = new ArrayList<>();
     }
 
-    public HoaDonToDisplayTableModel(List<HoaDonToDisPlay> sanPhamTrongHoaDons) {
-        this.sanPhamTrongHoaDons = sanPhamTrongHoaDons;
+    public HoaDonToDisplayTableModel(List<HoaDonToDisPlay> hoaDons) {
+        this.hoaDonToDisplays = hoaDons;
     }   
     
     @Override
@@ -54,7 +54,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
     @Override
     public int getRowCount()
     {
-        return sanPhamTrongHoaDons.size();
+        return hoaDonToDisplays.size();
     }
     @Override
     public Class getColumnClass(int column)
@@ -108,7 +108,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
     }
     public HoaDonToDisPlay getSPTrongHD(int row)
     {
-        return sanPhamTrongHoaDons.get(row);
+        return hoaDonToDisplays.get(row);
     }
     
     public void addSanPhamTHD(HoaDonToDisPlay sanPhamTHD)
@@ -118,13 +118,13 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
 
     public void insertSanPhamTHD(int row, HoaDonToDisPlay spTHD)
     {
-        sanPhamTrongHoaDons.add(row, spTHD);
+        hoaDonToDisplays.add(row, spTHD);
         fireTableRowsInserted(row, row);
     }
 
-    public void removeSanPhamTHD(int row)
+    public void removeHoaDon(int row)
     {
-        sanPhamTrongHoaDons.remove(row);
+        hoaDonToDisplays.remove(row);
         fireTableRowsDeleted(row, row);
     }
     

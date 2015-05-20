@@ -210,7 +210,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int selectedRowInd = tblSanPham.getSelectedRow();
-            SanPhamToDisplay selectedSP = hdModel.getSanPham(selectedRowInd);
+            SanPhamToDisplay selectedSP = hdModel.getSPTrongHD(selectedRowInd);
             FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo(selectedSP);
             advanceInfo.setVisible(true);
         } catch (SQLException ex) {
@@ -220,11 +220,13 @@ public class FrameListInvoices extends javax.swing.JFrame {
 
     private void loadTableCuaHang(int cuaHangID) throws SQLException {               
         removeAllRows(hdModel);
-        List<HoaDon> hoaDonToDisplays = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
-        for (HoaDon hoaDonToDisplay : hoaDonToDisplays) {
-            hoaDonToDisplay = (HoaDonToDisPlay)hoaDonToDisplay;
+        List<HoaDon> hoaDons = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
+        List<HoaDonToDisPlay> hoaDonToDisplays = new ArrayList<>();
+        for (HoaDon hoaDon : hoaDons) {
+            HoaDonToDisPlay hoaDonToDisplay = (HoaDonToDisPlay)hoaDon;
+            hoaDonToDisplays.add(hoaDonToDisplay);
         }
-        
+        hdModel = new HoaDonToDisplayTableModel(hoaDonToDisplays);
 
 //        hdModel = new HoaDonToDisplayTableModel(sanPhamToDisPlays);
         
@@ -242,11 +244,11 @@ public class FrameListInvoices extends javax.swing.JFrame {
         }
     }
     
-    private void removeAllRows(SanPhamDisplayTableModel model) {        
+    private void removeAllRows(HoaDonToDisplayTableModel model) {        
         int rowCount = model.getRowCount();
         //Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
-            model.removeSanPham(i);
+            model.removeHoaDon(i);
         }
     }
     /**
