@@ -10,19 +10,30 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+//import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.MaskFormatter;
+import org.dao.impl.HoaDonDAOImpl;
+import org.dao.util.Helper;
 import org.dao.util.SanPhamTrongHoaDonTableModel;
+import org.pojo.HoaDon;
 import org.pojo.SanPhamTrongHoaDon;
 import org.pojo.SanPhamTrongKho;
-
 /**
  *
  * @author ly.phong
@@ -35,7 +46,14 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     public FrameCreateInvoice() throws SQLException {
 //        tbSanPhamTrongHD = new JTable();         
         initComponents();
-        frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
+//        ftfNgayNhap.setValue(new java.util.Date());
+        setupFields();
+        ftfNgayNhap.setValue(new Date()); 
+//        Format shortDate = DateFormat.getDateInstance(DateFormat.SHORT);
+//        ftfNgayNhap = new JFormattedTextField(shortDate);
+//        ftfNgayNhap.setValue(new Date());
+//        frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
+//        ftfNgayNhap.setValue(new java.util.Date()); 
 //        tbSanPhamTrongHD = new JTable();
 //        tbSanPhamTrongHD = new JTable();  
 //        this.frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
@@ -54,7 +72,6 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNhanvien = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtNgayNhap = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         lblCustomer = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -65,7 +82,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         btDone = new javax.swing.JButton();
-        lblTest = new javax.swing.JLabel();
+        ftfNgayNhap = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,6 +90,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel1.setText("Invoice");
 
         jLabel2.setText("Staff");
+
+        txtNhanvien.setEditable(false);
+        txtNhanvien.setBackground(new java.awt.Color(0, 153, 153));
+        txtNhanvien.setEnabled(false);
 
         jLabel3.setText("Date");
 
@@ -120,7 +141,11 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             }
         });
 
-        lblTest.setText("test");
+        try {
+            ftfNgayNhap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,54 +158,49 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                 .addComponent(lblTotal)
                 .addGap(189, 189, 189))
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTest)
-                        .addGap(207, 207, 207)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ftfNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btDone)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btBuyMore))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btDone)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btDelete)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btBuyMore))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(47, Short.MAX_VALUE))))
+                                .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(jLabel1)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTest))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ftfNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -197,7 +217,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(lblTotal))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,7 +231,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
         // TODO add your handling code here:
-        
+        HoaDonDAOImpl hoaDonDAO = new HoaDonDAOImpl();
+        Date date = (Date)ftfNgayNhap.getValue();
+        date.getDate();
+        lblCustomer.setText(date.getDate()+"");
+//        HoaDon hoaDon = new HoaDon((Date)ftfNgayNhap, WIDTH, HEIGHT, WIDTH, ICONIFIED, WIDTH);
+//        hoaDonDAO.insertHoaDon(null);
     }//GEN-LAST:event_btDoneActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
@@ -223,6 +248,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btDeleteActionPerformed
 
+    private void setupFields() {
+        DateFormat format = new SimpleDateFormat("dd/MMMM/yyyy");
+        DateFormatter df = new DateFormatter(format);
+        ftfNgayNhap = new JFormattedTextField(df);
+        ftfNgayNhap.setValue(new Date());       
+    }
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
         removeAllRows(spTHDModel);
@@ -289,6 +320,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private javax.swing.JButton btBuyMore;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btDone;
+    private javax.swing.JFormattedTextField ftfNgayNhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,10 +329,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCustomer;
-    private javax.swing.JLabel lblTest;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tbSanPhamTrongHD;
-    private javax.swing.JTextField txtNgayNhap;
     public javax.swing.JTextField txtNhanvien;
     // End of variables declaration//GEN-END:variables
 }

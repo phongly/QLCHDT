@@ -78,7 +78,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int row, int column)
     {
-        HoaDonToDisPlay sanPhamTHD = getSPTrongHD(row);
+        HoaDonToDisPlay sanPhamTHD = getHD(row);
         switch (column)
         {
             case 0: return sanPhamTHD.getId();
@@ -94,7 +94,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
     @Override
     public void setValueAt(Object value, int row, int column)
     {
-        HoaDonToDisPlay sanPhamTHD = getSPTrongHD(row);
+        HoaDonToDisPlay sanPhamTHD = getHD(row);
 
         switch (column)
         {
@@ -106,7 +106,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
 
         fireTableCellUpdated(row, column);
     }
-    public HoaDonToDisPlay getSPTrongHD(int row)
+    public HoaDonToDisPlay getHD(int row)
     {
         return hoaDonToDisplays.get(row);
     }

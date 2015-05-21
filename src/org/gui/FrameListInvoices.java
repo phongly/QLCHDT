@@ -57,7 +57,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
         btApply = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
-        btInfo = new javax.swing.JButton();
+        btView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,7 +137,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btApply)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
@@ -150,10 +150,10 @@ public class FrameListInvoices extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblSanPham);
 
-        btInfo.setText("View");
-        btInfo.addActionListener(new java.awt.event.ActionListener() {
+        btView.setText("View");
+        btView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btInfoActionPerformed(evt);
+                btViewActionPerformed(evt);
             }
         });
 
@@ -169,7 +169,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
                 .addGap(107, 107, 107)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btInfo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btView, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
@@ -181,7 +181,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
-                .addComponent(btInfo)
+                .addComponent(btView)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -206,17 +206,13 @@ public class FrameListInvoices extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btApplyActionPerformed
 
-    private void btInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInfoActionPerformed
-        try {
-            // TODO add your handling code here:
-            int selectedRowInd = tblSanPham.getSelectedRow();
-            SanPhamToDisplay selectedSP = hdModel.getSPTrongHD(selectedRowInd);
-            FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo(selectedSP);
-            advanceInfo.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(FrameListInvoices.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btInfoActionPerformed
+    private void btViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btViewActionPerformed
+
+        int selectedRowInd = tblSanPham.getSelectedRow();
+        HoaDonToDisPlay selectedHD = hdModel.getHD(selectedRowInd);
+        FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo();
+        advanceInfo.setVisible(true);
+    }//GEN-LAST:event_btViewActionPerformed
 
     private void loadTableCuaHang(int cuaHangID) throws SQLException {               
         removeAllRows(hdModel);
@@ -294,7 +290,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
     private ThongTinCaoCap ttCC;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btApply;
-    private javax.swing.JButton btInfo;
+    private javax.swing.JButton btView;
     private javax.swing.JComboBox cbHeThongKho;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
