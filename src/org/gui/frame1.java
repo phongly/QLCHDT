@@ -28,23 +28,25 @@ public class frame1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jtTenSP = new javax.swing.JTextField();
         btGui = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblTenSanPhamDuocChon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Frame A");
 
-        jLabel2.setText("ten san pham ");
-
-        btGui.setText("Gui ten sang Frame B");
+        btGui.setText("Goi Frame B");
         btGui.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btGuiActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Ten san pham duoc chọn từ frame B là:");
+
+        lblTenSanPhamDuocChon.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,25 +58,27 @@ public class frame1 extends javax.swing.JFrame {
                         .addGap(161, 161, 161)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
+                        .addGap(133, 133, 133)
+                        .addComponent(btGui))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btGui)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblTenSanPhamDuocChon)))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jLabel1)
-                .addGap(53, 53, 53)
+                .addGap(41, 41, 41)
+                .addComponent(btGui)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btGui))
-                .addContainerGap(156, Short.MAX_VALUE))
+                    .addComponent(lblTenSanPhamDuocChon))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         pack();
@@ -82,8 +86,7 @@ public class frame1 extends javax.swing.JFrame {
 
     private void btGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuiActionPerformed
         // TODO add your handling code here:
-        frame2 f2 = new frame2();
-        f2.lblTenSPLa.setText(this.jtTenSP.getText());
+        frame2 f2 = new frame2(lblTenSanPhamDuocChon); // gọi constructor của frame2 mà có biến jTextField 
         f2.setVisible(true);
     }//GEN-LAST:event_btGuiActionPerformed
 
@@ -126,6 +129,6 @@ public class frame1 extends javax.swing.JFrame {
     private javax.swing.JButton btGui;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jtTenSP;
+    public javax.swing.JLabel lblTenSanPhamDuocChon;
     // End of variables declaration//GEN-END:variables
 }

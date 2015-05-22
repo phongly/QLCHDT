@@ -5,6 +5,9 @@
  */
 package org.gui;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Phong
@@ -18,6 +21,10 @@ public class frame2 extends javax.swing.JFrame {
         initComponents();
     }
 
+    public frame2(JLabel sanPhamtrave) {
+        initComponents();
+        sanPhamTraVeTam = sanPhamtrave; // gán sanPhamtrave từ frame 1 truyền qua
+    }                                        // cho sanPhamTraVeTam
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,16 +36,22 @@ public class frame2 extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lblTenSPLa = new javax.swing.JLabel();
+        jtTenSanPham = new javax.swing.JTextField();
+        btOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Ten san pham tu frame A la:");
+        jLabel1.setText("Ten san pham tra lai cho frame A:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Frame B");
 
-        lblTenSPLa.setText("jLabel3");
+        btOK.setText("OK");
+        btOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,23 +66,32 @@ public class frame2 extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTenSPLa)))
-                .addContainerGap(162, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btOK)
+                            .addComponent(jtTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel2)
-                .addGap(50, 50, 50)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblTenSPLa))
-                .addContainerGap(161, Short.MAX_VALUE))
+                    .addComponent(jtTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(btOK)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
+        // TODO add your handling code here:
+        this.sanPhamTraVeTam.setText(jtTenSanPham.getText());
+    }//GEN-LAST:event_btOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,9 +128,11 @@ public class frame2 extends javax.swing.JFrame {
         });
     }
 
+    private JLabel sanPhamTraVeTam; // dùng để giữ biến JLabel sanPhamtrave
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel lblTenSPLa;
+    private javax.swing.JTextField jtTenSanPham;
     // End of variables declaration//GEN-END:variables
 }
