@@ -7,6 +7,8 @@ package org.gui;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -19,12 +21,18 @@ public class frame2 extends javax.swing.JFrame {
      */
     public frame2() {
         initComponents();
+        initEventforTextField(tfDongia);
+         initEventforTextField(tfSoluong);
     }
 
     public frame2(JLabel sanPhamtrave) {
         initComponents();
         sanPhamTraVeTam = sanPhamtrave; // gán sanPhamtrave từ frame 1 truyền qua
-    }                                        // cho sanPhamTraVeTam
+                                                // cho sanPhamTraVeTam
+        initEventforTextField(tfDongia);
+        initEventforTextField(tfSoluong);
+    
+    }                                        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +46,12 @@ public class frame2 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jtTenSanPham = new javax.swing.JTextField();
         btOK = new javax.swing.JButton();
+        tfSoluong = new javax.swing.JTextField();
+        tfDongia = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        tfThanhTien = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +67,32 @@ public class frame2 extends javax.swing.JFrame {
             }
         });
 
+        tfSoluong.setText("0");
+        tfSoluong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfSoluongActionPerformed(evt);
+            }
+        });
+
+        tfDongia.setText("0");
+        tfDongia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfDongiaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("So lượng:");
+
+        jLabel4.setText("Đơn giá");
+
+        jLabel5.setText("Thành tiền");
+
+        tfThanhTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfThanhTienActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,13 +103,30 @@ public class frame2 extends javax.swing.JFrame {
                         .addGap(141, 141, 141)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tfSoluong)
+                                            .addComponent(tfDongia))))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btOK)
                             .addComponent(jtTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,9 +137,21 @@ public class frame2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(btOK)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfDongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,6 +162,44 @@ public class frame2 extends javax.swing.JFrame {
         this.sanPhamTraVeTam.setText(jtTenSanPham.getText());
     }//GEN-LAST:event_btOKActionPerformed
 
+    private void tfThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfThanhTienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfThanhTienActionPerformed
+
+    private void tfSoluongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSoluongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfSoluongActionPerformed
+
+    private void tfDongiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDongiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfDongiaActionPerformed
+
+    private void initEventforTextField(JTextField tf) {
+                tf.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateText();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateText();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateText();
+            }
+            
+            public void updateText() {
+                int donGia = Integer.parseInt( tfDongia.getText());
+                int soLuong = Integer.parseInt(tfSoluong.getText());
+                int thanhtien = donGia * soLuong;
+                tfThanhTien.setText(thanhtien+"");
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */
@@ -128,11 +235,18 @@ public class frame2 extends javax.swing.JFrame {
         });
     }
 
+    
     private JLabel sanPhamTraVeTam; // dùng để giữ biến JLabel sanPhamtrave
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jtTenSanPham;
+    private javax.swing.JTextField tfDongia;
+    private javax.swing.JTextField tfSoluong;
+    private javax.swing.JTextField tfThanhTien;
     // End of variables declaration//GEN-END:variables
 }
