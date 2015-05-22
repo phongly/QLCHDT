@@ -193,10 +193,15 @@ public class frame2 extends javax.swing.JFrame {
             }
             
             public void updateText() {
-                int donGia = Integer.parseInt( tfDongia.getText());
-                int soLuong = Integer.parseInt(tfSoluong.getText());
-                int thanhtien = donGia * soLuong;
-                tfThanhTien.setText(thanhtien+"");
+                try {
+                    int donGia = Integer.parseInt( tfDongia.getText());
+                    int soLuong = Integer.parseInt(tfSoluong.getText());
+                    int thanhtien = donGia * soLuong;
+                    tfThanhTien.setText(thanhtien+"");
+                } catch (Exception e) {
+                    System.err.print("dánh số hay chữ gì cũng được hết á");
+                }
+
             }
         });
     }
