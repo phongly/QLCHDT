@@ -47,8 +47,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 //        tbSanPhamTrongHD = new JTable();         
         initComponents();
 //        ftfNgayNhap.setValue(new java.util.Date());
-        setupFields();
-        ftfNgayNhap.setValue(new Date()); 
+
+
 //        Format shortDate = DateFormat.getDateInstance(DateFormat.SHORT);
 //        ftfNgayNhap = new JFormattedTextField(shortDate);
 //        ftfNgayNhap.setValue(new Date());
@@ -231,10 +231,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
         // TODO add your handling code here:
-        HoaDonDAOImpl hoaDonDAO = new HoaDonDAOImpl();
-        Date date = (Date)ftfNgayNhap.getValue();
-        date.getDate();
-        lblCustomer.setText(date.getDate()+"");
+                setupFields();
+        String text = ftfNgayNhap.getText(); 
+        lblCustomer.setText(text);
+
 //        HoaDon hoaDon = new HoaDon((Date)ftfNgayNhap, WIDTH, HEIGHT, WIDTH, ICONIFIED, WIDTH);
 //        hoaDonDAO.insertHoaDon(null);
     }//GEN-LAST:event_btDoneActionPerformed
@@ -249,10 +249,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     }//GEN-LAST:event_btDeleteActionPerformed
 
     private void setupFields() {
-        DateFormat format = new SimpleDateFormat("dd/MMMM/yyyy");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         DateFormatter df = new DateFormatter(format);
         ftfNgayNhap = new JFormattedTextField(df);
-        ftfNgayNhap.setValue(new Date());       
+        ftfNgayNhap.setValue(new Date());
+        String text = ftfNgayNhap.getText(); 
+        lblCustomer.setText(text);
     }
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
@@ -315,6 +317,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private List<SanPhamTrongHoaDon> sanPhamTrongHDs = new ArrayList<SanPhamTrongHoaDon>();
     private SanPhamTrongHoaDonTableModel spTHDModel = new SanPhamTrongHoaDonTableModel();
     FrameBuyProduct frameBP;
+    private Date convertDate = null;
     private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;
