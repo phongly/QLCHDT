@@ -50,7 +50,14 @@ public class NguoiDungDAOImpl implements NguoiDungDAO{
 
     @Override
     public NguoiDung getNguoiDungByID(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        String sql = "SELECT * FROM sanpham WHERE id="+id;
+        ResultSet rs = statement.executeQuery(sql);
+        rs.next();
+        NguoiDung nguoiDung = convert(rs);
+        rs.close();
+        statement.close();
+        return nguoiDung;  
     }
 
     @Override
@@ -71,6 +78,20 @@ public class NguoiDungDAOImpl implements NguoiDungDAO{
     @Override
     public void updateNguoiDung(NguoiDung ngDung) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<NguoiDung> getNguoiDungTheoLoai(int loai) throws SQLException {
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        List<NguoiDung> list = new ArrayList<>();
+        String sql = "SELECT * FROM nguoi_dung WHERE loai="+loai;
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            list.add(convert(rs));
+        }
+        rs.close();
+        statement.close();
+        return list;
     }
     
 }

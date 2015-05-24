@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,9 +30,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 import org.dao.impl.HoaDonDAOImpl;
+import org.dao.impl.NguoiDungDAOImpl;
 import org.dao.util.Helper;
 import org.dao.util.SanPhamTrongHoaDonTableModel;
 import org.pojo.HoaDon;
+import org.pojo.NguoiDung;
 import org.pojo.SanPhamTrongHoaDon;
 import org.pojo.SanPhamTrongKho;
 /**
@@ -43,20 +46,21 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     /**
      * Creates new form ManageReceipt
      */
-    public FrameCreateInvoice() throws SQLException {
+    private NguoiDung nhanVien;
+    private NguoiDung KhachHang;
+    public FrameCreateInvoice() throws SQLException, ParseException {
 //        tbSanPhamTrongHD = new JTable();         
         initComponents();
-//        ftfNgayNhap.setValue(new java.util.Date());
+        
+        int loaiNhanVien = 0;
+        int loaiKhachHang = 1;
+        nhanVien = getRandomNguoiDungTheo(loaiNhanVien);
+        KhachHang = getRandomNguoiDungTheo(loaiKhachHang);       
+        lblKhachHang.setText(KhachHang.getTen());
+        txtNhanvien.setText(nhanVien.getTen());
 
-
-//        Format shortDate = DateFormat.getDateInstance(DateFormat.SHORT);
-//        ftfNgayNhap = new JFormattedTextField(shortDate);
-//        ftfNgayNhap.setValue(new Date());
-//        frameBP = new FrameBuyProduct(tbSanPhamTrongHD);
-//        ftfNgayNhap.setValue(new java.util.Date()); 
-//        tbSanPhamTrongHD = new JTable();
-//        tbSanPhamTrongHD = new JTable();  
-//        this.frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
+        setupDateFields();
+        frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
     }
 
     /**
@@ -73,7 +77,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         txtNhanvien = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblCustomer = new javax.swing.JLabel();
+        lblKhachHang = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btDelete = new javax.swing.JButton();
         btBuyMore = new javax.swing.JButton();
@@ -82,7 +86,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         btDone = new javax.swing.JButton();
-        ftfNgayNhap = new javax.swing.JFormattedTextField();
+        txtNgayNhap = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,9 +104,9 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Customer:");
 
-        lblCustomer.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
-        lblCustomer.setForeground(new java.awt.Color(0, 102, 102));
-        lblCustomer.setText("Somebody");
+        lblKhachHang.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
+        lblKhachHang.setForeground(new java.awt.Color(0, 102, 102));
+        lblKhachHang.setText("Somebody");
 
         jLabel6.setText("Buy Products:");
 
@@ -141,12 +145,6 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             }
         });
 
-        try {
-            ftfNgayNhap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,16 +160,6 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ftfNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -182,9 +170,21 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                                 .addComponent(btBuyMore))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(273, 273, 273)
                         .addComponent(jLabel1)))
@@ -200,11 +200,11 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(ftfNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lblCustomer))
+                    .addComponent(lblKhachHang))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -217,28 +217,43 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(lblTotal))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuyMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyMoreActionPerformed
-          
-        frameBP.setVisible(true);       
+
+            
+            frameBP.setVisible(true);
 
     }//GEN-LAST:event_btBuyMoreActionPerformed
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
-        // TODO add your handling code here:
-                setupFields();
-        String text = ftfNgayNhap.getText(); 
-        lblCustomer.setText(text);
+        try {
+            // TODO add your handling code here:
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormatter df = new DateFormatter(formatter);      
+            ngayNhap = (Date)formatter.parse(txtNgayNhap.getText());
+            double tongTien = 0;
+            HoaDon hoaDon = new HoaDon(ngayNhap, tongTien, cuaHangID, KhachHang.getId(), nhanVien.getId(), 0);
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 //        HoaDon hoaDon = new HoaDon((Date)ftfNgayNhap, WIDTH, HEIGHT, WIDTH, ICONIFIED, WIDTH);
 //        hoaDonDAO.insertHoaDon(null);
     }//GEN-LAST:event_btDoneActionPerformed
 
+    private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
+        NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();
+        List<NguoiDung> nguoiDungs = nguoiDungDAO.getNguoiDungTheoLoai(loai);
+        
+        int ranDomNumber = Helper.randInt(1, nguoiDungs.size());
+        NguoiDung ranDomNguoiDung = nguoiDungs.get(ranDomNumber);
+        return ranDomNguoiDung;
+    } 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRowInd = tbSanPhamTrongHD.getSelectedRow();
@@ -248,13 +263,11 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btDeleteActionPerformed
 
-    private void setupFields() {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormatter df = new DateFormatter(format);
-        ftfNgayNhap = new JFormattedTextField(df);
-        ftfNgayNhap.setValue(new Date());
-        String text = ftfNgayNhap.getText(); 
-        lblCustomer.setText(text);
+    private void setupDateFields() throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        ngayNhap = Calendar.getInstance().getTime();        
+        String strDate = formatter.format(ngayNhap);
+        txtNgayNhap.setText(strDate);
     }
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
@@ -308,6 +321,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                     new FrameCreateInvoice().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -316,14 +331,13 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private List<SanPhamTrongKho> sanPhamTrongKhos = new ArrayList<>();
     private List<SanPhamTrongHoaDon> sanPhamTrongHDs = new ArrayList<SanPhamTrongHoaDon>();
     private SanPhamTrongHoaDonTableModel spTHDModel = new SanPhamTrongHoaDonTableModel();
-    FrameBuyProduct frameBP;
-    private Date convertDate = null;
+    private FrameBuyProduct frameBP;
+    private Date ngayNhap = null;
     private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btDone;
-    private javax.swing.JFormattedTextField ftfNgayNhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -331,9 +345,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCustomer;
+    private javax.swing.JLabel lblKhachHang;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tbSanPhamTrongHD;
+    private javax.swing.JTextField txtNgayNhap;
     public javax.swing.JTextField txtNhanvien;
     // End of variables declaration//GEN-END:variables
 }

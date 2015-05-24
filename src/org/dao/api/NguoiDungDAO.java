@@ -17,6 +17,7 @@ import org.pojo.*;
 public interface NguoiDungDAO {
     public List<NguoiDung> getAllNguoiDung() throws SQLException;
     public NguoiDung getNguoiDungByID(int id) throws SQLException;
+    public List<NguoiDung> getNguoiDungTheoLoai(int loai) throws SQLException; 
     public void deleteNguoiDung(NguoiDung ngDung) throws SQLException;
     public void deleteNguoiDung(int id) throws SQLException;
     public int insertNguoiDung(NguoiDung ngDung) throws SQLException;

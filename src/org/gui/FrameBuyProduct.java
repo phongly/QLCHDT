@@ -91,27 +91,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                 sanPhamTrongHD.setSoLuongMua(Integer.parseInt(txtBuyNumber.getText()));
             }
         });
-//        txtBuyNumber.getDocument().addDocumentListener(new DocumentListener() {
-//            public void changedUpdate(DocumentEvent e) {
-//              warn();
-//            }
-//            public void removeUpdate(DocumentEvent e) {
-//              warn();
-//            }
-//            public void insertUpdate(DocumentEvent e) {
-//              warn();
-//            }
-//
-//            public void warn() {
-//               if (Integer.parseInt(textField.getText())<=0){
-//                 JOptionPane.showMessageDialog(null,
-//                    "Error: Please enter number bigger than 0", "Error Massage",
-//                    JOptionPane.ERROR_MESSAGE);
-//               }
-//            }
-//        });
-        
-//        lblMsg.setText(sanPhamTrongHDs.size()+"");
+
     }    
     /**SanPhamTrongHoaDonTableModel spModel
      * This method is called from within the constructor to initialize the form.
@@ -273,30 +253,30 @@ public class FrameBuyProduct extends javax.swing.JFrame {
 
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
         // TODO add your handling code here:
-        if(sanPhamTrongHDs.size() == 0)
-            lblMsg.setText("Please choose a product!");
-        else {
-//            this.sanPhamTrongHDs.add(sanPhamTrongHD);
-//            spTHDModel.add(sanPhamTrongHD);
-//            spTHDModel.get
-//            sanPhamTrongHD.getTen();
-            int flag = 0;
-            List<SanPhamTrongHoaDon> sanPhamTHDs = spTHDModel.getAllSPTrongHD();
-            for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTHDs) {
-                if(sanPhamTrongHoaDon.getTen().equals(sanPhamTrongHD.getTen()))
-                    flag = 1;
-            }
-            
-            if(flag == 1) {
-                lblMsg.setText("You've chosen this product");
-            }
+        try {
+            if(sanPhamTrongHDs.size() == 0)
+                lblMsg.setText("Please choose a product!");
             else {
-                spTHDModel.addSanPhamTHD(sanPhamTrongHD);
-                tblSanPhamTHD.setModel(spTHDModel);
-                //            this.dispose();  
-            }
-   
+                int flag = 0;
+                List<SanPhamTrongHoaDon> sanPhamTHDs = spTHDModel.getAllSPTrongHD();
+                for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTHDs) {
+                    if(sanPhamTrongHoaDon.getTen().equals(sanPhamTrongHD.getTen()))
+                        flag = 1;
+                }
+
+                if(flag == 1) {
+                    lblMsg.setText("You've chosen this product");
+                }
+                else {
+                    spTHDModel.addSanPhamTHD(sanPhamTrongHD);
+                    tblSanPhamTHD.setModel(spTHDModel);
+                    //            this.dispose();  
+                }
+
+            }            
+        } catch (Exception e) {
         }
+
 //        txtBuyNumber.setText(" get from child frame");
     }//GEN-LAST:event_btOKActionPerformed
 

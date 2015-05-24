@@ -10,7 +10,7 @@ package org.pojo;
  *
  * @author ly.phong
  */
-public class SanPhamTrongHoaDon extends SanPham{
+public class SanPhamTrongHoaDon extends SanPhamTrongKho{
     private int id;
     private int hoaDonID;
     private int sanPhamID;
