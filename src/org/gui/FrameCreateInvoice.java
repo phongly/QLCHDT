@@ -10,7 +10,8 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-//import java.sql.Date;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.Format;
@@ -19,22 +20,26 @@ import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 import org.dao.impl.HoaDonDAOImpl;
 import org.dao.impl.NguoiDungDAOImpl;
+import org.dao.impl.SanPhamTrongHoaDonDAOImpl;
 import org.dao.util.Helper;
 import org.dao.util.SanPhamTrongHoaDonTableModel;
 import org.pojo.HoaDon;
 import org.pojo.NguoiDung;
+import org.pojo.SanPham;
 import org.pojo.SanPhamTrongHoaDon;
 import org.pojo.SanPhamTrongKho;
 /**
@@ -59,8 +64,15 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         lblKhachHang.setText(KhachHang.getTen());
         txtNhanvien.setText(nhanVien.getTen());
 
-        setupDateFields();
-        frameBP = new FrameBuyProduct(tbSanPhamTrongHD); 
+        setupDateFields();       
+            tbSanPhamTrongHD.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                System.out.println("dong thay doi");
+            }
+            });
+            frameBP = new FrameBuyProduct(tbSanPhamTrongHD, cuaHangID);
     }
 
     /**
@@ -225,9 +237,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
     private void btBuyMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyMoreActionPerformed
 
-            
             frameBP.setVisible(true);
-
     }//GEN-LAST:event_btBuyMoreActionPerformed
 
     private void btDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDoneActionPerformed
@@ -235,10 +245,28 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             // TODO add your handling code here:
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             DateFormatter df = new DateFormatter(formatter);      
-            ngayNhap = (Date)formatter.parse(txtNgayNhap.getText());
-            double tongTien = 0;
+            java.util.Date parsed = formatter.parse(txtNgayNhap.getText());
+            ngayNhap.setTime(parsed.getTime()); // or
+//            ngayNhap = new Date(parsed.getTime());
+
+            SanPhamTrongHoaDonTableModel spTHDModel = (SanPhamTrongHoaDonTableModel) tbSanPhamTrongHD.getModel();
+            List<SanPhamTrongHoaDon> sanPhamTrongHDs = spTHDModel.getAllSPTrongHD();
+            for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
+//                sanPhamTrongHoaDon.setHoaDonID(hoaDonID);
+                tongTien += sanPhamTrongHoaDon.getDonGia()*sanPhamTrongHoaDon.getSoLuongMua();
+            } 
             HoaDon hoaDon = new HoaDon(ngayNhap, tongTien, cuaHangID, KhachHang.getId(), nhanVien.getId(), 0);
+            HoaDonDAOImpl hoaDonDao = new HoaDonDAOImpl();
+            int hoaDonID = hoaDonDao.insertHoaDon(hoaDon);
+            
+            for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
+                sanPhamTrongHoaDon.setHoaDonID(hoaDonID);
+            }
+          
+//            new SanPhamTrongHoaDonDAOImpl().insertSanPhamTrongHoaDon(sanPhamTrongHoaDons);
         } catch (ParseException ex) {
+            Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -246,6 +274,10 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 //        hoaDonDAO.insertHoaDon(null);
     }//GEN-LAST:event_btDoneActionPerformed
 
+    private void initTableRowChanged() {
+        
+    }
+    
     private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
         NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();
         List<NguoiDung> nguoiDungs = nguoiDungDAO.getNguoiDungTheoLoai(loai);
@@ -253,7 +285,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         int ranDomNumber = Helper.randInt(1, nguoiDungs.size());
         NguoiDung ranDomNguoiDung = nguoiDungs.get(ranDomNumber);
         return ranDomNguoiDung;
-    } 
+    }
+    
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRowInd = tbSanPhamTrongHD.getSelectedRow();
@@ -265,10 +298,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
     private void setupDateFields() throws ParseException {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        ngayNhap = Calendar.getInstance().getTime();        
+        java.util.Date ultilDate = new java.util.Date();
+        ngayNhap = new Date(ultilDate.getTime());        
         String strDate = formatter.format(ngayNhap);
         txtNgayNhap.setText(strDate);
     }
+    
     private void loadTableSanPhamTrongHD() {
 //        DefaultTableModel model = (DefaultTableModel) tbSanPhamTrongHD.getModel();
         removeAllRows(spTHDModel);
@@ -333,6 +368,8 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private SanPhamTrongHoaDonTableModel spTHDModel = new SanPhamTrongHoaDonTableModel();
     private FrameBuyProduct frameBP;
     private Date ngayNhap = null;
+    private int cuaHangID;
+    private double tongTien = 0;
     private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;

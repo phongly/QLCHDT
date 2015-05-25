@@ -5,9 +5,8 @@
  */
 
 package org.pojo;
-
+//import java.util.Date;
 import java.sql.Date;
-
 /**
  *
  * @author ly.phong

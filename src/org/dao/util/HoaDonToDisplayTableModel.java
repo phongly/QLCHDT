@@ -111,12 +111,12 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
         return hoaDonToDisplays.get(row);
     }
     
-    public void addSanPhamTHD(HoaDonToDisPlay sanPhamTHD)
+    public void addHoaDon(HoaDonToDisPlay hoaDon)
     {
-        insertSanPhamTHD(getRowCount(), sanPhamTHD);
+        insertHoaDon(getRowCount(), hoaDon);
     }
 
-    public void insertSanPhamTHD(int row, HoaDonToDisPlay spTHD)
+    public void insertHoaDon(int row, HoaDonToDisPlay spTHD)
     {
         hoaDonToDisplays.add(row, spTHD);
         fireTableRowsInserted(row, row);
@@ -128,4 +128,8 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
         fireTableRowsDeleted(row, row);
     }
     
+    public List<HoaDonToDisPlay> getAllHoaDons() 
+    {
+        return hoaDonToDisplays;      
+    }
 }

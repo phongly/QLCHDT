@@ -63,10 +63,12 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         this.sanPhamTrongHDs = sanPhamTrongHDs;
     }
 
-    public FrameBuyProduct(JTable tblSanPhamTHDon) throws SQLException {
+    public FrameBuyProduct(JTable tblSanPhamTHDon, int cuaHangID) throws SQLException {
         initComponents();
         initComboBoxCuaHang();
         initSelectRowEventListener();
+        cuaHangID = cuaHangID;
+        tongTien = tongTien;
         chooseCuahang();
         tblSanPhamTHD = tblSanPhamTHDon;
         txtBuyNumber.getDocument().addDocumentListener(new DocumentListener() {
@@ -78,7 +80,11 @@ public class FrameBuyProduct extends javax.swing.JFrame {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                try {
+                    updateText();
+                } catch (Exception ev) {
+                }
+                
             }
 
             @Override
@@ -365,8 +371,9 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Object item = cbCuaHang.getSelectedItem();
-            int cuaHangHeThongID = Integer.parseInt(((ComboItem)item).getValue());
-            loadTableSanPham(cuaHangHeThongID);
+            cuaHangID = Integer.parseInt(((ComboItem)item).getValue());
+            loadTableSanPham(cuaHangID);
+
         } catch (SQLException ex) {
             Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -404,6 +411,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private List<SanPhamTrongHoaDon> sanPhamTrongHDs = new ArrayList<SanPhamTrongHoaDon>();
     private SanPhamTrongKho sanPhamTrongKho = null;
     private JTable tblSanPhamTHD;
+    private int cuaHangID;
+    private double tongTien;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btOK;

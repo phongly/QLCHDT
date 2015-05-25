@@ -75,11 +75,11 @@ public class SanPhamTrongHoaDonDAOImpl implements SanPhamTrongHoaDonDAO{
 
     @Override
     public int insertSanPhamTrongHoaDon(SanPhamTrongHoaDon sp) throws SQLException {
-        String sql = "INSERT INTO sanpham_trong_hoadon( hoadon_id, sanpham_id, so_luong_mua) values VALUES (?, ?, ?)";
+        String sql = "INSERT INTO sanpham_trong_hoadon( hoadon_id, sanpham_id, so_luong_mua) VALUES (?, ?, ?)";
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, sp.getHoaDonID());
-        ps.setInt(1, sp.getSanPhamID());
-        ps.setInt(1, sp.getSanPhamID());
+        ps.setInt(2, sp.getSanPhamID());
+        ps.setInt(3, sp.getSoLuongMua());
         int result = 0;
 
         ps.executeUpdate();
@@ -101,6 +101,13 @@ public class SanPhamTrongHoaDonDAOImpl implements SanPhamTrongHoaDonDAO{
         ps.setInt(2, sp.getSanPhamID());
         ps.setInt(3, sp.getSoLuongMua());
         ps.executeUpdate();
+    }
+
+    @Override
+    public void insertMultiSanPhamTrongHoaDon(List<SanPhamTrongHoaDon> SPs) throws SQLException {
+        for (SanPhamTrongHoaDon sanPhamTrongHoaDon : SPs) {
+            insertSanPhamTrongHoaDon(sanPhamTrongHoaDon);
+        }
     }
     
 }

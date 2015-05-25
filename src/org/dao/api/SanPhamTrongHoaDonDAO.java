@@ -20,5 +20,6 @@ public interface SanPhamTrongHoaDonDAO {
     public void deleteSanPhamTrongHoaDon(SanPhamTrongHoaDon sp) throws SQLException;
     public void deleteSanPhamTrongHoaDon(int id) throws SQLException;
     public int insertSanPhamTrongHoaDon(SanPhamTrongHoaDon sp) throws SQLException;
+    public void insertMultiSanPhamTrongHoaDon(List<SanPhamTrongHoaDon> SPs) throws SQLException;
     public void updateSanPhamTrongHoaDon(SanPhamTrongHoaDon sp) throws SQLException;    
 }
