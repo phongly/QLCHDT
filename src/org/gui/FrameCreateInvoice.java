@@ -53,6 +53,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
      */
     private NguoiDung nhanVien;
     private NguoiDung KhachHang;
+    private double tongTien = 0;
     public FrameCreateInvoice() throws SQLException, ParseException {
 //        tbSanPhamTrongHD = new JTable();         
         initComponents();
@@ -64,15 +65,16 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         lblKhachHang.setText(KhachHang.getTen());
         txtNhanvien.setText(nhanVien.getTen());
 
-        setupDateFields();       
+        setupDateFields();
             tbSanPhamTrongHD.getModel().addTableModelListener(new TableModelListener() {
 
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                System.out.println("dong thay doi");
-            }
+                @Override
+                public void tableChanged(TableModelEvent e) {
+                    System.out.println("dong thay doi");
+                }
             });
-            frameBP = new FrameBuyProduct(tbSanPhamTrongHD, cuaHangID);
+        frameBP = new FrameBuyProduct(tbSanPhamTrongHD, cuaHangID, tongTien, lblTotal);
+
     }
 
     /**
@@ -99,6 +101,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         btDone = new javax.swing.JButton();
         txtNgayNhap = new javax.swing.JTextField();
+        lbTest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -189,9 +192,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                                         .addComponent(lblKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(37, 37, 37)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbTest)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,7 +212,9 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTest))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -248,7 +256,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             java.util.Date parsed = formatter.parse(txtNgayNhap.getText());
             ngayNhap.setTime(parsed.getTime()); // or
 //            ngayNhap = new Date(parsed.getTime());
-
+            lbTest.setText(cuaHangID+"");
             SanPhamTrongHoaDonTableModel spTHDModel = (SanPhamTrongHoaDonTableModel) tbSanPhamTrongHD.getModel();
             List<SanPhamTrongHoaDon> sanPhamTrongHDs = spTHDModel.getAllSPTrongHD();
             for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
@@ -263,6 +271,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                 sanPhamTrongHoaDon.setHoaDonID(hoaDonID);
             }
           
+            
 //            new SanPhamTrongHoaDonDAOImpl().insertSanPhamTrongHoaDon(sanPhamTrongHoaDons);
         } catch (ParseException ex) {
             Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
@@ -291,6 +300,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRowInd = tbSanPhamTrongHD.getSelectedRow();
         spTHDModel = (SanPhamTrongHoaDonTableModel) tbSanPhamTrongHD.getModel();
+//        tongTien -= spTHDModel.getSPTrongHD(selectedRowInd).getThanhTien();
         spTHDModel.removeSanPhamTHD(selectedRowInd);
         tbSanPhamTrongHD.setModel(spTHDModel);
         
@@ -369,7 +379,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private FrameBuyProduct frameBP;
     private Date ngayNhap = null;
     private int cuaHangID;
-    private double tongTien = 0;
+    
     private SanPhamTrongHoaDon spTHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuyMore;
@@ -382,6 +392,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbTest;
     private javax.swing.JLabel lblKhachHang;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tbSanPhamTrongHD;

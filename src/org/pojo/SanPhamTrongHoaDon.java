@@ -14,42 +14,47 @@ public class SanPhamTrongHoaDon extends SanPham{
     private int id;
     private int hoaDonID;
     private int sanPhamID;
-    private int soLuongMua;
+    private int soLuongMua = 0;
     private double thanhTien = 0;
-
+//    private static double tongTien = 0;
     public SanPhamTrongHoaDon() {
         super();
     }
 
     public SanPhamTrongHoaDon(String ten, double donGia) {
         super(ten, donGia);
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
 
     public SanPhamTrongHoaDon(String ten, double donGia, int sanPhamID, int soLuongMua) {
         super(ten, donGia);
         this.sanPhamID = sanPhamID;
         this.soLuongMua = soLuongMua;
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
     
-    public SanPhamTrongHoaDon(int hoaDonID, int sanPhamID, int soLuongMua) {
-        super();
+    public SanPhamTrongHoaDon(int hoaDonID, int sanPhamID, int soLuongMua, double donGia) {
+        super(donGia);
         this.hoaDonID = hoaDonID;
         this.sanPhamID = sanPhamID;
         this.soLuongMua = soLuongMua;
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
 
-    public SanPhamTrongHoaDon(int id, int hoaDonID, int sanPhamID, int soLuongMua) {
-        super();
+    public SanPhamTrongHoaDon(int id, int hoaDonID, int sanPhamID, int soLuongMua, double donGia) {
+        super(donGia);
         this.id = id;
         this.hoaDonID = hoaDonID;
         this.sanPhamID = sanPhamID;
         this.soLuongMua = soLuongMua;
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
 
     public SanPhamTrongHoaDon(int hoaDonID, int soLuongMua, String ten, double donGia) {
         super(ten, donGia);
         this.hoaDonID = hoaDonID;
         this.soLuongMua = soLuongMua;
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
 
     public SanPhamTrongHoaDon(int id, int hoaDonID, int soLuongMua, int sanPhamID, String ten, double donGia) {
@@ -57,6 +62,7 @@ public class SanPhamTrongHoaDon extends SanPham{
         this.id = id;
         this.hoaDonID = hoaDonID;
         this.soLuongMua = soLuongMua;
+//        tongTien += this.soLuongMua*this.getDonGia();
     }
 
     
@@ -96,5 +102,7 @@ public class SanPhamTrongHoaDon extends SanPham{
         return thanhTien = this.getDonGia()*this.soLuongMua;
     }
     
-    
+//    public double getTongTien() {
+//        return tongTien;
+//    }
 }

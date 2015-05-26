@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -21,6 +22,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import org.dao.impl.CuaHangDAOImpl;
 import org.dao.impl.HeThongDAOImpl;
 import org.dao.impl.SanPhamToDisplayDAOImpl;
@@ -63,12 +66,13 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         this.sanPhamTrongHDs = sanPhamTrongHDs;
     }
 
-    public FrameBuyProduct(JTable tblSanPhamTHDon, int cuaHangID) throws SQLException {
+    public FrameBuyProduct(JTable tblSanPhamTHDon, int cuaHangID, double tongTien, JLabel lbTongTien) throws SQLException {
         initComponents();
         initComboBoxCuaHang();
         initSelectRowEventListener();
         cuaHangID = cuaHangID;
         tongTien = tongTien;
+        lblTongtien = lbTongTien;
         chooseCuahang();
         tblSanPhamTHD = tblSanPhamTHDon;
         txtBuyNumber.getDocument().addDocumentListener(new DocumentListener() {
@@ -98,6 +102,40 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             }
         });
 
+        spTHDModel.addTableModelListener(new TableModelListener() {
+                @Override
+                public final void tableChanged(TableModelEvent e) {
+                    switch(e.getType()) {
+                        case TableModelEvent.INSERT: System.out.println("table insert");
+                                                         double tong = updateTongTien();
+//                                                      lbTongTien;
+//                                                        cuaHangID = 0;
+                                                      
+                                                        break;
+                        case TableModelEvent.UPDATE: System.out.println("table update");
+                                                           lbTongTien.setText("table update");
+                                                        break;
+                        case TableModelEvent.DELETE: System.out.println("table delete");
+                                                        updateTongTien();
+                                                        break;
+                            
+                            
+                    }
+                    
+                }
+                public  final double updateTongTien() {
+                    List<SanPhamTrongHoaDon> SPTHDs = spTHDModel.getAllSPTrongHD();
+                    double tongTien = 0;
+                    if(SPTHDs.size() > 0)
+                        for (SanPhamTrongHoaDon SPTHD : SPTHDs) {
+                            tongTien += SPTHD.getThanhTien();
+                        }
+                    lbTongTien.setText(tongTien+"");
+                    return tongTien;
+                }
+                
+            });
+        tblSanPhamTHD.setModel(spTHDModel);
     }    
     /**SanPhamTrongHoaDonTableModel spModel
      * This method is called from within the constructor to initialize the form.
@@ -120,6 +158,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         txtAreaDetail = new javax.swing.JTextArea();
         btCancel = new javax.swing.JButton();
         lblMsg = new javax.swing.JLabel();
+        lbTest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -189,38 +228,45 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblMsg)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btOK)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btCancel)))
-                .addGap(68, 68, 68))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(261, 261, 261))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTest)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblMsg)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btOK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btCancel)))
+                        .addGap(68, 68, 68))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addGap(2, 2, 2)
+                .addComponent(lbTest)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -235,7 +281,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                     .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btOK)
                     .addComponent(btCancel))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -260,6 +306,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
         // TODO add your handling code here:
         try {
+            
             if(sanPhamTrongHDs.size() == 0)
                 lblMsg.setText("Please choose a product!");
             else {
@@ -274,6 +321,9 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                     lblMsg.setText("You've chosen this product");
                 }
                 else {
+                    
+//                    tongTien += sanPhamTrongHD.getThanhTien();
+//                    lblTongtien.setText(tongTien+"");
                     spTHDModel.addSanPhamTHD(sanPhamTrongHD);
                     tblSanPhamTHD.setModel(spTHDModel);
                     //            this.dispose();  
@@ -372,6 +422,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             // TODO add your handling code here:
             Object item = cbCuaHang.getSelectedItem();
             cuaHangID = Integer.parseInt(((ComboItem)item).getValue());
+            lbTest.setText(cuaHangID+"");
             loadTableSanPham(cuaHangID);
 
         } catch (SQLException ex) {
@@ -412,7 +463,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private SanPhamTrongKho sanPhamTrongKho = null;
     private JTable tblSanPhamTHD;
     private int cuaHangID;
-    private double tongTien;
+    private Double tongTien;
+    private JLabel lblTongtien;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btOK;
@@ -422,6 +474,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbTest;
     private javax.swing.JLabel lblMsg;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextArea txtAreaDetail;

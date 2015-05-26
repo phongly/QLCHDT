@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class SanPham {
     private int sanPhamID;
     private String ten;
-    private double donGia;
+    private double donGia = 0;
 
     public SanPham() {
     }
@@ -39,6 +39,10 @@ public class SanPham {
         this.donGia = donGia;
     }
     
+    public SanPham( double donGia) {
+        this.donGia = donGia;
+    }
+        
     public int getSanPhamID() {
         return sanPhamID;
     }
