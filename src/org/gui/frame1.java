@@ -31,6 +31,8 @@ public class frame1 extends javax.swing.JFrame {
         btGui = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblTenSanPhamDuocChon = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        lblSotrave = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +50,15 @@ public class frame1 extends javax.swing.JFrame {
 
         lblTenSanPhamDuocChon.setText("jLabel3");
 
+        jButton1.setText("so tra ve");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        lblSotrave.setText("so tra ve");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -59,13 +70,17 @@ public class frame1 extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(133, 133, 133)
-                        .addComponent(btGui))
+                        .addComponent(btGui)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSotrave))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblTenSanPhamDuocChon)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,12 +88,15 @@ public class frame1 extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(jLabel1)
                 .addGap(41, 41, 41)
-                .addComponent(btGui)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btGui)
+                    .addComponent(jButton1)
+                    .addComponent(lblSotrave))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblTenSanPhamDuocChon))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
@@ -86,9 +104,16 @@ public class frame1 extends javax.swing.JFrame {
 
     private void btGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuiActionPerformed
         // TODO add your handling code here:
-        frame2 f2 = new frame2(lblTenSanPhamDuocChon); // gọi constructor của frame2 mà có biến jTextField 
+        frame2 f2 = new frame2(lblTenSanPhamDuocChon, so); // gọi constructor của frame2 mà có biến jTextField 
+        so = f2.getSoTam();
         f2.setVisible(true);
+        lblSotrave.setText(so+"");
     }//GEN-LAST:event_btGuiActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        lblSotrave.setText(so+"");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,10 +150,13 @@ public class frame1 extends javax.swing.JFrame {
         });
     }
 
+    private Integer so;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGui;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblSotrave;
     public javax.swing.JLabel lblTenSanPhamDuocChon;
     // End of variables declaration//GEN-END:variables
 }

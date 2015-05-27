@@ -25,12 +25,14 @@ public class frame2 extends javax.swing.JFrame {
          initEventforTextField(tfSoluong);
     }
 
-    public frame2(JLabel sanPhamtrave) {
+    public frame2(JLabel sanPhamtrave, Integer so) {
         initComponents();
         sanPhamTraVeTam = sanPhamtrave; // gán sanPhamtrave từ frame 1 truyền qua
                                                 // cho sanPhamTraVeTam
         initEventforTextField(tfDongia);
         initEventforTextField(tfSoluong);
+        so = 10;
+        soTam = 9;
     
     }                                        
     /**
@@ -205,6 +207,12 @@ public class frame2 extends javax.swing.JFrame {
             }
         });
     }
+
+    public Integer getSoTam() {
+        return soTam;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -240,7 +248,7 @@ public class frame2 extends javax.swing.JFrame {
         });
     }
 
-    
+    private Integer soTam;
     private JLabel sanPhamTraVeTam; // dùng để giữ biến JLabel sanPhamtrave
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btOK;

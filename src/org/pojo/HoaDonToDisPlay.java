@@ -21,6 +21,7 @@ public class HoaDonToDisPlay extends HoaDon{
     private String tenNhanvien;
     private String tenKhachHang;
     private String tenCuaHang;
+    private int tinhTrang;
     private double tongTien = 0;
 
     public HoaDonToDisPlay() {
@@ -39,6 +40,11 @@ public class HoaDonToDisPlay extends HoaDon{
         super( ngayNhap, tongTien, cuaHangID, khachHangID, nhanVienID);
     }
 
+    public HoaDonToDisPlay(int id, Date ngayNhap, double tongTien, int cuaHangID, int khachHangID, int nhanVienID, int tinhTrang) {
+        super(id, ngayNhap, tongTien, cuaHangID, khachHangID, nhanVienID, tinhTrang);
+    }
+
+    
     public HoaDonToDisPlay(Date ngayNhap, double tongTien,
             List<SanPhamTrongHoaDon> sanPhamDuocMuas, NguoiDung khachHang, NguoiDung nhanVien, HethongCuaHangNhaCC cuaHang) {
         
@@ -65,16 +71,7 @@ public class HoaDonToDisPlay extends HoaDon{
         this.tenNhanvien = this.nhanVien.getTen();
         this.tenKhachHang = this.khachHang.getTen();
         this.tenCuaHang = this.cuaHang.getTen();
-    }
-        
-    @Override
-    public double getTongTien() {
-        if(sanPhamDuocMuas.size() > 0)
-        for (SanPhamTrongHoaDon sanPhamDuocMua : sanPhamDuocMuas) {
-            tongTien += sanPhamDuocMua.getDonGia();
-        }
-        return tongTien;
-    }
+    }        
 
     public NguoiDung getKhachHang() {
         return khachHang;
@@ -82,7 +79,6 @@ public class HoaDonToDisPlay extends HoaDon{
 
     public NguoiDung getNhanVien() {
         return nhanVien;
-    }
-    
+    }   
     
 }

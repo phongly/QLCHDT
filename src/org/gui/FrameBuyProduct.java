@@ -66,11 +66,12 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         this.sanPhamTrongHDs = sanPhamTrongHDs;
     }
 
-    public FrameBuyProduct(JTable tblSanPhamTHDon, int cuaHangID, double tongTien, JLabel lbTongTien) throws SQLException {
+    public FrameBuyProduct(JTable tblSanPhamTHDon,  double tongTien, JLabel lbTongTien) throws SQLException {
         initComponents();
         initComboBoxCuaHang();
         initSelectRowEventListener();
-        cuaHangID = cuaHangID;
+//        cuaHangID = cuaHangID;
+        this.cuaHangID = 5;
         tongTien = tongTien;
         lblTongtien = lbTongTien;
         chooseCuahang();
@@ -453,6 +454,10 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeSanPham(i);
         }
+    }
+
+    public int getCuaHangID() {
+        return cuaHangID;
     }
     
     

@@ -73,7 +73,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
                     System.out.println("dong thay doi");
                 }
             });
-        frameBP = new FrameBuyProduct(tbSanPhamTrongHD, cuaHangID, tongTien, lblTotal);
+        frameBP = new FrameBuyProduct(tbSanPhamTrongHD, tongTien, lblTotal);
 
     }
 
@@ -256,11 +256,12 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             java.util.Date parsed = formatter.parse(txtNgayNhap.getText());
             ngayNhap.setTime(parsed.getTime()); // or
 //            ngayNhap = new Date(parsed.getTime());
+            cuaHangID = frameBP.getCuaHangID();
             lbTest.setText(cuaHangID+"");
+          // giu lai  
             SanPhamTrongHoaDonTableModel spTHDModel = (SanPhamTrongHoaDonTableModel) tbSanPhamTrongHD.getModel();
             List<SanPhamTrongHoaDon> sanPhamTrongHDs = spTHDModel.getAllSPTrongHD();
             for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
-//                sanPhamTrongHoaDon.setHoaDonID(hoaDonID);
                 tongTien += sanPhamTrongHoaDon.getDonGia()*sanPhamTrongHoaDon.getSoLuongMua();
             } 
             HoaDon hoaDon = new HoaDon(ngayNhap, tongTien, cuaHangID, KhachHang.getId(), nhanVien.getId(), 0);
@@ -269,18 +270,19 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             
             for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTrongHDs) {
                 sanPhamTrongHoaDon.setHoaDonID(hoaDonID);
+                
             }
-          
-            
-//            new SanPhamTrongHoaDonDAOImpl().insertSanPhamTrongHoaDon(sanPhamTrongHoaDons);
+            SanPhamTrongHoaDonDAOImpl sanPhamTHDDAO = new SanPhamTrongHoaDonDAOImpl();
+            sanPhamTHDDAO.insertMultiSanPhamTrongHoaDon(sanPhamTrongHDs);
+
         } catch (ParseException ex) {
             Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) {
             Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        HoaDon hoaDon = new HoaDon((Date)ftfNgayNhap, WIDTH, HEIGHT, WIDTH, ICONIFIED, WIDTH);
-//        hoaDonDAO.insertHoaDon(null);
+
     }//GEN-LAST:event_btDoneActionPerformed
 
     private void initTableRowChanged() {

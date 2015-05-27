@@ -62,7 +62,6 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
         switch (column)
         {
             case 0: return Integer.class;
-            case 4: return Double.class;
             default: return String.class;
         }
     }
@@ -78,15 +77,16 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int row, int column)
     {
-        HoaDonToDisPlay sanPhamTHD = getHD(row);
+        HoaDonToDisPlay hoaDon = getHD(row);
         switch (column)
         {
-            case 0: return sanPhamTHD.getId();
-            case 1: return sanPhamTHD.getNhanVien();
-            case 2: return sanPhamTHD.getKhachHang();           
-            case 3: return sanPhamTHD.getTongTien();
-            case 4: return sanPhamTHD.getNgayNhap();
-            case 5: return sanPhamTHD.getTinhTrang();
+            case 0: return hoaDon.getId();
+            case 1: return hoaDon.getNhanVien().getTen();
+            case 2: return hoaDon.getKhachHang().getTen();           
+            case 3: return hoaDon.getTongTien();
+            case 4: return hoaDon.getNgayNhap();
+            case 5: return hoaDon.getTinhTrang();
+            case 6: return "cuong";
             default: return null;
         }
     }

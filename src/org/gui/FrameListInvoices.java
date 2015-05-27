@@ -58,6 +58,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         btView = new javax.swing.JButton();
+        lbTest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,12 +158,16 @@ public class FrameListInvoices extends javax.swing.JFrame {
             }
         });
 
+        lbTest.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbTest)
+                .addGap(106, 106, 106)
                 .addComponent(jLabel1)
                 .addGap(247, 247, 247))
             .addGroup(layout.createSequentialGroup()
@@ -177,7 +182,9 @@ public class FrameListInvoices extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lbTest))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
@@ -219,13 +226,13 @@ public class FrameListInvoices extends javax.swing.JFrame {
         List<HoaDon> hoaDons = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
         List<HoaDonToDisPlay> hoaDonToDisplays = new ArrayList<>();
         for (HoaDon hoaDon : hoaDons) {
-            HoaDonToDisPlay hoaDonToDisplay = (HoaDonToDisPlay)hoaDon;
+            HoaDonToDisPlay hoaDonToDisplay = new HoaDonToDisPlay(hoaDon.getId(), hoaDon.getNgayNhap(), hoaDon.getTongTien(), hoaDon.getCuaHangID(), 
+                                                    hoaDon.getKhachHangID(), hoaDon.getNhanVienID(), hoaDon.getTinhTrang());
+
             hoaDonToDisplays.add(hoaDonToDisplay);
         }
         hdModel = new HoaDonToDisplayTableModel(hoaDonToDisplays);
-
-//        hdModel = new HoaDonToDisplayTableModel(sanPhamToDisPlays);
-        
+        lbTest.setText(hoaDons.size()+"");
         tblSanPham.setModel(hdModel);
     }
     
@@ -302,6 +309,7 @@ public class FrameListInvoices extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lbTest;
     private javax.swing.JTable tblSanPham;
     // End of variables declaration//GEN-END:variables
 }
