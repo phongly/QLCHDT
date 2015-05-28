@@ -171,12 +171,16 @@ public class FrameListInvoices extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(247, 247, 247))
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btView, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btView, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,22 +219,36 @@ public class FrameListInvoices extends javax.swing.JFrame {
 
     private void btViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btViewActionPerformed
 
-        int selectedRowInd = tblSanPham.getSelectedRow();
-        HoaDonToDisPlay selectedHD = hdModel.getHD(selectedRowInd);
-        FrameAdvanceInfo advanceInfo = new FrameAdvanceInfo();
-        advanceInfo.setVisible(true);
+        try {
+            int selectedRowInd = tblSanPham.getSelectedRow();
+            HoaDonToDisPlay selectedHD = hdModel.getHD(selectedRowInd);
+            
+            FrameViewInvoice fViewInvoice = new FrameViewInvoice(selectedHD);
+            fViewInvoice.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameListInvoices.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btViewActionPerformed
 
     private void loadTableCuaHang(int cuaHangID) throws SQLException {               
         removeAllRows(hdModel);
         List<HoaDon> hoaDons = new HoaDonDAOImpl().getAllHoaDonByCuaHangID(cuaHangID);
+
         List<HoaDonToDisPlay> hoaDonToDisplays = new ArrayList<>();
         for (HoaDon hoaDon : hoaDons) {
+            NguoiDung nhanVien = new NguoiDungDAOImpl().getNguoiDungByID(hoaDon.getNhanVienID());
+            NguoiDung khachHang = new NguoiDungDAOImpl().getNguoiDungByID(hoaDon.getKhachHangID());
+            HethongCuaHangNhaCC cuaHang = new HeThongCuaHangNhaCCDAOImpl().getKhoByID(hoaDon.getCuaHangID());
             HoaDonToDisPlay hoaDonToDisplay = new HoaDonToDisPlay(hoaDon.getId(), hoaDon.getNgayNhap(), hoaDon.getTongTien(), hoaDon.getCuaHangID(), 
                                                     hoaDon.getKhachHangID(), hoaDon.getNhanVienID(), hoaDon.getTinhTrang());
+            
 
+            hoaDonToDisplay.setNhanVien(nhanVien);
+            hoaDonToDisplay.setKhachHang(khachHang);
+            hoaDonToDisplay.setCuaHang(cuaHang);
             hoaDonToDisplays.add(hoaDonToDisplay);
         }
+        
         hdModel = new HoaDonToDisplayTableModel(hoaDonToDisplays);
         lbTest.setText(hoaDons.size()+"");
         tblSanPham.setModel(hdModel);

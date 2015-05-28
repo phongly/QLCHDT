@@ -36,6 +36,7 @@ public class frame1 extends javax.swing.JFrame {
         lbGiaTritrave = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         tfGiaTriTraVe = new javax.swing.JTextField();
+        btOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +72,13 @@ public class frame1 extends javax.swing.JFrame {
             }
         });
 
+        btOK.setText("OK");
+        btOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btOKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,7 +96,9 @@ public class frame1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblSotrave))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
+                        .addGap(20, 20, 20)
+                        .addComponent(btOK)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbGiaTritrave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfGiaTriTraVe, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -121,8 +131,9 @@ public class frame1 extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbGiaTritrave)
-                    .addComponent(tfGiaTriTraVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(tfGiaTriTraVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btOK))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +159,12 @@ public class frame1 extends javax.swing.JFrame {
         f3.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
+        // TODO add your handling code here:
+        tfGiaTriTraVe.getText();
+        lblTenSanPhamDuocChon.setText(tfGiaTriTraVe.getText());
+    }//GEN-LAST:event_btOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,6 +204,7 @@ public class frame1 extends javax.swing.JFrame {
     private Integer so;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGui;
+    private javax.swing.JButton btOK;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

@@ -25,7 +25,6 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
         "Customer",
         "Total",
         "Date",
-        "Provider",
         "Status"
         
     };
@@ -85,8 +84,7 @@ public class HoaDonToDisplayTableModel extends AbstractTableModel{
             case 2: return hoaDon.getKhachHang().getTen();           
             case 3: return hoaDon.getTongTien();
             case 4: return hoaDon.getNgayNhap();
-            case 5: return hoaDon.getTinhTrang();
-            case 6: return "cuong";
+            case 5: return hoaDon.getTenTinhTrang();
             default: return null;
         }
     }

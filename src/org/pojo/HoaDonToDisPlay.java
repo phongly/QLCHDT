@@ -88,6 +88,26 @@ public class HoaDonToDisPlay extends HoaDon{
 
     public NguoiDung getNhanVien() {
         return nhanVien;
-    }   
+    }
+
+    public HethongCuaHangNhaCC getCuaHang() {
+        return cuaHang;
+    }
+
+    public void setCuaHang(HethongCuaHangNhaCC cuaHang) {
+        this.cuaHang = cuaHang;
+    }
+    
+    
+    
+    public String getTenTinhTrang() {
+        switch(this.getTinhTrang()) {
+            case 0: return "Normal";
+            case 1: return "Delete";
+            case 2: return "Update";
+            default: return "Normal";
+        }
+    }
+
     
 }

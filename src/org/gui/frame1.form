@@ -38,7 +38,9 @@
                       <Component id="lblSotrave" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="btOK" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbGiaTritrave" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tfGiaTriTraVe" min="-2" pref="57" max="-2" attributes="0"/>
@@ -81,8 +83,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbGiaTritrave" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfGiaTriTraVe" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btOK" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -144,6 +147,14 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfGiaTriTraVe">
+    </Component>
+    <Component class="javax.swing.JButton" name="btOK">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OK"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btOKActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

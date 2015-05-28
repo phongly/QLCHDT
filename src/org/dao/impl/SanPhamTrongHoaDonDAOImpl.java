@@ -30,7 +30,7 @@ public class SanPhamTrongHoaDonDAOImpl implements SanPhamTrongHoaDonDAO{
         int sanPhamID = rs.getInt("sanpham_id");
         int soLuong = rs.getInt("so_luong_mua");
 
-        SanPhamTrongHoaDon sanPham = new SanPhamTrongHoaDon(ID, hoaDonID, sanPhamID, soLuong);
+        SanPhamTrongHoaDon sanPham = new SanPhamTrongHoaDon(ID, hoaDonID, sanPhamID, soLuong, soLuong);
         return sanPham;
     }
     @Override
@@ -108,6 +108,20 @@ public class SanPhamTrongHoaDonDAOImpl implements SanPhamTrongHoaDonDAO{
         for (SanPhamTrongHoaDon sanPhamTrongHoaDon : SPs) {
             insertSanPhamTrongHoaDon(sanPhamTrongHoaDon);
         }
+    }
+
+    @Override
+    public List<SanPhamTrongHoaDon> getAllSanPhamTrongHoaDonByHoaDonID(int hoaDonID) throws SQLException {
+        Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
+        List<SanPhamTrongHoaDon> list = new ArrayList<>();
+        String sql = "SELECT * FROM sanpham_trong_hoadon WHERE hoadon_id="+hoaDonID;
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            list.add(convert(rs));
+        }
+        rs.close();
+        statement.close();
+        return list;
     }
     
 }

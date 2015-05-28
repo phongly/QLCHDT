@@ -6,6 +6,7 @@
 
 package org.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,7 +52,7 @@ public class NguoiDungDAOImpl implements NguoiDungDAO{
     @Override
     public NguoiDung getNguoiDungByID(int id) throws SQLException {
         Statement statement = PostgreConnection.getInstance().getConnection().createStatement();
-        String sql = "SELECT * FROM sanpham WHERE id="+id;
+        String sql = "SELECT * FROM nguoi_dung WHERE id="+id;
         ResultSet rs = statement.executeQuery(sql);
         rs.next();
         NguoiDung nguoiDung = convert(rs);
@@ -77,7 +78,17 @@ public class NguoiDungDAOImpl implements NguoiDungDAO{
 
     @Override
     public void updateNguoiDung(NguoiDung ngDung) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE nguoi_dung\n" +
+                        "   SET ten=?, dia_chi=?, so_dt=?, mat_khau=?, loai=?\n" +
+                        " WHERE id="+ngDung.getId();
+        PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
+        ps.setString(1, ngDung.getTen());
+        ps.setString(2, ngDung.getDiaChi());
+        ps.setString(3, ngDung.getSoDT());
+        ps.setString(4, ngDung.getMatKhau());
+        ps.setInt(5, ngDung.getLoai());
+        ps.executeUpdate();
+        
     }
 
     @Override
