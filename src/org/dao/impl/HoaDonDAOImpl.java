@@ -87,7 +87,7 @@ public class HoaDonDAOImpl implements HoaDonDAO{
         String sql = "UPDATE hoadon" +
                     "   SET ngay_nhap=?, tong_tien=?, cuahang_id=?, khachhang_id=?," +
                     "       nhanvien_id=?, tinhtrang=?\n" +
-                    " WHERE id"+hd.getId();
+                    " WHERE id="+hd.getId();
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
         ps.setDate(1, hd.getNgayNhap());
         ps.setDouble(2, hd.getTongTien());

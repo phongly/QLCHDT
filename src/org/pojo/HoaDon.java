@@ -120,7 +120,6 @@ public class HoaDon {
 
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
-    }
-    
+    }   
     
 }
