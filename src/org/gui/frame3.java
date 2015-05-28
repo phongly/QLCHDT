@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import javax.swing.JTextField;
 /**
  *
  * @author ly.phong
@@ -20,8 +21,12 @@ public class frame3 extends javax.swing.JFrame {
     /**
      * Creates new form frame3
      */
-    private String giaTriTraVe;
+
     public frame3() {
+        initComponents();
+    }
+    
+    public frame3(JTextField tfGiaTriTraVe) {
         initComponents();
         DefaultTableModel model = (DefaultTableModel)tbSanPham.getModel();
         int rows = model.getRowCount();
@@ -41,8 +46,8 @@ public class frame3 extends javax.swing.JFrame {
                   row = tbSanPham.rowAtPoint(point);
                   column = tbSanPham.columnAtPoint(point);
                   String str = tbSanPham.getValueAt(row, column).toString();
-                  setGiaTriTraVe(str);
-                  lbTong.setText(giaTriTraVe);
+                  
+                  tfGiaTriTraVe.setText(str);
 
             }
 
@@ -68,13 +73,6 @@ public class frame3 extends javax.swing.JFrame {
         });
     }
 
-    public void setGiaTriTraVe(String giaTriTraVe) {
-        this.giaTriTraVe = giaTriTraVe;
-    }
-    
-    public String getGiaTriTraVe() {
-        return giaTriTraVe;
-    }
 
     
     /**
@@ -89,8 +87,9 @@ public class frame3 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSanPham = new javax.swing.JTable();
         lbTong = new javax.swing.JLabel();
+        btOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,32 +104,46 @@ public class frame3 extends javax.swing.JFrame {
 
         lbTong.setText("jLabel1");
 
+        btOk.setText("OK");
+        btOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btOkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(149, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(114, 114, 114))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbTong)
-                        .addGap(236, 236, 236))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btOk)
+                        .addGap(158, 158, 158)
+                        .addComponent(lbTong))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(114, 114, 114))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(lbTong)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTong)
+                    .addComponent(btOk))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOkActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,6 +181,7 @@ public class frame3 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btOk;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTong;
     private javax.swing.JTable tbSanPham;

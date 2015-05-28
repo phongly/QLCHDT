@@ -73,6 +73,15 @@ public class HoaDonToDisPlay extends HoaDon{
         this.tenCuaHang = this.cuaHang.getTen();
     }        
 
+    public void setKhachHang(NguoiDung khachHang) {
+        this.khachHang = khachHang;
+    }
+
+    public void setNhanVien(NguoiDung nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+
+    
     public NguoiDung getKhachHang() {
         return khachHang;
     }

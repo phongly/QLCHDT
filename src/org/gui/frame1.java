@@ -35,7 +35,7 @@ public class frame1 extends javax.swing.JFrame {
         lblSotrave = new javax.swing.JLabel();
         lbGiaTritrave = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        btTrave = new javax.swing.JButton();
+        tfGiaTriTraVe = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,13 +71,6 @@ public class frame1 extends javax.swing.JFrame {
             }
         });
 
-        btTrave.setText("Tra ve");
-        btTrave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btTraveActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,10 +88,10 @@ public class frame1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblSotrave))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(btTrave)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbGiaTritrave))
+                        .addGap(123, 123, 123)
+                        .addComponent(lbGiaTritrave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfGiaTriTraVe, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,11 +118,11 @@ public class frame1 extends javax.swing.JFrame {
                     .addComponent(lblTenSanPhamDuocChon))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(3, 3, 3)
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbGiaTritrave)
-                    .addComponent(btTrave))
-                .addContainerGap(51, Short.MAX_VALUE))
+                    .addComponent(tfGiaTriTraVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,21 +141,13 @@ public class frame1 extends javax.swing.JFrame {
         lblSotrave.setText(so+"");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private String giaTritrave;
     frame3 f3;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        f3 = new frame3();
+        f3 = new frame3(tfGiaTriTraVe);
         f3.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btTraveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTraveActionPerformed
-        // TODO add your handling code here:
-        giaTritrave = f3.getGiaTriTraVe();
-                String st = lbGiaTritrave.getText();
-        lbGiaTritrave.setText(st + giaTritrave);
-    }//GEN-LAST:event_btTraveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +187,6 @@ public class frame1 extends javax.swing.JFrame {
     private Integer so;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGui;
-    private javax.swing.JButton btTrave;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -210,5 +194,6 @@ public class frame1 extends javax.swing.JFrame {
     private javax.swing.JLabel lbGiaTritrave;
     private javax.swing.JLabel lblSotrave;
     public javax.swing.JLabel lblTenSanPhamDuocChon;
+    private javax.swing.JTextField tfGiaTriTraVe;
     // End of variables declaration//GEN-END:variables
 }
