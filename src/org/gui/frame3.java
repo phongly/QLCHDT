@@ -6,8 +6,11 @@
 
 package org.gui;
 
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.table.DefaultTableModel;
-
+import java.awt.event.*;
 /**
  *
  * @author ly.phong
@@ -17,9 +20,10 @@ public class frame3 extends javax.swing.JFrame {
     /**
      * Creates new form frame3
      */
+    private String giaTriTraVe;
     public frame3() {
         initComponents();
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel)tbSanPham.getModel();
         int rows = model.getRowCount();
         int tong = 0;
         for (int i = 0; i < rows; i++) {
@@ -27,8 +31,52 @@ public class frame3 extends javax.swing.JFrame {
            tong+=Integer.parseInt((String)model.getValueAt(i, 1));
         }
         lbTong.setText(tong+"");
+        
+        tbSanPham.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point point = e.getPoint();
+                  int row,column;
+                  row = tbSanPham.rowAtPoint(point);
+                  column = tbSanPham.columnAtPoint(point);
+                  String str = tbSanPham.getValueAt(row, column).toString();
+                  setGiaTriTraVe(str);
+                  lbTong.setText(giaTriTraVe);
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
+    public void setGiaTriTraVe(String giaTriTraVe) {
+        this.giaTriTraVe = giaTriTraVe;
+    }
+    
+    public String getGiaTriTraVe() {
+        return giaTriTraVe;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,12 +87,12 @@ public class frame3 extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbSanPham = new javax.swing.JTable();
         lbTong = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Iphone", "30"},
                 {"Nokia", "15"}
@@ -53,7 +101,7 @@ public class frame3 extends javax.swing.JFrame {
                 "ten ", "gia"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbSanPham);
 
         lbTong.setText("jLabel1");
 
@@ -121,7 +169,7 @@ public class frame3 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbTong;
+    private javax.swing.JTable tbSanPham;
     // End of variables declaration//GEN-END:variables
 }
