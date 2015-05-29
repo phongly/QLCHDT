@@ -17,9 +17,12 @@ public class SanPhamTrongKho extends SanPham{
     private int sanPhamTrongKhoID;
     private int KhoID;
     private int nhaCCID;
+    private int nhanVienNhapID;
+    private int nhanVienXuatID;
     private int soLuongTon;
     private Date ngayNhap;
     private Date ngayXuat;
+    
     
     public SanPhamTrongKho() {
         super();
@@ -46,7 +49,7 @@ public class SanPhamTrongKho extends SanPham{
         this.KhoID = KhoID;
         this.soLuongTon = soLuongTon;
     }
-       
+    
     public SanPhamTrongKho(int sanPhamTrongKhoID, int KhoID, int sanPhamID, int soLuongTon, Date ngayNhap, Date ngayXuat) {
         super(sanPhamID);
         this.sanPhamTrongKhoID = sanPhamTrongKhoID;
@@ -54,6 +57,16 @@ public class SanPhamTrongKho extends SanPham{
         this.soLuongTon = soLuongTon;
         this.ngayNhap = ngayNhap;
         this.ngayXuat = ngayXuat;
+    }
+    public SanPhamTrongKho(int sanPhamTrongKhoID, int KhoID, int sanPhamID, int soLuongTon, Date ngayNhap, Date ngayXuat, int nvNhapID, int nvXuatID) {
+        super(sanPhamID);
+        this.sanPhamTrongKhoID = sanPhamTrongKhoID;
+        this.KhoID = KhoID;
+        this.soLuongTon = soLuongTon;
+        this.ngayNhap = ngayNhap;
+        this.ngayXuat = ngayXuat;
+        this.nhanVienNhapID = nvNhapID;
+        this.nhanVienXuatID = nvXuatID;
     }
 
     public SanPhamTrongKho(int sanPhamTrongKhoID, int KhoID, int nhaCCID, int soLuongTon, Date ngayNhap, Date ngayXuat, int sanPhamID) {
@@ -64,6 +77,17 @@ public class SanPhamTrongKho extends SanPham{
         this.soLuongTon = soLuongTon;
         this.ngayNhap = ngayNhap;
         this.ngayXuat = ngayXuat;
+    }
+    public SanPhamTrongKho(int sanPhamTrongKhoID, int KhoID, int nhaCCID, int soLuongTon, Date ngayNhap, Date ngayXuat, int sanPhamID, int nvNhapID, int nvXuatID) {
+        super(sanPhamID);
+        this.sanPhamTrongKhoID = sanPhamTrongKhoID;
+        this.KhoID = KhoID;
+        this.nhaCCID = nhaCCID;
+        this.soLuongTon = soLuongTon;
+        this.ngayNhap = ngayNhap;
+        this.ngayXuat = ngayXuat;
+        this.nhanVienNhapID = nvNhapID;
+        this.nhanVienXuatID = nvXuatID;
     }
 
     
@@ -113,6 +137,22 @@ public class SanPhamTrongKho extends SanPham{
 
     public void setNhaCCID(int nhaCCID) {
         this.nhaCCID = nhaCCID;
+    }
+
+    public int getNhanVienNhapID() {
+        return nhanVienNhapID;
+    }
+
+    public void setNhanVienNhapID(int nhanVienNhapID) {
+        this.nhanVienNhapID = nhanVienNhapID;
+    }
+
+    public int getNhanVienXuatID() {
+        return nhanVienXuatID;
+    }
+
+    public void setNhanVienXuatID(int nhanVienXuatID) {
+        this.nhanVienXuatID = nhanVienXuatID;
     }
 
     

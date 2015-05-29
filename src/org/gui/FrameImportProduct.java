@@ -6,16 +6,21 @@
 package org.gui;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.DateFormatter;
 import org.dao.impl.*;
 import org.dao.util.ComboItem;
+import org.dao.util.Helper;
 import org.dao.util.PostgreConnection;
 import org.pojo.*;
 /**
@@ -27,11 +32,33 @@ public class FrameImportProduct extends javax.swing.JFrame {
     /**
      * Creates new form F_AddProduct
      */
-    public FrameImportProduct() throws SQLException {
+    NguoiDung nhanVien = null;
+    public FrameImportProduct() throws SQLException, ParseException {
         initComponents();
         initComboBoxNhaCC();
+        int loaiNhanVien = 0;
+        nhanVien = getRandomNguoiDungTheo(loaiNhanVien);
+        txtNhanvien.setText(nhanVien.getTen().toString());
+        setupDateFields();
+        
     }
 
+    private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
+        NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();
+        List<NguoiDung> nguoiDungs = nguoiDungDAO.getNguoiDungTheoLoai(loai);
+        
+        int ranDomNumber = Helper.randInt(1, nguoiDungs.size());
+        NguoiDung ranDomNguoiDung = nguoiDungs.get(ranDomNumber);
+        return ranDomNguoiDung;
+    }
+    private Date ngayNhap = null;
+    private void setupDateFields() throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date ultilDate = new java.util.Date();
+        ngayNhap = new Date(ultilDate.getTime());        
+        String strDate = formatter.format(ngayNhap);
+        txtNgay.setText(strDate);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +83,7 @@ public class FrameImportProduct extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btReset = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
+        lbThongbao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,41 +128,35 @@ public class FrameImportProduct extends javax.swing.JFrame {
             }
         });
 
+        lbThongbao.setForeground(new java.awt.Color(0, 153, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(77, Short.MAX_VALUE)
+                        .addGap(72, 72, 72)
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(cbNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4))
-                        .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                                .addGap(6, 6, 6)
+                                .addComponent(lbThongbao))
+                            .addComponent(cbNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(155, 155, 155))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,6 +168,16 @@ public class FrameImportProduct extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(140, 140, 140))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +190,7 @@ public class FrameImportProduct extends javax.swing.JFrame {
                     .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,11 +206,13 @@ public class FrameImportProduct extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(4, 4, 4)
                 .addComponent(cbNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbThongbao)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btReset)
                     .addComponent(btSave))
-                .addGap(65, 65, 65))
+                .addGap(58, 58, 58))
         );
 
         pack();
@@ -202,6 +236,11 @@ public class FrameImportProduct extends javax.swing.JFrame {
             String tenSp = txtTenSP.getText();
             double gia = Double.valueOf(txtDongia.getText());
 
+            // about date
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormatter df = new DateFormatter(formatter);      
+            java.util.Date parsed = formatter.parse(txtNgay.getText());
+            ngayNhap.setTime(parsed.getTime()); 
             // insert sanpham
             SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
             SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();       
@@ -219,14 +258,20 @@ public class FrameImportProduct extends javax.swing.JFrame {
             sptk.setSanPhamID(sanPhamID);
             sptk.setKhoID(heThongID);
             sptk.setSoLuongTon(soLuongTon);         
-            sptk.setNgayNhap(null);
-            sptk.setNgayXuat(null);
+            sptk.setNgayNhap(ngayNhap);
             sptk.setNhaCCID(nhaCCID);
+            sptk.setNhanVienNhapID(nhanVien.getId());
             SanPhamTrongKhoDAOImpl sptkDAOImp = new SanPhamTrongKhoDAOImpl();
-            sptkDAOImp.insertSanPhamTrongKho(sptk);            
+            int id = sptkDAOImp.insertSanPhamTrongKho(sptk);
+            if(id != 0 || id != -1) 
+                lbThongbao.setText("You have saved product successfully!");
 
 //            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
+            
+
         } catch (SQLException ex) {
+            Logger.getLogger(FrameImportProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(FrameImportProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btSaveActionPerformed
@@ -276,6 +321,8 @@ public class FrameImportProduct extends javax.swing.JFrame {
                     new FrameImportProduct().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(FrameImportProduct.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FrameImportProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
@@ -293,6 +340,7 @@ public class FrameImportProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lbThongbao;
     private javax.swing.JTextField txtDongia;
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtNhanvien;

@@ -6,6 +6,7 @@
 
 package org.gui;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +60,14 @@ public class FrameManageProduct extends javax.swing.JFrame {
         cbHeThongKho = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
-        btAdd = new javax.swing.JButton();
+        btImport = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         btInfo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        btExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,10 +171,10 @@ public class FrameManageProduct extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblSanPham);
 
-        btAdd.setText("Add");
-        btAdd.addActionListener(new java.awt.event.ActionListener() {
+        btImport.setText("Import");
+        btImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddActionPerformed(evt);
+                btImportActionPerformed(evt);
             }
         });
 
@@ -203,6 +205,13 @@ public class FrameManageProduct extends javax.swing.JFrame {
 
         jLabel8.setText("2...");
 
+        btExport.setText("Export");
+        btExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -220,11 +229,13 @@ public class FrameManageProduct extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btAdd)
+                                .addComponent(btImport)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btExport)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btInfo))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
@@ -243,10 +254,11 @@ public class FrameManageProduct extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAdd)
+                    .addComponent(btImport)
                     .addComponent(btEdit)
                     .addComponent(btDelete)
-                    .addComponent(btInfo))
+                    .addComponent(btInfo)
+                    .addComponent(btExport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -294,16 +306,18 @@ public class FrameManageProduct extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btApplyActionPerformed
 
-    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+    private void btImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportActionPerformed
         try {
             // TODO add your handling code here:
             FrameImportProduct addProduct = new FrameImportProduct();
             addProduct.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_btAddActionPerformed
+    }//GEN-LAST:event_btImportActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         // TODO add your handling code here:
@@ -326,6 +340,26 @@ public class FrameManageProduct extends javax.swing.JFrame {
             Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btInfoActionPerformed
+
+    private void btExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExportActionPerformed
+
+        try {
+            // TODO add your handling code here:
+            int selectedRowInd = tblSanPham.getSelectedRow();
+            SanPhamToDisplay selectedSP = spModel.getSanPham(selectedRowInd);
+            SanPhamDAOImpl spDAO = new SanPhamDAOImpl();
+            SanPhamTrongKhoDAOImpl sptkDAO = new SanPhamTrongKhoDAOImpl();
+            FrameExportProduct fExport = new FrameExportProduct(selectedSP);
+            fExport.setVisible(true);
+//            spDAO.deleteSanPham(selectedSP);
+//            sptkDAO.deleteSanPhamTrongKho(selectedSP);
+//            spModel.removeSanPham(selectedRowInd);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameManageProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btExportActionPerformed
 
     private void loadTableSanPham(int khoID) throws SQLException {               
         removeAllRows(spModel);
@@ -397,10 +431,11 @@ public class FrameManageProduct extends javax.swing.JFrame {
     private SanPhamDisplayTableModel spModel = new SanPhamDisplayTableModel();
     private ThongTinCaoCap ttCC;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAdd;
     private javax.swing.JButton btApply;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btEdit;
+    private javax.swing.JButton btExport;
+    private javax.swing.JButton btImport;
     private javax.swing.JButton btInfo;
     private javax.swing.JComboBox cbHeThongKho;
     private javax.swing.JComboBox jComboBox1;

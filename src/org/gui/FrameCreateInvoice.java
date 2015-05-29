@@ -284,10 +284,6 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btDoneActionPerformed
-
-    private void initTableRowChanged() {
-        
-    }
     
     private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
         NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();

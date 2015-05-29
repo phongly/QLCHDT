@@ -31,7 +31,10 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
         int soLuongTon = rs.getInt("so_luong_ton");
         Date ngayNhap = rs.getDate("ngay_nhap");
         Date ngayXuat = rs.getDate("ngay_xuat");
-        SanPhamTrongKho sanPhamTrongKho = new SanPhamTrongKho(sanPhamTrongKhoID, khoID, sanPhamID, soLuongTon, ngayNhap, ngayXuat);
+        int nhanVienNhapID = rs.getInt("nhanviennhap_id");
+        int nhanVienXuatID = rs.getInt("nhanvienxuat_id");
+        SanPhamTrongKho sanPhamTrongKho = new SanPhamTrongKho(sanPhamTrongKhoID, khoID, sanPhamID, soLuongTon, 
+                                                                ngayNhap, ngayXuat, nhanVienNhapID, nhanVienXuatID);
         return sanPhamTrongKho;
     }
     
@@ -82,7 +85,7 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
 
     @Override
     public int insertSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException {
-        String sql = "INSERT INTO sanpham_trong_kho(id_sp, id_kho, so_luong_ton, ngay_nhap, ngay_xuat, nhacc_id) values (?,?,?,?,?,?)";
+        String sql = "INSERT INTO sanpham_trong_kho(id_sp, id_kho, so_luong_ton, ngay_nhap, ngay_xuat, nhacc_id, nhanviennhap_id, nhanvienxuat_id) values (?,?,?,?,?,?,?,?)";
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, sp.getSanPhamID());
         ps.setInt(2, sp.getKhoID());
@@ -90,7 +93,8 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
         ps.setDate(4, sp.getNgayNhap());
         ps.setDate(5, sp.getNgayXuat());
         ps.setInt(6, sp.getNhaCCID());
-        
+        ps.setInt(7, sp.getNhanVienNhapID());
+        ps.setInt(8, sp.getNhanVienXuatID());
         int result = 0;
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
@@ -105,7 +109,7 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
     public void updateSanPhamTrongKho(SanPhamTrongKho sp) throws SQLException {
         String sql = " UPDATE sanpham_trong_kho\n" +
                     "  SET id_sp=?, id_kho=?, so_luong_ton=?, ngay_nhap=?, ngay_xuat=?," +
-                    "   nhacc_id=?" +
+                    "   nhacc_id=?, nhanviennhap_id=?, nhanvienxuat_id=?" +
                     "  WHERE id=?";
         PreparedStatement ps = PostgreConnection.getInstance().getConnection().prepareStatement(sql);
         ps.setInt(1, sp.getSanPhamID());
@@ -114,7 +118,9 @@ public class SanPhamTrongKhoDAOImpl implements SanPhamTrongKhoDAO{
         ps.setDate(4, sp.getNgayNhap());
         ps.setDate(5, sp.getNgayXuat());
         ps.setInt(6, sp.getNhaCCID());
-        ps.setInt(7, sp.getSanPhamTrongKhoID());
+        ps.setInt(7, sp.getNhanVienNhapID());
+        ps.setInt(8, sp.getNhanVienXuatID());
+        ps.setInt(9, sp.getSanPhamTrongKhoID());
         ps.executeUpdate();
         
     }

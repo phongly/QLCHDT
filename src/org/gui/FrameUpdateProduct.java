@@ -223,6 +223,7 @@ public class FrameUpdateProduct extends javax.swing.JFrame {
             
             spDAO.updateSanPham(sanPham);
             sptkDAO.updateSanPhamTrongKho(sanPham);
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(FrameUpdateProduct.class.getName()).log(Level.SEVERE, null, ex);
         }

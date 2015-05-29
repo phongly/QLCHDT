@@ -7,16 +7,21 @@ package org.gui;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.DateFormatter;
 import org.dao.impl.*;
 import org.dao.util.ComboItem;
+import org.dao.util.Helper;
 import org.dao.util.PostgreConnection;
 import org.pojo.*;
 /**
@@ -28,11 +33,30 @@ public class FrameExportProduct extends javax.swing.JFrame {
     /**
      * Creates new form F_AddProduct
      */
-    public FrameExportProduct() throws SQLException {
+    private NguoiDung nhanVien;
+    private Date ngayXuat = null;
+    public FrameExportProduct() throws SQLException, ParseException {
         initComponents();
         initComboBoxKho();
+        setupDateFields();
+        int loaiNhanVien = 0;
+        nhanVien = getRandomNguoiDungTheo(loaiNhanVien);
+        txtNhanvien.setText(nhanVien.getTen().toString());
     }
 
+    SanPhamTrongKho sptk;
+    public FrameExportProduct(SanPhamTrongKho sptkho) throws SQLException, ParseException {
+        initComponents();
+        initComboBoxKho();
+        setupDateFields();
+        sptk = sptkho;
+        int loaiNhanVien = 0;
+        nhanVien = getRandomNguoiDungTheo(loaiNhanVien);
+        txtNhanvien.setText(nhanVien.getTen().toString());
+        txtDongia.setText(sptk.getDonGia()+"");
+        txtTenSP.setText(sptk.getTen());
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +81,8 @@ public class FrameExportProduct extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btReset = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        lbMsg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,6 +100,17 @@ public class FrameExportProduct extends javax.swing.JFrame {
         jLabel3.setText("Date:");
 
         jLabel4.setText("Product Name:");
+
+        txtTenSP.setEditable(false);
+        txtTenSP.setBackground(new java.awt.Color(0, 153, 153));
+
+        txtDongia.setEditable(false);
+        txtDongia.setBackground(new java.awt.Color(0, 153, 153));
+        txtDongia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDongiaActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Price:");
 
@@ -101,39 +138,19 @@ public class FrameExportProduct extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        lbMsg.setForeground(new java.awt.Color(255, 51, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(77, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
-                        .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,10 +158,44 @@ public class FrameExportProduct extends javax.swing.JFrame {
                         .addComponent(btReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSave)
-                        .addGap(77, 77, 77))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(39, 39, 39))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(140, 140, 140))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbMsg)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(72, 72, 72)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtSoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(74, 74, 74)
+                                        .addComponent(cbKho, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(163, 163, 163))))
+                        .addGap(155, 155, 155))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,11 +208,13 @@ public class FrameExportProduct extends javax.swing.JFrame {
                     .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(lbMsg)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(13, 13, 13)
                 .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,8 +229,9 @@ public class FrameExportProduct extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btReset)
-                    .addComponent(btSave))
-                .addGap(65, 65, 65))
+                    .addComponent(btSave)
+                    .addComponent(jButton1))
+                .addGap(61, 61, 61))
         );
 
         pack();
@@ -200,36 +254,75 @@ public class FrameExportProduct extends javax.swing.JFrame {
             // TODO add your handling code here:
             String tenSp = txtTenSP.getText();
             double gia = Double.valueOf(txtDongia.getText()) ;
-
-            // insert sanpham
-            SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
-            SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();       
-            int sanPhamID = sanPhamDAOIm.insertSanPham(newSanPham);           
+            // about date
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormatter df = new DateFormatter(formatter);      
+            java.util.Date parsed = formatter.parse(txtNgay.getText());
+            ngayXuat.setTime(parsed.getTime()); 
+            // insert sanpham // chua can
+//            SanPham newSanPham = new SanPhamTrongKho(tenSp, gia);
+//            SanPhamDAOImpl sanPhamDAOIm = new SanPhamDAOImpl();       
+//            int sanPhamID = sanPhamDAOIm.insertSanPham(newSanPham);           
             
             HethongCuaHangNhaCC heThong = new HeThongDAOImpl().getHeThong();
             int heThongID = heThong.getCuaHangID();
-            // insert san pham trong kho
-            newSanPham.setSanPhamID(sanPhamID);
-            SanPhamTrongKho sptk = (SanPhamTrongKho)newSanPham;
+            // insert san pham trong kho chua can
+//            newSanPham.setSanPhamID(sanPhamID);
+//            SanPhamTrongKho sptk = (SanPhamTrongKho)newSanPham;
             
             Object item = cbKho.getSelectedItem();
-            int nhaCCID = Integer.parseInt(((ComboItem)item).getValue());            
-            int soLuongTon = Integer.parseInt(txtSoluong.getText());
-            sptk.setSanPhamID(sanPhamID);
-            sptk.setKhoID(heThongID);
-            sptk.setSoLuongTon(soLuongTon);         
-            sptk.setNgayNhap(null);
-            sptk.setNgayXuat(null);
-            sptk.setNhaCCID(nhaCCID);
-            SanPhamTrongKhoDAOImpl sptkDAOImp = new SanPhamTrongKhoDAOImpl();
-            sptkDAOImp.insertSanPhamTrongKho(sptk);            
+            int khoID = Integer.parseInt(((ComboItem)item).getValue());            
+            int soLuongDeXuatKho = Integer.parseInt(txtSoluong.getText());
+            int soLuongTon = sptk.getSoLuongTon();
 
+            
+            if(soLuongTon < soLuongDeXuatKho) {
+                lbMsg.setText("This quantity is greater than in stock of System!");
+            } else if(soLuongDeXuatKho <= 0 || txtSoluong.getText().equalsIgnoreCase("")){
+                   lbMsg.setText("This quantity is not valid!");
+            } else {
+                SanPhamTrongKhoDAOImpl sptkDAOImp = new SanPhamTrongKhoDAOImpl();
+                sptk.setSoLuongTon(soLuongTon-soLuongDeXuatKho);
+                sptkDAOImp.updateSanPhamTrongKho(sptk);
+                if(soLuongTon == soLuongDeXuatKho)
+                    sptkDAOImp.deleteSanPhamTrongKho(sptk);
+                //            sptk.setSanPhamID(sanPhamID);               
+                sptk.setKhoID(heThongID);
+                sptk.setNgayXuat(ngayXuat);
+                sptk.setSoLuongTon(soLuongDeXuatKho);
+                sptk.setKhoID(khoID);
+                sptk.setNhanVienXuatID(nhanVien.getId());
+                int id = sptkDAOImp.insertSanPhamTrongKho(sptk);
+                if(id > 0) {
+                    this.dispose();
+                }
+            }
+            
 //            lbTestValue.setText(newSanPham.getTen() + sptk.getSanPhamID() + " " + sptk.getNhaCCID());
         } catch (SQLException ex) {
             Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);           
         }
     }//GEN-LAST:event_btSaveActionPerformed
 
+    private void txtDongiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDongiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDongiaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
+        NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();
+        List<NguoiDung> nguoiDungs = nguoiDungDAO.getNguoiDungTheoLoai(loai);
+        
+        int ranDomNumber = Helper.randInt(1, nguoiDungs.size());
+        NguoiDung ranDomNguoiDung = nguoiDungs.get(ranDomNumber);
+        return ranDomNguoiDung;
+    }
     /**
      * @param args the command line arguments
      */
@@ -244,6 +337,16 @@ public class FrameExportProduct extends javax.swing.JFrame {
         }
                
     }
+    
+    
+    private void setupDateFields() throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date ultilDate = new java.util.Date();
+        ngayXuat = new Date(ultilDate.getTime());        
+        String strDate = formatter.format(ngayXuat);
+        txtNgay.setText(strDate);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -275,6 +378,8 @@ public class FrameExportProduct extends javax.swing.JFrame {
                     new FrameExportProduct().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FrameExportProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
@@ -285,6 +390,7 @@ public class FrameExportProduct extends javax.swing.JFrame {
     private javax.swing.JButton btReset;
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox cbKho;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -292,6 +398,7 @@ public class FrameExportProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lbMsg;
     private javax.swing.JTextField txtDongia;
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtNhanvien;

@@ -19,6 +19,7 @@ import org.dao.impl.NguoiDungDAOImpl;
 import org.dao.impl.SanPhamDAOImpl;
 import org.dao.impl.SanPhamTrongHoaDonDAOImpl;
 import org.dao.util.ComboItem;
+import org.dao.util.Helper;
 import org.dao.util.SanPhamTrongHoaDonTableModel;
 import org.pojo.HoaDon;
 import org.pojo.HoaDonToDisPlay;
@@ -73,8 +74,15 @@ public class FrameViewInvoice extends javax.swing.JFrame {
 //        NhaCCDAOImpl nhaCCImpl = new NhaCCDAOImpl();
         cbThayDoi.addItem(new ComboItem("Delete", "1"));
         cbThayDoi.addItem(new ComboItem("Update", "2"));
-
-
+    }
+    
+    private NguoiDung getRandomNguoiDungTheo(int loai) throws SQLException {       
+        NguoiDungDAOImpl  nguoiDungDAO = new NguoiDungDAOImpl();
+        List<NguoiDung> nguoiDungs = nguoiDungDAO.getNguoiDungTheoLoai(loai);
+        
+        int ranDomNumber = Helper.randInt(1, nguoiDungs.size());
+        NguoiDung ranDomNguoiDung = nguoiDungs.get(ranDomNumber);
+        return ranDomNguoiDung;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -317,6 +325,7 @@ public class FrameViewInvoice extends javax.swing.JFrame {
                         KH.setDiaChi(tfDiaChiKH.getText());
                         KH.setSoDT(tfDTKH.getText());
                         nguoiDungDAO.updateNguoiDung(KH);
+                        lbTest.setText(ngayNhapStr);
                         break;
                 case 1: hoaDon.setTinhTrang(actionID);
                         break;

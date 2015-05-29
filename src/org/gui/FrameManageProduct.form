@@ -37,11 +37,13 @@
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btAdd" min="-2" max="-2" attributes="0"/>
+                              <Component id="btImport" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btEdit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btDelete" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btExport" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btInfo" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -67,10 +69,11 @@
               <Component id="jPanel2" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btImport" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btExport" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
@@ -299,12 +302,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btAdd">
+    <Component class="javax.swing.JButton" name="btImport">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add"/>
+        <Property name="text" type="java.lang.String" value="Import"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAddActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btImportActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btEdit">
@@ -345,6 +348,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="2..."/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btExport">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Export"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExportActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
