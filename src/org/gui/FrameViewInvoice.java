@@ -332,6 +332,7 @@ public class FrameViewInvoice extends javax.swing.JFrame {
             }
             HoaDon hoaDonUpdated = hoaDon;
             hoaDonDAO.updateHoaDon(hoaDonUpdated);
+            this.dispose();
         } catch (ParseException ex) {
             Logger.getLogger(FrameViewInvoice.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

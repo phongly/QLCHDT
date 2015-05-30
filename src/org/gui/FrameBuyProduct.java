@@ -66,7 +66,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         this.sanPhamTrongHDs = sanPhamTrongHDs;
     }
 
-    public FrameBuyProduct(JTable tblSanPhamTHDon,  double tongTien, JLabel lbTongTien) throws SQLException {
+    public FrameBuyProduct(JTable tblSanPhamTHDon, double tongTien, JLabel lbTongTien) throws SQLException {
         initComponents();
         initComboBoxCuaHang();
         initSelectRowEventListener();
@@ -98,7 +98,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             }
             
             public void updateText() {
-                lblMsg.setText(txtBuyNumber.getText());
+                soLuogMuaHienTai = Integer.parseInt(txtBuyNumber.getText());
+                lblMsg.setText("Only "+ soLuogTon +" left");
                 sanPhamTrongHD.setSoLuongMua(Integer.parseInt(txtBuyNumber.getText()));
             }
         });
@@ -207,7 +208,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Number to Buy:");
+        jLabel5.setText("Quantity:");
 
         txtAreaDetail.setEditable(false);
         txtAreaDetail.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
@@ -245,8 +246,6 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMsg)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
                             .addComponent(jScrollPane3)
@@ -254,6 +253,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMsg)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btOK)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -270,8 +271,7 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblMsg))
+                    .addComponent(jLabel2))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -281,7 +281,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtBuyNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btOK)
-                    .addComponent(btCancel))
+                    .addComponent(btCancel)
+                    .addComponent(lblMsg))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
@@ -307,20 +308,25 @@ public class FrameBuyProduct extends javax.swing.JFrame {
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
         // TODO add your handling code here:
         try {
-            
+            int flag = 0;
+            if(soLuogMuaHienTai > soLuogTon) {               
+                flag = 1;
+            }
             if(sanPhamTrongHDs.size() == 0)
                 lblMsg.setText("Please choose a product!");
             else {
-                int flag = 0;
+
+                
                 List<SanPhamTrongHoaDon> sanPhamTHDs = spTHDModel.getAllSPTrongHD();
                 for (SanPhamTrongHoaDon sanPhamTrongHoaDon : sanPhamTHDs) {
                     if(sanPhamTrongHoaDon.getTen().equals(sanPhamTrongHD.getTen()))
-                        flag = 1;
+                        flag = 2;
                 }
 
-                if(flag == 1) {
-                    lblMsg.setText("You've chosen this product");
-                }
+                if(flag == 1)
+                    lblMsg.setText("Only "+ soLuogTon +" left");
+                else if(flag == 2) 
+                    lblMsg.setText("You've chosen this product");                
                 else {
                     
 //                    tongTien += sanPhamTrongHD.getThanhTien();
@@ -343,6 +349,8 @@ public class FrameBuyProduct extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btCancelActionPerformed
 
+    private int soLuogMuaHienTai = 0;
+    private int soLuogTon = 0;
     private void initSelectRowEventListener() {
         tblSanPham.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -358,15 +366,24 @@ public class FrameBuyProduct extends javax.swing.JFrame {
                         detail = "";
                         for (ThongTinCaoCap thongTinCC : thongTinCCs) {
                             detail += thongTinCC.getTenThongTin() + ": \n";
-                            detail += thongTinCC.getMoTa() + "\n";
+                            detail += "  - "+thongTinCC.getMoTa() + "\n";
                             
                         }
 //                        sanPhamTrongKho = (SanPhamTrongKho) sanPham;
-                        
-                        sanPhamTrongHD = new SanPhamTrongHoaDon(sanPham.getTen(), sanPham.getDonGia(), sanPham.getSanPhamID(), 
-                                                                    Integer.parseInt(txtBuyNumber.getText()));
-                        sanPhamTrongHDs.add(sanPhamTrongHD);
-                        lblMsg.setText("change "+ sanPhamTrongHDs.size());
+                        txtAreaDetail.setText(detail);
+                        soLuogTon = sanPham.getSoLuongTon();
+
+                        soLuogMuaHienTai = Integer.parseInt(txtBuyNumber.getText());
+                        soLuogTon = sanPham.getSoLuongTon();
+                        if(soLuogMuaHienTai > soLuogTon)
+                        {                  
+                            lblMsg.setText("Only "+sanPham.getSoLuongTon()+ " units left!");
+                        } else {
+                            sanPhamTrongHD = new SanPhamTrongHoaDon(sanPham.getTen(), sanPham.getDonGia(), sanPham.getSanPhamID(), 
+                                                                    Integer.parseInt(txtBuyNumber.getText()));                            
+                            sanPhamTrongHDs.add(sanPhamTrongHD);
+                        }
+                        lblMsg.setText("change "+ thongTinCCs.size()+"");
                     }
                     
                 } catch (SQLException ex) {

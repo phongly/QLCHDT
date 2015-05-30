@@ -274,6 +274,7 @@ public class FrameCreateInvoice extends javax.swing.JFrame {
             }
             SanPhamTrongHoaDonDAOImpl sanPhamTHDDAO = new SanPhamTrongHoaDonDAOImpl();
             sanPhamTHDDAO.insertMultiSanPhamTrongHoaDon(sanPhamTrongHDs);
+            this.dispose();
 
         } catch (ParseException ex) {
             Logger.getLogger(FrameCreateInvoice.class.getName()).log(Level.SEVERE, null, ex);

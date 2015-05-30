@@ -84,6 +84,7 @@ public class FrameImportProduct extends javax.swing.JFrame {
         btReset = new javax.swing.JButton();
         btSave = new javax.swing.JButton();
         lbThongbao = new javax.swing.JLabel();
+        btCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -130,6 +131,13 @@ public class FrameImportProduct extends javax.swing.JFrame {
 
         lbThongbao.setForeground(new java.awt.Color(0, 153, 51));
 
+        btCancel.setText("Cancel");
+        btCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,6 +169,8 @@ public class FrameImportProduct extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btCancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSave)
@@ -211,7 +221,8 @@ public class FrameImportProduct extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btReset)
-                    .addComponent(btSave))
+                    .addComponent(btSave)
+                    .addComponent(btCancel))
                 .addGap(58, 58, 58))
         );
 
@@ -228,6 +239,9 @@ public class FrameImportProduct extends javax.swing.JFrame {
 
     private void btResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResetActionPerformed
         // TODO add your handling code here:
+        txtTenSP.setText(null);
+        txtDongia.setText(null);
+        txtSoluong.setText(null);
     }//GEN-LAST:event_btResetActionPerformed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
@@ -275,6 +289,11 @@ public class FrameImportProduct extends javax.swing.JFrame {
             Logger.getLogger(FrameImportProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btSaveActionPerformed
+
+    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,6 +349,7 @@ public class FrameImportProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCancel;
     private javax.swing.JButton btReset;
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox cbNhaCC;
